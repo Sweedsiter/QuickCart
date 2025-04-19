@@ -67,7 +67,7 @@ export const createUserOrder = inngest.createFunction({
         maxSize: 5,
         timeout: '5s'
     }
-},
+    },
     { event: 'order/created' },
     async ({events})=>{
 
