@@ -36,7 +36,7 @@ const AddProduct = () => {
       const token = await getToken()
 
       const { data } = await axios.post('/api/product/add',formData,{headers:{Authorization:`Bearer ${token}`}})
-
+     
       if (data.success){
         toast.success(data.message)
         setFiles([])
@@ -51,9 +51,7 @@ const AddProduct = () => {
 
     } catch (error) {
       toast.error(error.message)
-    }
-
-    
+    }   
   };
 
   return (

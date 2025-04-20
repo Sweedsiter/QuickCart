@@ -18,7 +18,7 @@ export const AppContextProvider = (props) => {
     const router = useRouter()
 
     const {user} = useUser()
-    const { getToken}  = useAuth()    
+    const { getToken}  = useAuth()       
 
     const [products, setProducts] = useState([])
     const [userData, setUserData] = useState(false)
@@ -43,7 +43,7 @@ export const AppContextProvider = (props) => {
     const fetchUserData = async () => {
       try {
         if(user.publicMetadata.role === 'seller'){
-            setIsSeller(true)
+            setIsSeller(true)           
         }
 
         const token = await getToken()
@@ -51,7 +51,7 @@ export const AppContextProvider = (props) => {
         const { data } = await axios.get('/api/user/data',{ headers: { Authorization: `Bearer ${token}`} })
         if (data.success){
             setUserData(data.user)
-            setCartItems(data.user.cartItems)
+            setCartItems(data.user.cartItems)   
         } else{
             toast.error(data.message)
         }   
@@ -135,7 +135,7 @@ export const AppContextProvider = (props) => {
         }       
     }, [user])
 
-    const value = {
+    const value = {     
         user, getToken,
         currency, router,
         isSeller, setIsSeller,
