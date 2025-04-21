@@ -34,7 +34,7 @@ const AddAddress = () => {
                
             if(data.success){
                 toast.success(data.message)
-                router
+                router.push('/cart')
             }else{
                 toast.error(data.message)
             }
