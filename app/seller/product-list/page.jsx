@@ -15,6 +15,28 @@ const ProductList = () => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
 
+  const oneDelete = (id) => async () => {
+    if (!window.confirm("Are you sure you want to delete this product?")) {
+        return; // Exit if the user cancels the confirmation dialog
+    }
+
+    try {
+        const token = await getToken();
+        const { data } = await axios.delete(`/api/product/delete?id=${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (data.success) {
+            toast.success("Product deleted successfully");
+            setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id)); // Update the product list
+        } else {
+            toast.error(data.message);
+        }
+    } catch (error) {
+        toast.error(error.response?.data?.message || "An error occurred");
+    }
+};
+
   const fetchSellerProduct = async () => {
     try {
       const token = await getToken()
@@ -85,6 +107,7 @@ const ProductList = () => {
                       />
                     </button>
                   </td>
+                  <td className="px-4 py-3" onClick={ oneDelete(product._id) }>Delete</td>
                 </tr>
               ))}
             </tbody>

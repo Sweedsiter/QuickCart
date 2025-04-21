@@ -42,10 +42,7 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: "User not found" });
         }
         user.cartItems = {};
-        await user.save();
-        console.log(user)
-
-
+        await user.save();    
         return NextResponse.json({ success: true, message: 'Order Placed' })
 
     } catch (error) {

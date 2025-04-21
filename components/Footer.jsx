@@ -41,7 +41,7 @@ const Footer = () => {
             <h2 className="font-medium text-gray-900 mb-5">Get in touch ติดต่อ</h2>
             <div className="text-sm space-y-2">
               <p>+66 91 045 5990</p>
-              <p>D27saitun@gmail.com</p>
+              <p>D27saitunlu@gmail.com</p>
             </div>
           </div>
         </div>
