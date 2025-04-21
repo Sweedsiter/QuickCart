@@ -43,6 +43,7 @@ export async function POST(request) {
         }
         user.cartItems = {};
         await user.save();
+        console.log(user)
 
 
         return NextResponse.json({ success: true, message: 'Order Placed' })

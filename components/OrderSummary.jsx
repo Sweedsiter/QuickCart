@@ -65,7 +65,7 @@ const OrderSummary = () => {
         router.push('/order-placed')   
       } else {
         toast.error(data.message)
-      }
+      }   
 
      } catch (error) {
       toast.error(error.message)
