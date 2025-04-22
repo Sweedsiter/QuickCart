@@ -15,6 +15,8 @@ const ProductList = () => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
 
+
+// Delete product function
   const oneDelete = (id) => async () => {
     if (!window.confirm("Are you sure you want to delete this product?")) {
         return; // Exit if the user cancels the confirmation dialog
@@ -36,6 +38,14 @@ const ProductList = () => {
         toast.error(error.response?.data?.message || "An error occurred");
     }
 };
+// Update product function
+  const handleUpdate = (id) => () => {
+    router.push(`/seller/update-product/${id}`)
+  }
+  
+
+
+
 
   const fetchSellerProduct = async () => {
     try {
@@ -108,6 +118,7 @@ const ProductList = () => {
                     </button>
                   </td>
                   <td className="px-4 py-3" onClick={ oneDelete(product._id) }>Delete</td>
+                  <td className="px-4 py-3" onClick={ handleUpdate(product._id) }>Update</td>
                 </tr>
               ))}
             </tbody>

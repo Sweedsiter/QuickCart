@@ -1,0 +1,179 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { useAppContext } from "@/context/AppContext";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useRouter, useParams } from "next/navigation";
+import Loading from "@/components/Loading";
+import Footer from "@/components/seller/Footer";
+import Image from "next/image";
+
+
+
+export default function UpdateProduct() {
+
+    const { id } = useParams(); // Get the product ID from the URL parameters
+    const [product, setProduct] = useState(null); // State to hold the product data
+    const [loading, setLoading] = useState(true); // State to manage loading state
+    const { getToken } = useAppContext(); // Get the token from context
+    const router = useRouter(); // Initialize the router
+
+    // Fetch product data by ID
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const token = await getToken();
+                const { data } = await axios.get(`/api/product/updateId?id=${id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if (data.success) {
+                    setProduct(data.product);
+                } else {
+                    toast.error(data.message);
+                }
+            } catch (error) {
+                toast.error(error.response?.data?.message || "Failed to fetch product data");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (id) {
+            fetchProduct();
+        }
+    }, [id, getToken]);
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const token = await getToken();
+            const { data } = await axios.put(
+                `/api/product/update`,
+                { id, updates: product },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            if (data.success) {
+                toast.success("Product updated successfully!");
+                router.push("/seller"); // Redirect to the seller dashboard
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Failed to update product");
+        }
+    };
+
+    if (loading) {
+        return <Loading />;
+    }
+
+    if (!product) {
+        return <div className="text-center mt-10">Product not found</div>;
+    }
+
+    return (
+        <div className="flex-1 min-h-screen flex flex-col justify-between">
+            <form onSubmit={handleSubmit} className="md:p-10 p-4 space-y-5 max-w-lg">
+                <div>
+                    <p className="text-base font-medium">Product Image</p>
+                    <div className="flex flex-wrap items-center gap-3 mt-2">
+                        {product.image && product.image.length > 0 ? (
+                            <Image
+                                src={product.image[0]} // Ensure this is a valid image URL
+                                alt="Product Image"
+                                className="w-32 h-32 object-cover rounded-md"
+                                width={128} // Optional: Specify width
+                                height={128} // Optional: Specify height
+                            />
+                        ) : (
+                            <p className="text-gray-500">No image available</p>
+                        )}
+                        {/* <div>   
+                                {product.image && product.image.length > 0 ? (
+                                    <Image
+                                        src={product.image[0]} // Ensure this is a valid image URL
+                                        alt="Product Image"
+                                        className="w-32 h-32 object-cover rounded-md"
+                                        width={128} // Optional: Specify width
+                                        height={128} // Optional: Specify height
+                                    />
+                                ) : (
+                                    <p className="text-gray-500">No image available</p>
+                                )}
+                                <label htmlFor="image-upload" className="cursor-pointer text-blue-500 underline">
+                                    Upload Image
+                                </label>
+                                <input
+                                    type="file"
+                                    id="image-upload"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            setProduct({ ...product, image: [URL.createObjectURL(file)] });
+                                        }
+                                    }}
+                                />
+                        </div> */}
+                    </div>
+
+
+                </div>
+                <div className="flex flex-col gap-1 max-w-md">
+                    <label className="text-base font-medium" htmlFor="product-name">
+                        Name
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={product.name}
+                        onChange={(e) => setProduct({ ...product, name: e.target.value })}
+                        required
+                        className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+                    />
+                </div>
+                <div className="flex flex-col gap-1 max-w-md">
+                    <label
+                        className="text-base font-medium"
+                        htmlFor="product-description"
+                    >
+                        Description
+                    </label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        value={product.description}
+                        onChange={(e) => setProduct({ ...product, description: e.target.value })}
+                        required
+                        className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40 resize-none"
+                    ></textarea>
+                </div>
+                <div className="flex flex-col gap-1 max-w-md">
+                    <label className="text-base font-medium" htmlFor="product-name">
+                        Price
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={product.price}
+                        onChange={(e) => setProduct({ ...product, name: e.target.value })}
+                        required
+                        className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+                    />
+                </div>
+
+                <button type="submit" className="px-8 py-2.5 bg-orange-500 text-white font-medium rounded">
+                    Update
+                </button>
+            </form>
+            <Footer />
+        </div>
+    );
+}

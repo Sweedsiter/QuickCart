@@ -18,6 +18,8 @@ const AddProduct = () => {
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
 
+
+// Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData()

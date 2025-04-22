@@ -5,11 +5,13 @@ import Link from "next/link"
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
 import { useClerk, UserButton } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
 
   const { isSeller, router, user } = useAppContext();
   const clerk = useClerk()
+  const pathname = usePathname(); 
 
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700">
@@ -20,10 +22,14 @@ const Navbar = () => {
         alt="logo"
       />
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
-        <Link href="/" className="hover:text-gray-900 hover:font-medium transition ">
+        <Link href="/" className={`hover:text-gray-900 hover:font-medium transition ${
+            pathname === "/" ? "text-orange-500 font-medium" : ""
+          }`}>
           Home
         </Link>
-        <Link href="/all-products" className="hover:text-gray-900 hover:font-medium  transition">
+        <Link href="/all-products" className={`hover:text-gray-900 hover:font-medium transition ${
+            pathname === "/all-products" ? "text-orange-500 font-medium" : ""
+          }`}>
           Shop
         </Link>
         <Link href="/" className="hover:text-gray-900 hover:font-medium transition">
@@ -32,7 +38,7 @@ const Navbar = () => {
         <Link href="/" className="hover:text-gray-900 hover:font-medium transition">
           Contact
         </Link>
-
+     
         {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border px-4 py-1.5 rounded-full">Seller Dashboard</button>}
 
       </div>
