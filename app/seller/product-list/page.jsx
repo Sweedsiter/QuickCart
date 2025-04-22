@@ -16,33 +16,33 @@ const ProductList = () => {
   const [loading, setLoading] = useState(true)
 
 
-// Delete product function
+  // Delete product function
   const oneDelete = (id) => async () => {
     if (!window.confirm("Are you sure you want to delete this product?")) {
-        return; // Exit if the user cancels the confirmation dialog
+      return; // Exit if the user cancels the confirmation dialog
     }
 
     try {
-        const token = await getToken();
-        const { data } = await axios.delete(`/api/product/delete?id=${id}`, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
+      const token = await getToken();
+      const { data } = await axios.delete(`/api/product/delete?id=${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-        if (data.success) {
-            toast.success("Product deleted successfully");
-            setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id)); // Update the product list
-        } else {
-            toast.error(data.message);
-        }
+      if (data.success) {
+        toast.success("Product deleted successfully");
+        setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id)); // Update the product list
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
-        toast.error(error.response?.data?.message || "An error occurred");
+      toast.error(error.response?.data?.message || "An error occurred");
     }
-};
-// Update product function
+  };
+  // Update product function
   const handleUpdate = (id) => () => {
     router.push(`/seller/update-product/${id}`)
   }
-  
+
 
 
 
@@ -51,12 +51,12 @@ const ProductList = () => {
     try {
       const token = await getToken()
 
-      const { data } = await axios.get('/api/product/seller-list', { headers: { Authorization: `Bearer ${token}`} })
+      const { data } = await axios.get('/api/product/seller-list', { headers: { Authorization: `Bearer ${token}` } })
 
       if (data.success) {
         setProducts(data.products)
         setLoading(false)
-      } else {     
+      } else {
         toast.error(data.message)
       }
     } catch (error) {
@@ -85,10 +85,12 @@ const ProductList = () => {
                   Price
                 </th>
                 <th className="px-4 py-3 font-medium truncate max-sm:hidden">Action</th>
+                <th className="px-4 py-3 font-medium truncate max-sm:hidden">Delete</th>
+                <th className="px-4 py-3 font-medium truncate max-sm:hidden">Update</th>
               </tr>
             </thead>
             <tbody className="text-sm text-gray-500">
-              
+
               {products.map((product, index) => (
                 <tr key={index} className="border-t border-gray-500/20">
                   <td className="md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3 truncate">
@@ -117,8 +119,15 @@ const ProductList = () => {
                       />
                     </button>
                   </td>
-                  <td className="px-4 py-3" onClick={ oneDelete(product._id) }>Delete</td>
-                  <td className="px-4 py-3" onClick={ handleUpdate(product._id) }>Update</td>
+                  <td className="px-4 py-3" > 
+                     <button onClick={oneDelete(product._id)} className="flex items-center gap-1 px-1.5 md:px-3.5 py-2 bg-red-600 text-white rounded-md">
+                     <span className="hidden md:block">Delete</span>
+                  </button></td>
+                  <td className="px-4 py-3" >
+                    <button onClick={handleUpdate(product._id)} className="flex items-center gap-1 px-1.5 md:px-3.5 py-2 bg-green-600 text-white rounded-md">
+                      <span className="hidden md:block">Update</span>
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

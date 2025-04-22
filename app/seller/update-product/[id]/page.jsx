@@ -59,7 +59,7 @@ export default function UpdateProduct() {
 
             if (data.success) {
                 toast.success("Product updated successfully!");
-                router.push("/seller"); // Redirect to the seller dashboard
+                router.push("/seller/product-list"); // Redirect to the seller dashboard
             } else {
                 toast.error(data.message);
             }
@@ -77,7 +77,7 @@ export default function UpdateProduct() {
     }
 
     return (
-        <div className="flex-1 min-h-screen flex flex-col justify-between">
+        <div className="flex-1 min-h-screen flex flex-col justify-between w-full">
             <form onSubmit={handleSubmit} className="md:p-10 p-4 space-y-5 max-w-lg">
                 <div>
                     <p className="text-base font-medium">Product Image</p>
@@ -163,7 +163,22 @@ export default function UpdateProduct() {
                         id="name"
                         name="name"
                         value={product.price}
-                        onChange={(e) => setProduct({ ...product, name: e.target.value })}
+                        onChange={(e) => setProduct({ ...product, price: e.target.value })}
+                        required
+                        className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+                    />
+                </div>
+
+                <div className="flex flex-col gap-1 max-w-md">
+                    <label className="text-base font-medium" htmlFor="product-name">
+                        offerPrice
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={product.offerPrice}
+                        onChange={(e) => setProduct({ ...product, offerPrice: e.target.value })}
                         required
                         className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
                     />
