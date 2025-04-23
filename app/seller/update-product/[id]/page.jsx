@@ -138,6 +138,29 @@ export default function UpdateProduct() {
                         className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
                     />
                 </div>
+
+                <div className="flex flex-col gap-1 w-32">
+                    <label className="text-base font-medium" htmlFor="category">
+                        Category
+                    </label>
+                    <select
+                        id="category"
+                        className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+                        onChange={(e) => setProduct({ ...product, category: e.target.value })}
+                       value={product.category}
+                        required
+                    >
+                        <option value="Earphone">Earphone</option>
+                        <option value="Headphone">Headphone</option>
+                        <option value="Watch">Watch</option>
+                        <option value="Smartphone">Smartphone</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Camera">Camera</option>
+                        <option value="Accessories">Accessories</option>
+                    </select>
+                </div>
+
+
                 <div className="flex flex-col gap-1 max-w-md">
                     <label
                         className="text-base font-medium"

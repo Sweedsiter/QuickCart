@@ -22,20 +22,20 @@ const Navbar = () => {
         alt="logo"
       />
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
-        <Link href="/" className={`hover:text-gray-900 hover:font-medium transition ${
-            pathname === "/" ? "text-orange-500 font-medium" : ""
+        <Link href="/" className={`hover:font-bold transition ${
+            pathname === "/" ? "text-fuchsia-900 font-bold" : ""
           }`}>
           Home
         </Link>
-        <Link href="/all-products" className={`hover:text-gray-900 hover:font-medium transition ${
-            pathname === "/all-products" ? "text-orange-500 font-medium" : ""
+        <Link href="/all-products" className={`hover:font-bold transition ${
+            pathname === "/all-products" ? "text-fuchsia-900 font-bold" : ""
           }`}>
           Shop
         </Link>
-        <Link href="/" className="hover:text-gray-900 hover:font-medium transition">
+        <Link href="/" className=" hover:font-bold transition">
           About Us
         </Link>
-        <Link href="/" className="hover:text-gray-900 hover:font-medium transition">
+        <Link href="/" className=" hover:font-bold transition">
           Contact
         </Link>
      

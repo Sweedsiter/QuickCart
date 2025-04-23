@@ -1,32 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
+import { useAppContext } from "@/context/AppContext";
 
 const HeaderSlider = () => {
+   const { router } =  useAppContext()
   const sliderData = [
     {
       id: 1,
-      title: "Experience Pure Sound - Your Perfect Headphones Awaits!",
-      offer: "Limited Time Offer 30% Off",
-      buttonText1: "Buy now",
-      buttonText2: "Find more",
-      imgSrc: assets.header_headphone_image,
+      title: "Dx-emb รับตีลายปักโดยโปรแกรม Wilcom Version ล่าสุด และเครื่องปักคุณภาพสูง แปลงไฟล์ได้ทุกเวอร์ชั่น",
+      offer: "",
+      buttonText1: "สั่งตีลายใหม่",
+      buttonText2: "ดูสินค้าทั้งหมด",
+      imgSrc: assets.wilcom,
     },
     {
       id: 2,
-      title: "Next-Level Gaming Starts Here - Discover PlayStation 5 Today!",
-      offer: "Hurry up only few lefts!",
-      buttonText1: "Shop Now",
-      buttonText2: "Explore Deals",
-      imgSrc: assets.header_playstation_image,
+      title: "ไฟล์ที่ลูกค้าจะได้รับ คือไฟล์รูปภาพและ .pes .dst และ .emb ที่สามารถนำไปใช้ได้กับเครื่องปักทุกยี่ห้อ",
+      offer: "",
+      buttonText1: "สั่งตีลายใหม่",
+      buttonText2: "ดูสินค้าทั้งหมด",
+      imgSrc: assets.กรณ์อาฌาณ,
     },
     {
       id: 3,
-      title: "Power Meets Elegance - Apple MacBook Pro is Here for you!",
-      offer: "Exclusive Deal 40% Off",
-      buttonText1: "Order Now",
-      buttonText2: "Learn More",
-      imgSrc: assets.header_macbook_image,
+      title: "บริการหลังบ้าน 24 ชั่วโมง เพื่อให้ลูกค้าได้ไฟล์ที่ดีที่สุด และ คุณภาพที่ดี",
+      offer: "",
+      buttonText1: "สั่งตีลายใหม่",
+      buttonText2: "ดูสินค้าทั้งหมด",
+      imgSrc: assets.service,
     },
   ];
 
@@ -35,7 +37,7 @@ const HeaderSlider = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % sliderData.length);
-    }, 3000);
+    }, 4000);
     return () => clearInterval(interval);
   }, [sliderData.length]);
 
@@ -54,9 +56,9 @@ const HeaderSlider = () => {
         {sliderData.map((slide, index) => (
           <div
             key={slide.id}
-            className="flex flex-col-reverse md:flex-row items-center justify-between bg-[#E6E9F2] py-8 md:px-14 px-5 mt-6 rounded-xl min-w-full"
+            className="flex flex-col-reverse md:flex-row items-center justify-between bg-orange-200 py-8 md:px-14 px-5 mt-6 rounded-xl min-w-full"
           >
-            <div className="md:pl-8 mt-10 md:mt-0">
+            <div className="md:pl-8 mt-10 md:py-16 md:mt-0">
               <p className="md:text-base text-orange-600 pb-1">{slide.offer}</p>
               <h1 className="max-w-lg md:text-[40px] md:leading-[48px] text-2xl font-semibold">
                 {slide.title}
@@ -65,15 +67,15 @@ const HeaderSlider = () => {
                 <button className="md:px-10 px-7 md:py-2.5 py-2 bg-orange-600 rounded-full text-white font-medium">
                   {slide.buttonText1}
                 </button>
-                <button className="group flex items-center gap-2 px-6 py-2.5 font-medium">
+                <button onClick={() => { router.push('/all-products') }} className="group flex items-center gap-2 px-6 py-2.5 font-medium" >
                   {slide.buttonText2}
                   <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
                 </button>
               </div>
             </div>
-            <div className="flex items-center flex-1 justify-center">
+            <div className="flex items-center flex-1 justify-center w-full " >
               <Image
-                className="md:w-72 w-48"
+                className="md:w-1/3 w-48 "
                 src={slide.imgSrc}
                 alt={`Slide ${index + 1}`}
               />
@@ -82,13 +84,13 @@ const HeaderSlider = () => {
         ))}
       </div>
 
-      <div className="flex items-center justify-center gap-2 mt-8">
+      <div className="flex items-center justify-center gap-2 mt-12">
         {sliderData.map((_, index) => (
           <div
             key={index}
             onClick={() => handleSlideChange(index)}
-            className={`h-2 w-2 rounded-full cursor-pointer ${
-              currentSlide === index ? "bg-orange-600" : "bg-gray-500/30"
+            className={`h-4 w-4 rounded-full cursor-pointer ${
+              currentSlide === index ? "bg-orange-400" : "bg-gray-500/30"
             }`}
           ></div>
         ))}

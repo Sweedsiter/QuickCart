@@ -5,7 +5,7 @@ import { useAppContext } from '@/context/AppContext';
 
 const ProductCard = ({ product }) => {
 
-    const { currency, router } = useAppContext()
+    const {  router } = useAppContext()
 
     return (
         <div
@@ -51,7 +51,9 @@ const ProductCard = ({ product }) => {
 
             <div className="flex items-end justify-between w-full mt-1">
                 <p className="text-base font-medium">฿{product.offerPrice}</p>
-                <button className=" max-sm:hidden px-4 py-1.5 text-gray-500 border border-gray-500/20 rounded-full text-xs hover:bg-slate-50 transition">
+                <button 
+                onClick={() => { router.push('/product/' + product._id); scrollTo(0, 0) }}
+                 className=" max-sm:hidden px-4 py-1.5 text-gray-500 border border-gray-500/20 rounded-full text-xs hover:bg-slate-50 transition">
                     Buy now
                 </button>
             </div>

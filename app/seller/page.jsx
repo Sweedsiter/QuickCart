@@ -17,11 +17,13 @@ const AddProduct = () => {
   const [category, setCategory] = useState('Earphone');
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state  
 
 
 // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true
     const formData = new FormData()
 
     formData.append('name',name)
@@ -39,7 +41,11 @@ const AddProduct = () => {
       const token = await getToken()
 
       const { data } = await axios.post('/api/product/add',formData,{headers:{Authorization:`Bearer ${token}`}})
-     
+
+      if(!data){
+        const waithing = "plase wait"
+      }
+       
       if (data.success){
         toast.success(data.message)
         setFiles([])
@@ -54,7 +60,9 @@ const AddProduct = () => {
 
     } catch (error) {
       toast.error(error.message)
-    }   
+    }finally {
+      setLoading(false); // Set loading to false after submission
+    }
   };
 
   return (
@@ -97,7 +105,7 @@ const AddProduct = () => {
             value={name}
             required
           />
-        </div>
+        </div> 
         <div className="flex flex-col gap-1 max-w-md">
           <label
             className="text-base font-medium"
@@ -164,9 +172,14 @@ const AddProduct = () => {
             />
           </div>
         </div>
-        <button type="submit" className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded">
-          ADD
+        <button
+          type="submit"
+          className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded"
+          disabled={loading} 
+        >
+          {loading ? "Adding..." : "ADD"} 
         </button>
+           
       </form>
       <Footer />
     </div>
