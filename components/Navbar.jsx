@@ -6,31 +6,31 @@ import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
 import { useClerk, UserButton } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
-// import NavSearch from '@/components/์NavSearch'
+import NavSearch from '@/components/์NavSearch'
 
 const Navbar = () => {
 
-  const { isSeller, user, products } = useAppContext();
+  const { isSeller, user, products, } = useAppContext();
   const clerk = useClerk()
   const pathname = usePathname();
   const router = useRouter();
 
   const [showSearch, setShowSearch] = useState(false); // State to toggle search input
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
-  // const [filteredProducts, setFilteredProducts] = useState([]); // State for filtered products
+  const [filteredProducts, setFilteredProducts] = useState([]); // State for filtered products
 
   // Handle search input change
-  // const handleSearch = (query) => {
-  //   setSearchQuery(query);
-  //   if (query.trim() === "") {
-  //     setFilteredProducts([]);
-  //     return;
-  //   }
-  //   const filtered = products.filter((product) =>
-  //     product.name.toLowerCase().includes(query.toLowerCase())
-  //   );
-  //   setFilteredProducts(filtered);
-  // };
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query.trim() === "") {
+      setFilteredProducts([]);
+      return;
+    }
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  };
 
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700" >
@@ -41,11 +41,11 @@ const Navbar = () => {
         alt="logo"
       />
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
-        <Link href="/" className={`hover:font-bold transition ${pathname === "/" ? "text-orange-600 font-bold " : ""
+        <Link href="/" className={`hover:font-bold transition ${pathname === "/" ? "text-fuchsia-900 font-bold" : ""
           }`}>
           Home
         </Link>
-        <Link href="/all-products" className={`hover:font-bold transition ${pathname === "/all-products" ? "text-orange-600 font-bold" : ""
+        <Link href="/all-products" className={`hover:font-bold transition ${pathname === "/all-products" ? "text-fuchsia-900 font-bold" : ""
           }`}>
           Shop
         </Link>
@@ -75,17 +75,17 @@ const Navbar = () => {
           )}
 
         
-            {/* {filteredProducts.length > 0 && (
+            {filteredProducts.length > 0 && (
               <div className=" fixed inset-0 bg-orange-200 bg-opacity-75 flex items-start z-20  mt-20"  onClick={() => setFilteredProducts([])}> 
-               {
-                filteredProducts.map((product) => (
-                  <NavSearch key={product.id} product={product} onClick={() => { router.push(`/product/${product.id}`), setFilteredProducts([]) }}  />  
-                ))
-               }
+                {filteredProducts.map((product) => (
+                 <NavSearch product={product} />
+                ))}
               </div>
-            )}       */}
+            )}
+         
 
-          {/* {
+
+          {
             showSearch ? (
               <button onClick={() => {setShowSearch(false),setFilteredProducts([])}} className="text-red-500  hover:font-bold transition">
                 X
@@ -94,7 +94,7 @@ const Navbar = () => {
               <button onClick={() => setShowSearch(true)} className="text-gray-500 hover:text-gray-900 transition">
                 <Image src={assets.search_icon} alt="search icon" />
               </button>
-            )} */}
+            )}
 
         </div>
 
