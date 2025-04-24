@@ -29,7 +29,7 @@ import พระครูปคุณสิริธรรม from "./พระ�
 import ร้านนานาภัณฑ์02 from "./ร้านนานาภัณฑ์02.png";
 
 
-import Logo from "./Logo.png";
+import Logo3 from "./Logo3.png";
 import Logo2 from "./Logo2.png";
 
 import macbook_image from "./macbook_image.png";
@@ -77,7 +77,7 @@ export const assets = {
   พระครูปคุณสิริธรรม,
   ร้านนานาภัณฑ์02,
 
-  Logo,
+  Logo3,
   Logo2,
 
   macbook_image,
