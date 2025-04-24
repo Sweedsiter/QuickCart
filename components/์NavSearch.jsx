@@ -9,7 +9,7 @@ const NavSearch = ({ product }) => {
    
 
     return (
-        <>
+        <div>
 
             {!isModalOpen && <div
                 className="flex flex-row cursor-pointer m-6 p-2 bg-white  rounded-lg shadow-md z-10 transition-all duration-300 ease-in-out transform hover:scale-105"
@@ -32,7 +32,7 @@ const NavSearch = ({ product }) => {
                     <p className="font-medium text-gray-800 p-8">{product.name}</p>
                 </div>
             </div>}
-        </>
+        </div>
 
     );
 };
