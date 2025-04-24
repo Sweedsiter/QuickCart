@@ -5,21 +5,31 @@ import toast from "react-hot-toast";
 
 const OrderSummary = () => {
 
-  const { currency, router, getCartCount, getCartAmount, getToken , user , cartItems , setCartItems } = useAppContext()
+  const { currency, router, getCartCount, getCartAmount, getToken, user, cartItems, setCartItems } = useAppContext()
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const [userAddresses, setUserAddresses] = useState([]);
+
+  // Function to check if user is logged in and redirect to login page if not
+  const checkUser = () => {
+    if (!user) {
+      alert("กรุณาเข้าสู่ระบบโดย email ก่อนทำการสั่งซื้อ");
+      router.push("/");
+    } else {
+      router.push("/add-address");
+    }
+  };
 
   const fetchUserAddresses = async () => {
 
     try {
 
       const token = await getToken()
-      const {data} = await axios.get('/api/user/get-address',{headers:{Authorization:`Bearer ${token}`}})
-      if (data.success){
+      const { data } = await axios.get('/api/user/get-address', { headers: { Authorization: `Bearer ${token}` } })
+      if (data.success) {
         setUserAddresses(data.addresses)
-        if(data.addresses.length > 0){
+        if (data.addresses.length > 0) {
           setSelectedAddress(data.addresses[0])
         }
       } else {
@@ -36,58 +46,58 @@ const OrderSummary = () => {
   };
 
   const createOrder = async () => {
-     try {
+    try {
 
-      if(!selectedAddress){
-        return toast.error('Please select an address')    
+      if (!selectedAddress) {
+        return toast.error('กรุณา เลือกที่อยู่เพื่อทำการสั่งซื้อ')
       }
 
-      let cartItemsArray = Object.keys(cartItems).map((key)=>({product:key, quantity:cartItems[key]}))
-      cartItemsArray = cartItemsArray.filter(item => item.quantity > 0 ) 
+      let cartItemsArray = Object.keys(cartItems).map((key) => ({ product: key, quantity: cartItems[key] }))
+      cartItemsArray = cartItemsArray.filter(item => item.quantity > 0)
 
-      if (cartItemsArray.length === 0){
+      if (cartItemsArray.length === 0) {
         return toast.error('Cart is empty')
       }
 
       const token = await getToken()
 
 
-      const {data} = await axios.post('/api/order/create',{
+      const { data } = await axios.post('/api/order/create', {
         address: selectedAddress._id,
         items: cartItemsArray,
-      },{
-        headers:{Authorization:`Bearer ${token}`}
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
       })
 
-      if(data.success){
+      if (data.success) {
         toast.success(data.message)
         setCartItems({})
-        router.push('/order-placed')   
+        router.push('/order-placed')
       } else {
         toast.error(data.message)
-      }   
+      }
 
-     } catch (error) {
+    } catch (error) {
       toast.error(error.message)
-     }
+    }
   }
 
   useEffect(() => {
-   if (user) {
-    fetchUserAddresses();
-   }
+    if (user) {
+      fetchUserAddresses();
+    }
   }, [user])
 
   return (
     <div className="w-full md:w-96 bg-gray-500/5 p-5">
       <h2 className="text-xl md:text-2xl font-medium text-gray-700">
-        Order Summary
+        กรอกเพื่อทำการสั่งซื้อ
       </h2>
       <hr className="border-gray-500/30 my-5" />
       <div className="space-y-6">
         <div>
           <label className="text-base font-medium uppercase text-gray-600 block mb-2">
-            Select Address
+            เลือกที่อยู่เพื่อทำการสั่งซื้อ
           </label>
           <div className="relative inline-block w-full text-sm border">
             <button
@@ -118,7 +128,7 @@ const OrderSummary = () => {
                   </li>
                 ))}
                 <li
-                  onClick={() => router.push("/add-address")}
+                  onClick={checkUser}
                   className="px-4 py-2 hover:bg-gray-500/10 cursor-pointer text-center"
                 >
                   + Add New Address
@@ -130,7 +140,7 @@ const OrderSummary = () => {
 
         <div>
           <label className="text-base font-medium uppercase text-gray-600 block mb-2">
-            Promo Code
+             Scan QR Code เท่านั้น
           </label>
           <div className="flex flex-col items-start gap-3">
             <input
@@ -139,7 +149,7 @@ const OrderSummary = () => {
               className="flex-grow w-full outline-none p-2.5 text-gray-600 border"
             />
             <button className="bg-orange-600 text-white px-9 py-2 hover:bg-orange-700">
-              Apply
+              กดเพื่อชำระ
             </button>
           </div>
         </div>
@@ -148,7 +158,7 @@ const OrderSummary = () => {
 
         <div className="space-y-4">
           <div className="flex justify-between text-base font-medium">
-            <p className="uppercase text-gray-600">Items {getCartCount()}</p>
+            <p className="uppercase text-gray-600">จำนวนลาย {getCartCount()}</p>
             <p className="text-gray-800">{currency}{getCartAmount()}</p>
           </div>
           <div className="flex justify-between">
@@ -160,14 +170,14 @@ const OrderSummary = () => {
             <p className="font-medium text-gray-800">{currency}{Math.floor(getCartAmount() * 0.02)}</p>
           </div>
           <div className="flex justify-between text-lg md:text-xl font-medium border-t pt-3">
-            <p>Total</p>
+            <p>ยอดรวม</p>
             <p>{currency}{getCartAmount() + Math.floor(getCartAmount() * 0.02)}</p>
           </div>
         </div>
       </div>
 
       <button onClick={createOrder} className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700">
-        Place Order
+        ส่งข้อมูลการสั่งซื้อ
       </button>
     </div>
   );

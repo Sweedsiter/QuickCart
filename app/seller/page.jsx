@@ -128,20 +128,15 @@ const AddProduct = () => {
             <label className="text-base font-medium" htmlFor="category">
               Category
             </label>
-            <select
-              id="category"
+            <input
+              id="product-price"
+              type="text"
+              placeholder="กรลุ่มสินค้า"
               className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
               onChange={(e) => setCategory(e.target.value)}
               defaultValue={category}
-            >
-              <option value="Earphone">Earphone</option>
-              <option value="Headphone">Headphone</option>
-              <option value="Watch">Watch</option>
-              <option value="Smartphone">Smartphone</option>
-              <option value="Laptop">Laptop</option>
-              <option value="Camera">Camera</option>
-              <option value="Accessories">Accessories</option>
-            </select>
+              required
+            />
           </div>
           <div className="flex flex-col gap-1 w-32">
             <label className="text-base font-medium" htmlFor="product-price">

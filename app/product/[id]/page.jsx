@@ -18,6 +18,7 @@ const Product = () => {
 
     const [mainImage, setMainImage] = useState(null);
     const [productData, setProductData] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const fetchProductData = async () => {
         const product = products.find(product => product._id === id);
@@ -32,9 +33,12 @@ const Product = () => {
         <Navbar />
         <div className="px-6 md:px-16 lg:px-32 pt-14 space-y-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+
+                {/* Cart */}
                 <div className="px-5 lg:px-16 xl:px-20">
-                    <div className="rounded-lg overflow-hidden bg-gray-500/10 mb-4">
-                        <Image
+                    <div className="rounded-lg overflow-hidden bg-gray-400/10 mb-4" >
+                        <Image  
+                           onClick={() => setIsModalOpen(true)}
                             src={mainImage || productData.image[0]}
                             alt="alt"
                             className="w-full h-auto object-cover mix-blend-multiply"
@@ -62,6 +66,8 @@ const Product = () => {
                         ))}
                     </div>
                 </div>
+
+                {/* addtoCart productData._id */}
 
                 <div className="flex flex-col">
                     <h1 className="text-3xl font-medium text-gray-800/90 mb-4">
@@ -122,6 +128,8 @@ const Product = () => {
                     </div>
                 </div>
             </div>
+            
+            {/* product slice  */}
             <div className="flex flex-col items-center">
                 <div className="flex flex-col items-center mb-4 mt-16">
                     <p className="text-3xl font-medium">Featured <span className="font-medium text-orange-600">Embroidery</span></p>
@@ -134,6 +142,30 @@ const Product = () => {
                     See more
                 </button>
             </div>
+
+            {/* Modal for image preview */}
+            {isModalOpen && (
+            <div
+              className="fixed inset-0 bg-orange-200 bg-opacity-75 flex items-center justify-center z-50 "
+              onClick={() => setIsModalOpen(false)} // Close modal on background click
+            >
+              <div className="relative">
+                <button
+                  className="absolute top-4 right-4 text-slate-900 text-2xl "
+                  onClick={() => setIsModalOpen(false)} // Close modal on button click
+                >
+                  &times;
+                </button>
+                <Image
+                  src={mainImage || productData.image[0]}
+                  alt="alt"
+                  className="w-auto h-auto max-w-screen max-h-screen p-8 bg-white rounded-lg"
+                  width={1920}
+                  height={1080}
+                />
+              </div>
+            </div>
+          )}
         </div>
         <Footer />
     </>
