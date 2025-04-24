@@ -41,11 +41,11 @@ const Navbar = () => {
         alt="logo"
       />
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
-        <Link href="/" className={`hover:font-bold transition ${pathname === "/" ? "text-fuchsia-900 font-bold" : ""
+        <Link href="/" className={`hover:font-bold transition ${pathname === "/" ? "text-orange-600 font-bold " : ""
           }`}>
           Home
         </Link>
-        <Link href="/all-products" className={`hover:font-bold transition ${pathname === "/all-products" ? "text-fuchsia-900 font-bold" : ""
+        <Link href="/all-products" className={`hover:font-bold transition ${pathname === "/all-products" ? "text-orange-600 font-bold" : ""
           }`}>
           Shop
         </Link>
@@ -77,13 +77,13 @@ const Navbar = () => {
         
             {filteredProducts.length > 0 && (
               <div className=" fixed inset-0 bg-orange-200 bg-opacity-75 flex items-start z-20  mt-20"  onClick={() => setFilteredProducts([])}> 
-                {filteredProducts.map((product) => (
-                 <NavSearch product={product} />
-                ))}
+               {
+                filteredProducts.map((product) => (
+                  <NavSearch key={product.id} product={product} onClick={() => { router.push(`/product/${product.id}`), setFilteredProducts([]) }}  />  
+                ))
+               }
               </div>
-            )}
-         
-
+            )}      
 
           {
             showSearch ? (

@@ -41,7 +41,7 @@ const AllProducts = () => {
             className="border border-gray-300 rounded-md p-2"
           >
             {categories.map((category, index) => (
-              <option key={index} value={category}>
+              <option  key={index} value={category}>
                 {category}
               </option>
             ))}
