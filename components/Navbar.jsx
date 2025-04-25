@@ -48,7 +48,7 @@ const Navbar = () => {
     }, []);
 
   return (
-    <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700" >
+    <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700"  onClick={() => {  setFilteredProducts([]),setSearchQuery("")}}>
       <Image
         className="cursor-pointer w-28 md:w-32 "
         onClick={() => router.push('/')}
@@ -56,11 +56,11 @@ const Navbar = () => {
         alt="logo"
       />
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
-        <Link href="/" className={`hover:font-bold transition ${pathname === "/" ? "text-fuchsia-900 font-bold" : ""
+        <Link href="/" className={`hover:font-bold transition ${pathname === "/" ? "text-orange-600  font-bold" : ""
           }`}>
           Home
         </Link>
-        <Link href="/all-products" className={`hover:font-bold transition ${pathname === "/all-products" ? "text-fuchsia-900 font-bold" : ""
+        <Link href="/all-products" className={`hover:font-bold transition ${pathname === "/all-products" ? "text-orange-600 font-bold" : ""
           }`}>
           Shop
         </Link>

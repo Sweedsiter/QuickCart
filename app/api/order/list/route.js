@@ -1,4 +1,4 @@
-import { addressDummyData } from "@/assets/assets";
+
 import connectDB from "@/config/db";
 import Order from "@/models/Order";
 import Product from "@/models/Product";
@@ -14,7 +14,6 @@ export async function GET(request) {
         await connectDB()
 
 
-        addressDummyData.length
         Product.length
 
         const orders = await Order.find({userId}).populate('address items.product')
