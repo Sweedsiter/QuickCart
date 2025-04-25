@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import { assets, BagIcon, BoxIcon, CartIcon, HomeIcon } from "@/assets/assets";
 import Link from "next/link"
 import { useAppContext } from "@/context/AppContext";
@@ -31,6 +31,21 @@ const Navbar = () => {
     );
     setFilteredProducts(filtered);
   };
+    // Clear filteredProducts when clicking outside
+    useEffect(() => {
+      const handleBodyClick = (event) => {
+        const searchContainer = document.querySelector(".search-container");
+        if (searchContainer && !searchContainer.contains(event.target)) {
+          setFilteredProducts([]);          
+        }
+      };
+  
+      document.addEventListener("click", handleBodyClick);
+  
+      return () => {
+        document.removeEventListener("click", handleBodyClick);
+      };
+    }, []);
 
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700" >
@@ -76,7 +91,7 @@ const Navbar = () => {
 
         
             {filteredProducts.length > 0 && (
-              <div className=" fixed inset-0 bg-orange-200 bg-opacity-75 flex items-start z-20  mt-20"  onClick={() => setFilteredProducts([])}> 
+              <div className=" fixed inset-0 bg-orange-200 bg-opacity-75 flex items-start z-20  mt-20"  onClick={() => {setFilteredProducts([]),setSearchQuery("")}}> 
                 {filteredProducts.map((product) => (
                  <NavSearch product={product} />
                 ))}
@@ -87,7 +102,7 @@ const Navbar = () => {
 
           {
             showSearch ? (
-              <button onClick={() => {setShowSearch(false),setFilteredProducts([])}} className="text-red-500  hover:font-bold transition">
+              <button onClick={() => {setShowSearch(false),setFilteredProducts([]),setSearchQuery()}} className="text-red-500  hover:font-bold transition">
                 X
               </button>
             ) : (
