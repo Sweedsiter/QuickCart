@@ -11,7 +11,7 @@ const NewsLetter = () => {
 
     // EmailJS configuration
     const templateParams = {
-      message: contactInfo, // Pass the contact info to the email template
+      message: contactInfo, // Pass the contact info to the email template เดก้ด
     };
 
     emailjs
