@@ -88,3 +88,20 @@ export const createUserOrder = inngest.createFunction({
         return { success: true , processed: orders.length}
     }
 )
+
+// inngest Function to delet Order from database
+export const OrderDeleted = inngest.createFunction(
+    {
+        id: 'delete-order-deleted'
+    },
+    { event: 'clerk/user.deleted' },
+    async ({ event }) => {
+        const { id } = event.data
+
+        await connectDB()    
+
+        // Delete all orders associated with the user ID
+        const result = await Order.deleteMany({ userId: id });
+        return { success: true, deletedCount: result.deletedCount }; // Return the number of deleted orders
+    }
+)

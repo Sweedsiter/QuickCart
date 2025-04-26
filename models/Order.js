@@ -4,7 +4,8 @@ const orderSchema = new mongoose.Schema({
     userId: { type: String, required: true, ref: 'user'},
     items: [{
         product: {type: String, required: true, ref: 'product'},
-        quantity: {type: Number, required: true}
+        quantity: {type: Number, required: true},
+        image: { type: String, required: true } // Add image URL for the product
     }],
     amount: { type: Number, required: true},
     address: {type: String, ref: 'address' ,required: true},

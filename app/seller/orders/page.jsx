@@ -1,7 +1,5 @@
 'use client';
-import React, { useEffect, useState } from "react";
-import { assets } from "@/assets/assets";
-import Image from "next/image";
+import React, { use, useEffect, useState } from "react";
 import { useAppContext } from "@/context/AppContext";
 import Footer from "@/components/seller/Footer";
 import Loading from "@/components/Loading";
@@ -10,10 +8,11 @@ import toast from "react-hot-toast";
 
 const Orders = () => {
 
-    const { currency , getToken , user} = useAppContext();
+    const { currency , getToken , user ,products , router} = useAppContext();
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+
 
     const fetchSellerOrders = async () => {
        try {
@@ -21,8 +20,14 @@ const Orders = () => {
         const token = await getToken()
 
         const {data} = await axios.get('/api/order/seller-order',{ headers: { Authorization: `Bearer ${token}`} })
+        const  userData  = await axios.get('/api/user/user-data')   
+        const eii = userData.data.userData
+        console.log(userData.data.userData[0].email)
+        console.log(userData.data.userData[0]._id)
         
-        if(data.success){
+        console.log(eii)
+           
+         if(data.success){
             setOrders(data.orders)
             setLoading(false)
         } else{
@@ -47,10 +52,10 @@ const Orders = () => {
                 <div className="max-w-4xl rounded-md">
                     {orders.map((order, index) => (
                         <div key={index} className="flex flex-col md:flex-row gap-5 justify-between p-5 border-t border-gray-300">
-                            <div className="flex-1 flex gap-5 max-w-80">
-                                <Image
+                            <div onClick={ ()=>router.push(`/product/${ products.find((product) => product._id === order.items[0].product._id)._id}`)} className="flex-1 flex gap-5 max-w-80">
+                                <img
                                     className="max-w-16 max-h-16 object-cover"
-                                    src={assets.box_icon}
+                                    src={ products.find((product) => product._id === order.items[0].product._id).image}
                                     alt="box_icon"
                                 />
                                 <p className="flex flex-col gap-3">
@@ -62,13 +67,14 @@ const Orders = () => {
                             </div>
                             <div>
                                 <p>
-                                    <span className="font-medium">{order.address.fullName}</span>
-                                    <br />
-                                    <span >{order.address.area}</span>
-                                    <br />
-                                    <span>{`${order.address.city}, ${order.address.state}`}</span>
+                                    <span className="font-medium">{order.address.fullName}</span>                                  
                                     <br />
                                     <span>{order.address.phoneNumber}</span>
+                                    <br />
+                                    <span>                                  
+                                    {order.userId }    
+                                    </span>
+                                  
                                 </p>
                             </div>
                             <p className="font-medium my-auto">{currency}{order.amount}</p>
@@ -78,7 +84,7 @@ const Orders = () => {
                                     <span>Date : {new Date(order.date).toLocaleDateString()}</span>
                                     <span>Payment : Pending</span>
                                 </p>
-                            </div>
+                            </div>                            
                         </div>
                     ))}
                 </div>
