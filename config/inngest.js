@@ -100,24 +100,34 @@ export const createUserOrder = inngest.createFunction(
     { event: 'order/created' },
     async ({ events }) => {
         try {
-            const orders = events.map((event) => {
-                const { userId, items, amount, address, date } = event.data;
-
-                // Validate required fields
-                if (!userId || !items || !amount || !address || !date) {
-                    throw new Error("Missing required order fields");
-                }
-
-                return {
-                    userId,
-                    items,
-                    amount,
-                    address,
-                    date
-                };
-            });
-
             await connectDB();
+
+            const orders = await Promise.all(
+                events.map(async (event) => {
+                    const { userId, items, amount, address, date } = event.data;
+
+                    // Validate required fields
+                    if (!userId || !items || !amount || !address || !date) {
+                        throw new Error("Missing required order fields");
+                    }
+
+                    // Fetch the user's email from the database
+                    const user = await User.findById(userId);
+                    if (!user) {
+                        throw new Error(`User with ID ${userId} not found`);
+                    }
+
+                    return {
+                        userId,
+                        email: user.email, // Add the user's email
+                        items,
+                        amount,
+                        address,
+                        date
+                    };
+                })
+            );
+
             await Order.insertMany(orders);
 
             return { success: true, processed: orders.length };
