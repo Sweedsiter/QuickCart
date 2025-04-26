@@ -62,32 +62,71 @@ export const syncUserDeletion = inngest.createFunction(
 
 // Inngest Function to create user's order database
 
-export const createUserOrder = inngest.createFunction({
-    id: 'create-user-order',
-    batchEvents: {
-        maxSize: 5,
-        timeout: '5s'
-    }
+// export const createUserOrder = inngest.createFunction({
+//     id: 'create-user-order',
+//     batchEvents: {
+//         maxSize: 5,
+//         timeout: '5s'
+//     }
+//     },
+//     { event: 'order/created' },
+//     async ({events})=>{
+
+//         const orders = events.map((event)=>{
+//             return {
+//                 userId : event.data.userId,
+//                 items : event.data.items,
+//                 amount : event.data.amount,
+//                 address : event.data.address,
+//                 date : event.data.date
+//             }            
+//         })
+
+//         await connectDB()
+//         await Order.insertMany(orders)
+
+//         return { success: true , processed: orders.length}
+//     }
+// )
+
+export const createUserOrder = inngest.createFunction(
+    {
+        id: 'create-user-order',
+        batchEvents: {
+            maxSize: 5,
+            timeout: '5s'
+        }
     },
     { event: 'order/created' },
-    async ({events})=>{
+    async ({ events }) => {
+        try {
+            const orders = events.map((event) => {
+                const { userId, items, amount, address, date } = event.data;
 
-        const orders = events.map((event)=>{
-            return {
-                userId : event.data.userId,
-                items : event.data.items,
-                amount : event.data.amount,
-                address : event.data.address,
-                date : event.data.date
-            }            
-        })
+                // Validate required fields
+                if (!userId || !items || !amount || !address || !date) {
+                    throw new Error("Missing required order fields");
+                }
 
-        await connectDB()
-        await Order.insertMany(orders)
+                return {
+                    userId,
+                    items,
+                    amount,
+                    address,
+                    date
+                };
+            });
 
-        return { success: true , processed: orders.length}
+            await connectDB();
+            await Order.insertMany(orders);
+
+            return { success: true, processed: orders.length };
+        } catch (error) {
+            console.error("Error processing orders:", error.message);
+            return { success: false, message: error.message };
+        }
     }
-)
+);
 
 // // inngest Function to delet Order from database
 // export const OrderDeleted = inngest.createFunction(
