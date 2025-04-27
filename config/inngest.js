@@ -108,7 +108,7 @@ export const createUserOrder = inngest.createFunction(
                     const { userId, items, itemsWithImages , amount, address, date } = event.data;
 
                     // Validate required fields
-                    if (!userId || !items || itemsWithImages || !amount || !address || !date) {
+                    if (!userId || !items || !itemsWithImages || !amount || !address || !date) {
                         throw new Error("Missing required order fields");
                     }
 
