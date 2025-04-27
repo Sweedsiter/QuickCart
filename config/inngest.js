@@ -3,6 +3,7 @@ import { Inngest } from "inngest";
 import User from "@/models/User";
 import Order from "@/models/Order";
 import connectDB from "./db";
+import Product from "@/models/Product";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "quickcart-next" });
@@ -117,24 +118,24 @@ export const createUserOrder = inngest.createFunction(
                         throw new Error(`User with ID ${userId} not found`);
                     }
 
-                                // Add product images to items
-                                const itemsWithImages = await Promise.all(
-                                    items.map(async (item) => {
-                                        const product = await Product.findById(item.product);
-                                        if (!product) {
-                                            throw new Error(`Product with ID ${item.product} not found`);
-                                        }
-                                        return {
-                                            ...item,
-                                            image: product.image[0] // Add the first image from the product
-                                        };
-                                    })
-                                );
+                    // Add product images to items
+                    const itemsWithImages = await Promise.all(
+                        items.map(async (item) => {
+                            const product = await Product.findById(item.product);
+                            if (!product) {
+                                throw new Error(`Product with ID ${item.product} not found`);
+                            }
+                            return {
+                                ...item,
+                                image: product.image[0] // Add the first image from the product
+                            };
+                        })
+                    );
 
                     return {
                         userId,
                         email: user.email, // Add the user's email
-                        items,itemsWithImages, // Include items with images
+                        items, itemsWithImages, // Include items with images
                         amount,
                         address,
                         date
@@ -161,7 +162,7 @@ export const createUserOrder = inngest.createFunction(
 //     async ({ event }) => {
 //         const { id } = event.data
 
-//         await connectDB()    
+//         await connectDB()
 
 //         // Delete all orders associated with the user ID
 //         const result = await Order.deleteMany({ userId: id });
