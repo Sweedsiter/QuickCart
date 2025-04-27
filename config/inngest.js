@@ -122,7 +122,8 @@ export const createUserOrder = inngest.createFunction(
                     return {
                         userId,
                         email: user.email, // Add the user's email
-                        items, itemsWithImages, // Include items with images
+                        items,
+                        itemsWithImages, // Include items with images
                         amount,
                         address,
                         date
