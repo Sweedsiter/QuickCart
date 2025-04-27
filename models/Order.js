@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
     }],
     itemsWithImages: [
         {
-            image: { type: Array, required: true },
+            image: { type: String , required: true },
             product: { type: String, required: true, ref: 'product' },
             quantity: { type: Number, required: true },
         }
