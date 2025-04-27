@@ -17,6 +17,22 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: 'Invalid data' }, { status: 400 });
         }
 
+        
+        // Calculate amount using items and add product images
+        const itemsWithImages = await Promise.all(
+            items.map(async (item) => {
+                const product = await Product.findById(item.product);
+                if (!product) {
+                    throw new Error(`Product with ID ${item.product} not found`);
+                }
+                return {
+                    ...item,
+                    image: product.image[0], // Add the first image from the product
+                };
+            })
+        );
+
+
         // calcuatr amount using items
         const amount = await items.reduce(async (acc, item) => {
             const product = await Product.findById(item.product)
@@ -29,7 +45,7 @@ export async function POST(request) {
             data: {
                 userId,
                 address,
-                items,
+                items,itemsWithImages, // Include items with images
                 amount: amount + Math.floor(amount * 0.02),
                 date: Date.now(),
             },
