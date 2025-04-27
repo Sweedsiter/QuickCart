@@ -117,10 +117,24 @@ export const createUserOrder = inngest.createFunction(
                         throw new Error(`User with ID ${userId} not found`);
                     }
 
+                                // Add product images to items
+                                const itemsWithImages = await Promise.all(
+                                    items.map(async (item) => {
+                                        const product = await Product.findById(item.product);
+                                        if (!product) {
+                                            throw new Error(`Product with ID ${item.product} not found`);
+                                        }
+                                        return {
+                                            ...item,
+                                            image: product.image[0] // Add the first image from the product
+                                        };
+                                    })
+                                );
+
                     return {
                         userId,
                         email: user.email, // Add the user's email
-                        items,
+                        items,itemsWithImages, // Include items with images
                         amount,
                         address,
                         date
