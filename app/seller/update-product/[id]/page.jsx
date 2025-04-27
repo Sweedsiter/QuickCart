@@ -10,14 +10,17 @@ import Image from "next/image";
 
 
 
-export default function UpdateProduct() {
 
+export default function UpdateProduct() {
+ 
     const { id } = useParams(); // Get the product ID from the URL parameters
     const [product, setProduct] = useState(null); // State to hold the product data
     const [loading, setLoading] = useState(true); // State to manage loading state
-    const { getToken } = useAppContext(); // Get the token from context
+    const { getToken ,products  } = useAppContext(); // Get the token from context
     const router = useRouter(); // Initialize the router
+    
 
+    const categories = ["All", ...new Set(products.map((product) => product.category))];
     // Fetch product data by ID
     useEffect(() => {
         const fetchProduct = async () => {
@@ -147,16 +150,16 @@ export default function UpdateProduct() {
                         id="category"
                         className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
                         onChange={(e) => setProduct({ ...product, category: e.target.value })}
-                       value={product.category}
+                        value={product.category}
                         required
                     >
-                        <option value="Earphone">Earphone</option>
-                        <option value="Headphone">Headphone</option>
-                        <option value="Watch">Watch</option>
-                        <option value="Smartphone">Smartphone</option>
-                        <option value="Laptop">Laptop</option>
-                        <option value="Camera">Camera</option>
-                        <option value="Accessories">Accessories</option>
+                        {/* <option value="Earphone">Earphone</option> */}
+                        {categories.map((category, index) => (
+                            <option key={index} value={category}>
+                                {category}
+                            </option>
+                        ))}
+
                     </select>
                 </div>
 
