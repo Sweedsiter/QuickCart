@@ -105,7 +105,7 @@ export const createUserOrder = inngest.createFunction(
 
             const orders = await Promise.all(
                 events.map(async (event) => {
-                    const { userId, items, itemsWithImages, amount, address, date } = event.data;
+                    const { userId, items, itemsWithImages , amount, address, date } = event.data;
 
                     // Validate required fields
                     if (!userId || !items || itemsWithImages || !amount || !address || !date) {

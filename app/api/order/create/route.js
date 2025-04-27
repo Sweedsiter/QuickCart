@@ -45,7 +45,7 @@ export async function POST(request) {
             data: {
                 userId,
                 address,
-                items,itemsWithImages, // Include items with images
+                items, itemsWithImages, // Include items with images
                 amount: amount + Math.floor(amount * 0.02),
                 date: Date.now(),
             },
