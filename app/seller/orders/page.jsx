@@ -8,41 +8,36 @@ import toast from "react-hot-toast";
 
 const Orders = () => {
 
-    const { currency , getToken , user ,products , router} = useAppContext();
+    const { currency, getToken, user, products, router } = useAppContext();
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
 
     const fetchSellerOrders = async () => {
-       try {
+        try {
 
-        const token = await getToken()
+            const token = await getToken()
 
-        const {data} = await axios.get('/api/order/seller-order',{ headers: { Authorization: `Bearer ${token}`} })
-        const  userData  = await axios.get('/api/user/user-data')   
-        const eii = userData.data.userData
-        console.log(userData.data.userData[0].email)
-        console.log(userData.data.userData[0]._id)
-        
-        console.log(eii)
-           
-         if(data.success){
-            setOrders(data.orders)
-            setLoading(false)
-        } else{
-            toast.error(data.message)
+            const { data } = await axios.get('/api/order/seller-order', { headers: { Authorization: `Bearer ${token}` } })   
+
+
+            if (data.success) {
+                setOrders(data.orders)
+                setLoading(false)
+            } else {
+                toast.error(data.message)
+            }
+
+        } catch (error) {
+            toast.error(error.message)
         }
-
-       } catch (error) {
-        toast.error(error.message)
-       }
     }
 
     useEffect(() => {
-       if(user){
-        fetchSellerOrders();
-       }
+        if (user) {
+            fetchSellerOrders();
+        }
     }, [user]);
 
     return (
@@ -52,10 +47,10 @@ const Orders = () => {
                 <div className="max-w-4xl rounded-md">
                     {orders.map((order, index) => (
                         <div key={index} className="flex flex-col md:flex-row gap-5 justify-between p-5 border-t border-gray-300">
-                            <div onClick={ ()=>router.push(`/product/${ products.find((product) => product._id === order.items[0].product._id)._id}`)} className="flex-1 flex gap-5 max-w-80">
+                            <div onClick={() => router.push(`/product/${products.find((product) => product._id === order.items[0].product._id)._id}`)} className="flex-1 flex gap-5 max-w-80">                       
                                 <img
                                     className="max-w-16 max-h-16 object-cover"
-                                    src={ products.find((product) => product._id === order.items[0].product._id).image}
+                                    src={order.items.map((item) => item.product.image)}
                                     alt="box_icon"
                                 />
                                 <p className="flex flex-col gap-3">
@@ -67,14 +62,14 @@ const Orders = () => {
                             </div>
                             <div>
                                 <p>
-                                    <span className="font-medium">{order.address.fullName}</span>                                  
+                                    <span className="font-medium">{order.address.fullName}</span>
                                     <br />
                                     <span>{order.address.phoneNumber}</span>
                                     <br />
-                                    <span>                                  
-                                    {order.email }    
+                                    <span>
+                                        {order.email}
                                     </span>
-                                  
+
                                 </p>
                             </div>
                             <p className="font-medium my-auto">{currency}{order.amount}</p>
@@ -84,7 +79,7 @@ const Orders = () => {
                                     <span>Date : {new Date(order.date).toLocaleDateString()}</span>
                                     <span>Payment : Pending</span>
                                 </p>
-                            </div>                            
+                            </div>
                         </div>
                     ))}
                 </div>
