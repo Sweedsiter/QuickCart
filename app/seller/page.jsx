@@ -18,7 +18,7 @@ const AddProduct = () => {
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
   const [loading, setLoading] = useState(false); // Loading state  
-
+  const [imgArray,setImgArray] = useState(1)
 
 // Handle form submission
   const handleSubmit = async (e) => {
@@ -72,7 +72,7 @@ const AddProduct = () => {
           <p className="text-base font-medium">Product Image</p>
           <div className="flex flex-wrap items-center gap-3 mt-2">
 
-            {[...Array(4)].map((_, index) => (
+            {[...Array(imgArray)].map((_, index) => (
               <label key={index} htmlFor={`image${index}`}>
                 <input onChange={(e) => {
                   const updatedFiles = [...files];
@@ -89,7 +89,8 @@ const AddProduct = () => {
                 />
               </label>
             ))}
-
+             <span onClick={()=> setImgArray(imgArray + 1)} className="text-3xl px-4 border bg-green-500/60 text-white">+</span>
+             <span onClick={()=> setImgArray(imgArray - 1)} className="text-3xl px-4 border bg-red-500/60 text-white">-</span>            
           </div>
         </div>
         <div className="flex flex-col gap-1 max-w-md">
