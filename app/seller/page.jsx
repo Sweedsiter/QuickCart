@@ -7,14 +7,15 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Footer from "@/components/Footer";
 
+
 const AddProduct = () => {
 
-  const { getToken } = useAppContext()
+  const { getToken,router} = useAppContext()
 
   const [files, setFiles] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Earphone');
+  const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
   const [loading, setLoading] = useState(false); // Loading state  
@@ -24,6 +25,7 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Set loading to true
+
     const formData = new FormData()
 
     formData.append('name',name)
@@ -37,37 +39,43 @@ const AddProduct = () => {
       formData.append('images',files[i])      
     }
     try {
-
-      const token = await getToken()
-
-      const { data } = await axios.post('/api/product/add',formData,{headers:{Authorization:`Bearer ${token}`}})
+     const token = await getToken()
+     const { data } = await axios.post('/api/product/add',formData,{headers:{Authorization:`Bearer ${token}`}})      
 
       if(!data){
-        const waithing = "plase wait"
+        toast.error(data?.message || 'Failed to create product');
+        return;
       }
        
       if (data.success){
+        const newId = data.newProduct._id             
         toast.success(data.message)
         setFiles([])
         setName('')
         setDescription('')
         setCategory('')
         setPrice('')
-        setOfferPrice('')
+        setOfferPrice('')   
+        router.push(`/seller/product-url/${newId}`)    
       }else{
         toast.error(data.message)
-      }
-
+      }     
+          
     } catch (error) {
       toast.error(error.message)
     }finally {
       setLoading(false); // Set loading to false after submission
-    }
+    }    
   };
+
+  // if add product get urlLink download files
+
+
 
   return (
     <div className="flex-1 min-h-screen flex flex-col justify-between">
-      <form onSubmit={handleSubmit} className="md:p-10 p-4 space-y-5 ">
+
+        <form onSubmit={handleSubmit} className="md:p-10 p-4 space-y-5 ">
         <div>
           <p className="text-base font-medium">Product Image</p>
           <div className="flex flex-wrap items-center gap-3 mt-2">
@@ -176,7 +184,8 @@ const AddProduct = () => {
           {loading ? "Adding..." : "ADD"} 
         </button>
            
-      </form>
+      </form>  
+     
       <Footer />
     </div>
   );

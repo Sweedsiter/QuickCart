@@ -9,13 +9,13 @@ import toast from "react-hot-toast";
 
 const MyOrders = () => {
 
-    const { currency, getToken, user , products ,router } = useAppContext();
+    const { currency, getToken, user, products, router } = useAppContext();
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // const Products = 
-    
+
 
     const fetchOrders = async () => {
         try {
@@ -49,11 +49,11 @@ const MyOrders = () => {
                     <h2 className="text-lg font-medium mt-6">My Orders</h2>
                     {loading ? <Loading /> : (<div className=" border-t border-gray-300 text-sm">
                         {orders.map((order, index) => (
-                            <div key={index} onClick={ ()=>router.push(`/product/${ products.find((product) => product._id === order.items[0].product._id)._id}`)} className="flex flex-col md:flex-row gap-5 justify-between p-5 border-b border-gray-300">
-                                <div className="flex-1 flex gap-5 max-w-80" > 
+                            <div key={index} onClick={() => router.push(`/product/${products.find((product) => product._id === order.items[0].product._id)._id}`)} className="flex flex-col md:flex-row gap-5 justify-between p-5 border-b border-gray-300">
+                                <div className="flex-1 flex gap-5 max-w-80" >
                                     <img
-                                        className="max-w-16 max-h-16 object-cover"                                     
-                                        src={ products.find((product) => product._id === order.items[0].product._id).image}
+                                        className="max-w-16 max-h-16 object-cover"
+                                        src={products.find((product) => product._id === order.items[0].product._id).image}
                                         alt="box_icon"
                                     />
                                     <p className="flex flex-col gap-3">
@@ -73,7 +73,7 @@ const MyOrders = () => {
                                         <br />
                                         <span>{`${order.address.city}, ${order.address.state}`}</span>
                                         <br /> */}
-                                        <span>{order.address.phoneNumber}</span>   
+                                        <span>{order.address.phoneNumber}</span>
                                     </p>
                                 </div>
                                 <p className="font-medium my-auto">{currency}{order.amount}</p>
@@ -83,7 +83,13 @@ const MyOrders = () => {
                                         <span>Date : {new Date(order.date).toLocaleDateString()}</span>
                                         <span>Payment : Pending</span>
                                     </p>
-                                </div>                           
+                                </div>
+                                <div>
+                                    <h1>Status</h1>
+                                    <p className="flex flex-col">
+                                    กรุณารอภายใน 24 ชม.
+                                    </p>
+                                </div>
                             </div>
                         ))}
                     </div>)}

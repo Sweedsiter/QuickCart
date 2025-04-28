@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const Orders = () => {
 
-    const { currency, getToken, user, products, router } = useAppContext();
+    const { currency, getToken, user,  router } = useAppContext();
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -19,7 +19,7 @@ const Orders = () => {
 
             const token = await getToken()
 
-            const { data } = await axios.get('/api/order/seller-order', { headers: { Authorization: `Bearer ${token}` } })   
+            const { data } = await axios.get('/api/order/seller-order', { headers: { Authorization: `Bearer ${token}` } })
 
 
             if (data.success) {
@@ -39,7 +39,7 @@ const Orders = () => {
             fetchSellerOrders();
         }
     }, [user]);
-   console.log(orders)
+
     return (
         <div className="flex-1 h-screen overflow-scroll flex flex-col justify-between text-sm">
             {loading ? <Loading /> : <div className="md:p-10 p-4 space-y-5">
@@ -47,7 +47,7 @@ const Orders = () => {
                 <div className="rounded-md">
                     {orders.map((order, index) => (
                         <div key={index} className="flex flex-col md:flex-row gap-5 justify-between p-5 border-t border-gray-300">
-                            <div onClick={() => router.push(`/product/${order.items[0].product._id}`)} className="flex-1 flex gap-5 max-w-80">                       
+                            <div onClick={() => router.push(`/product/${order.items[0].product._id}`)} className="flex-1 flex gap-5 max-w-80">
                                 <img
                                     className="max-w-16 max-h-16 object-cover"
                                     src={order.items.map((item) => item.product.image)}
@@ -68,8 +68,8 @@ const Orders = () => {
                                     <br />
                                     <span>
                                         {order.email}
-                                    </span>  
-                                                               
+                                    </span>
+
                                 </p>
                             </div>
                             <p className="font-medium my-auto">{currency}{order.amount}</p>
@@ -78,6 +78,12 @@ const Orders = () => {
                                     <span>Method : COD</span>
                                     <span>Date : {new Date(order.date).toLocaleDateString()}</span>
                                     <span>Payment : Pending</span>
+                                </p>
+                            </div>
+                            <div>
+                                <h1>Status</h1>
+                                <p className="flex flex-col">
+                                กรุณารอภายใน 24 ชม.
                                 </p>
                             </div>
                         </div>

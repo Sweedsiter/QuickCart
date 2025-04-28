@@ -74,11 +74,11 @@ export async function POST(request) {
             image,
             date: Date.now()
         })
-
+    
         return NextResponse.json({ success: true, message: 'Upload successful', newProduct})
 
     } catch (error) {
-        console.error('Error in /api/product/add:', error);
+        // console.error('Error in /api/product/add:', error);
         NextResponse.json({ success: false, message: error.message})
     }    
 }
