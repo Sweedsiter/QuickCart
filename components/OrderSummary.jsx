@@ -15,7 +15,7 @@ const OrderSummary = () => {
   const checkUser = () => {
     if (!user) {
       alert("กรุณาเข้าสู่ระบบโดย email ก่อนทำการสั่งซื้อ");
-      router.push("/");
+      
     } else {
       router.push("/add-address");
     }
