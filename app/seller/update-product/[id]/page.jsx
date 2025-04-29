@@ -61,14 +61,15 @@ export default function UpdateProduct() {
             );
 
             if (data.success) {
-                toast.success("Product updated successfully!");
-                router.push("/seller/product-list"); // Redirect to the seller dashboard
+                toast.success("Product updated successfully!");               
+                router.push(`/seller/product-url/${data.product._id}`)   
             } else {
                 toast.error(data.message);
             }
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to update product");
         }
+        //  router.push("/seller/product-list"); // Redirect to the seller dashboard
     };
 
     if (loading) {

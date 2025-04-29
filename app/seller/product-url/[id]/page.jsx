@@ -1,13 +1,11 @@
 "use client";
-import React from 'react'
-import { useRouter, useParams } from "next/navigation";
-
+import React  from 'react'
+import { useParams } from "next/navigation";
 
 export default function ProductUrl() {
-
+   
     const { id } = useParams();
-    const router = useRouter();
-
+   
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -49,6 +47,7 @@ export default function ProductUrl() {
             <label className="text-lg ">
                 Product File ID : {id}
             </label>
+     
             <form onSubmit={handleSubmit} >
                 <div className="flex flex-col gap-1 max-w-md py-2">
                     <label className="text-base font-medium" htmlFor="product-name">
