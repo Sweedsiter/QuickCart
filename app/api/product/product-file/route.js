@@ -28,10 +28,10 @@ export async function POST(request) {
 
         const formData = await request.formData();
 
-        const producu_id = formData.get('product_id'); // Get product ID
+        const product_id = formData.get('product_id'); // Get product ID
         const files = formData.getAll('files'); // Get all uploaded files    
 
-        if (!producu_id || files.length === 0) {
+        if (!product_id  || files.length === 0) {
             return NextResponse.json({ success: false, message: 'Missing product ID or files' });
         }
 
@@ -64,7 +64,7 @@ export async function POST(request) {
         
         await connectDB();
         const newProductFiles = await ProductUrl.create({
-            producu_id,
+            product_id,
             filesUrl,
             date: Date.now(),
         });

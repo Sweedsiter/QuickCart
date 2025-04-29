@@ -1,11 +1,42 @@
 "use client";
-import React  from 'react'
-import { useParams } from "next/navigation";
+
+import React, { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import Loading from "@/components/Loading";
+
 
 export default function ProductUrl() {
-   
-    const { id } = useParams();
-   
+
+    const { id } = useParams(); // Extract the `id` from the URL
+    const router = useRouter();
+    const [updateFile, setUpdateFile] = useState({})
+    const [statuFile , setStatueFile ] = useState(false)
+
+
+    // Fetch product data using the `id` parameter
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await fetch(`/api/product/product-file-check?id=${id}`);
+                const data = await response.json(); // Parse the JSON response
+            
+
+                if (data.success) {
+                    setUpdateFile(data.product); // Log the product data   
+                    setStatueFile(true)                             
+                } else {
+                    toast.error(data.message);
+                } 
+            } catch (error) {
+                toast.error(error.message || "Failed to fetch product data");
+            }
+        };
+        if (id) {
+            fetchProduct();
+        }
+    }, [id, setUpdateFile]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -43,12 +74,16 @@ export default function ProductUrl() {
 
     return (
         <div className='md:p-10 p-4 space-y-5 flex flex-col'>
-            <p className='text-xl'>กรุณากรอก ไฟล์งาน</p>
-            <label className="text-lg ">
-                Product File ID : {id}
-            </label>
+            <p className='text-xl'>กรุณากรอก ไฟล์งาน</p>     
+            {
+                !statuFile ? <label className="text-lg ">
+                    Product File New : {id}
+                </label> : <label className="text-lg ">
+                    Product File Old : {updateFile.product_id}
+                </label>
+            }
      
-            <form onSubmit={handleSubmit} >
+                <form onSubmit={handleSubmit} >
                 <div className="flex flex-col gap-1 max-w-md py-2">
                     <label className="text-base font-medium" htmlFor="product-name">
                         Wilcom file
@@ -92,7 +127,7 @@ export default function ProductUrl() {
                 >
                     Submit
                 </button>
-            </form>
+            </form>     
         </div>
     )
 }

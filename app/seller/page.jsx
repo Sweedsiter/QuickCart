@@ -56,7 +56,7 @@ const AddProduct = () => {
         setCategory('')
         setPrice('')
         setOfferPrice('')   
-        router.push(`/seller/product-url/${newId}`)    
+        router.push(`/seller/product-file/${newId}`)    
       }else{
         toast.error(data.message)
       }     

@@ -62,7 +62,7 @@ export default function UpdateProduct() {
 
             if (data.success) {
                 toast.success("Product updated successfully!");               
-                router.push(`/seller/product-url/${data.product._id}`)   
+                router.push(`/seller/product-file/${data.product._id}`)   
             } else {
                 toast.error(data.message);
             }
