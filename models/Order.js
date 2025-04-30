@@ -7,13 +7,6 @@ const orderSchema = new mongoose.Schema({
         product: { type: String, required: true, ref: 'product' },
         quantity: { type: Number, required: true },
     }],
-    itemsWithImages: [
-        {
-            image: { type: String , required: true },
-            product: { type: String, required: true, ref: 'product' },
-            quantity: { type: Number, required: true },
-        }
-    ], // Add image field for the product
     amount: { type: Number, required: true },
     address: { type: String, ref: 'address', required: true },
     status: { type: String, required: true, default: 'Order Placed' },
