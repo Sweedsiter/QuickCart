@@ -12,7 +12,7 @@ const Orders = () => {
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [orderSendIds, setOrderSendIds] = useState(new Set());   
+    const [orderSendIds, setOrderSendIds] = useState(new Set());
 
     // Fetch seller orders
     const fetchSellerOrders = async () => {
@@ -40,9 +40,13 @@ const Orders = () => {
             const { data } = await axios.get('/api/order/order-send', { headers: { Authorization: `Bearer ${token}` } });
 
             if (data.success) {
-                const processedIds = data.orders.map((orders) => orders.order_id);
-                setOrderSendIds(processedIds);
-               
+                // Store both order_id and date
+                const processedOrders = data.orders.map((orderSend) => ({
+                    order_id: orderSend.order_id,
+                    date: orderSend.date
+                }));
+                setOrderSendIds(processedOrders);
+
             } else {
                 toast.error(data.message);
             }
@@ -57,7 +61,7 @@ const Orders = () => {
             fetchOrderSendIds();
         }
     }, [user]);
-  
+
 
     // FileId Check
     const fileId = async (id) => {
@@ -68,10 +72,12 @@ const Orders = () => {
             });
 
             if (data.success) {
-                toast.success("Product order Update successfully");                          
+                toast.success("Product order Update successfully");
+                fetchOrderSendIds(); 
             } else {
                 toast.error(data.message);
             }
+            
         } catch (error) {
             toast.error(error.response?.data?.message || "An error occurred order Update");
         }
@@ -104,11 +110,11 @@ const Orders = () => {
                                         <span className="font-medium">{order.address.fullName}</span>
                                         <br />
                                         <span>{order.address.phoneNumber}</span>
-                                        <br />                                
+                                        <br />
 
                                     </p>
                                 </div>
-                                
+
 
                                 <div>
                                     <p>
@@ -134,18 +140,20 @@ const Orders = () => {
                                     </p>
                                 </div>
                                 <div>
-                                    <h1>Status</h1>   
-                    
-                                    {orderSendIds.includes(item._id.toString()) ? (
-                                            <p className="text-green-600 ">Processed</p>
-                                        ) : (
-                                            <button
-                                                className="bg-red-600 text-white p-2 my-2 rounded rounded-lg"
-                                                onClick={() => fileId(item.product._id)}
-                                            >
-                                                Send File
-                                            </button>
-                                        )}
+                                    <h1>Status</h1>
+                                    {item.product._id}
+                                    {orderSendIds.some((orderSend) => orderSend.order_id === item._id.toString()) ? (
+                                        <p className="text-green-600">
+                                            Processed: Date {new Date(orderSendIds.find((orderSend) => orderSend.order_id === item._id.toString()).date).toLocaleDateString()}
+                                        </p>
+                                    ) : (
+                                        <button
+                                            className="bg-red-600 text-white p-2 my-2 rounded rounded-lg"
+                                            onClick={() => fileId(item.product._id)}
+                                        >
+                                            Send File
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         ))

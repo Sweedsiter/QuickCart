@@ -17,6 +17,7 @@ export async function GET(request) {
         if (!item_id) {
             return NextResponse.json({ success: false, message: "Product ID is required" });
         }
+        console.log("params", item_id)
 
         // Check if the item_id exists in the product-files collection
         const productFile = await ProductFile.findOne({ product_id: item_id });
@@ -24,22 +25,36 @@ export async function GET(request) {
         if (!productFile) {
             return NextResponse.json({ success: false, message: "Product File url found" });
         }
+        console.log("ProductFile", item_id)
+
+
+        // Check if the item_id exists in the  Order collection
         const order = await Order.findOne({ "items.product": item_id });
 
         if (!order) {
             return NextResponse.json({ success: false, message: "Order not found for the given product" });
         }
 
-        const matchingItem = order.items.find((item) => item.product === item_id);
 
-        if (!matchingItem) {
-            return NextResponse.json({ success: false, message: "Item not found in the order" });
-        }  
-        const OrderSended = await Order_send.findOne({order_id: matchingItem._id})
+        // Extract all product IDs from the order's items
+        const Order_items =await order.items.map((item) => item.product);
+        console.log("Order_items", Order_items);
 
-        if(OrderSended){
-            return NextResponse.json({ success: false, message: "This is Item Haved" });
+        // Check if the item_id exists in the Order_items array
+        const iii = await Order_items.some((e) => e === item_id);      
+        console.log("iii ", iii );
+
+        const matchingItem = order.items.find((item) => item.product === item_id);             
+        console.log("matchingItem ",matchingItem );
+
+
+        // Check if the item has already been processed in Order_send
+        const OrderSended = await Order_send.findOne({ order_id: order._id, productfile_id: productFile.product_id });
+
+        if (OrderSended) {
+            return NextResponse.json({ success: false, message: "This item has already been processed" });
         }
+
         // Add new data to the productFile
         const newOrderSend = {
             order_id: matchingItem._id,
@@ -48,7 +63,7 @@ export async function GET(request) {
             date: Date.now()
         };
 
-        const createdOrder = await Order_send.create(newOrderSend);       
+        const createdOrder = await Order_send.create(newOrderSend);
         return NextResponse.json({ success: true, createdOrder });
     } catch (error) {
         console.error("Error creating Order_send:", error.message);
