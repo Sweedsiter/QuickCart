@@ -4,7 +4,6 @@ const orderSchema = new mongoose.Schema({
     userId: { type: String, required: true, ref: 'user' },
     email: { type: String, required: true },
     items: [{
-        product_file : {type: String,required: false},
         product: { type: String, required: true, ref: 'product' },
         quantity: { type: Number, required: true },
     }],
