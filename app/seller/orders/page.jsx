@@ -41,7 +41,6 @@ const Orders = () => {
         }
     }, [user]);
 
- console.log(orders)
 
     // FileId Check
     const fileId = async (id) => {
@@ -112,8 +111,9 @@ const Orders = () => {
                                     <div>
                                         <h1>Status</h1>
                                         <p className="flex flex-col">
-                                            กรุณารอภายใน 24 ชม.
+                                            กรุณารอภายใน 24 ชม.  {item._id}
                                         </p>
+                                      
                                         <button className="p-2 border my-2"
                                             onClick={() => fileId(item.product._id)}>
                                             Ckeck Files

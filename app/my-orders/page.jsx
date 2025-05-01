@@ -90,6 +90,9 @@ const MyOrders = () => {
                                     <p className="flex flex-col">
                                     กรุณารอภายใน 24 ชม.
                                     </p>
+                                    <p className="flex flex-col">
+                                   {item._id}
+                                    </p>
                                 </div>
                             </div>
                               ))
