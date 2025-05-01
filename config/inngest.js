@@ -119,7 +119,7 @@ export const createUserOrder = inngest.createFunction(
                         throw new Error(`User with ID ${userId} not found`);
                     }
                               // Add product_file to each item dynamically
-                              const updatedItems = await Promise.all(
+                              const product_file = await Promise.all(
                                 items.map(async (item) => {
                                     const productFile = await ProductFile.findOne({ product_id: item.product });
                                     return {
@@ -133,7 +133,7 @@ export const createUserOrder = inngest.createFunction(
                     return {
                         userId,
                         email: user.email, // Add the user's email
-                        items, updatedItems, // Include updated items with product_file                      
+                        items, product_file, // Include updated items with product_file                      
                         amount,
                         address,
                         date
