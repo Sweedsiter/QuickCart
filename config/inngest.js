@@ -133,7 +133,8 @@ export const createUserOrder = inngest.createFunction(
                     return {
                         userId,
                         email: user.email, // Add the user's email
-                        items, product_file, // Include updated items with product_file                      
+                        items, 
+                        product_file:product_file, // Include updated items with product_file                      
                         amount,
                         address,
                         date
