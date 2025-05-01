@@ -35,7 +35,11 @@ export async function GET(request) {
         if (!matchingItem) {
             return NextResponse.json({ success: false, message: "Item not found in the order" });
         }  
+        const OrderSended = await Order_send.findOne({order_id: matchingItem._id})
 
+        if(OrderSended){
+            return NextResponse.json({ success: false, message: "This is Item Haved" });
+        }
         // Add new data to the productFile
         const newOrderSend = {
             order_id: matchingItem._id,
@@ -44,8 +48,7 @@ export async function GET(request) {
             date: Date.now()
         };
 
-        const createdOrder = await Order_send.create(newOrderSend);
-        console.log("Order_send created successfully:", createdOrder);
+        const createdOrder = await Order_send.create(newOrderSend);       
         return NextResponse.json({ success: true, createdOrder });
     } catch (error) {
         console.error("Error creating Order_send:", error.message);
