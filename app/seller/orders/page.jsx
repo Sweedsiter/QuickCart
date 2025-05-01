@@ -41,7 +41,7 @@ const Orders = () => {
         }
     }, [user]);
 
-
+ console.log(orders)
 
     // FileId Check
     const fileId = async (id) => {
