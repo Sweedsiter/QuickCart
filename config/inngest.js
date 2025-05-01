@@ -3,6 +3,7 @@ import { Inngest } from "inngest";
 import User from "@/models/User";
 import Order from "@/models/Order";
 import connectDB from "./db";
+import ProductFile from "@/models/Product-Url"
 // import Product from "@/models/Product";
 
 // Create a client to send and receive events
