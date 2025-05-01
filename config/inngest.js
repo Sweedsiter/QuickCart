@@ -106,7 +106,7 @@ export const createUserOrder = inngest.createFunction(
 
             const orders = await Promise.all(
                 events.map(async (event) => {
-                    const { userId, items , amount, address, date } = event.data;
+                    const { userId, items, amount, address, date } = event.data;
 
                     // Validate required fields
                     if (!userId || !items || !amount || !address || !date) {
@@ -118,23 +118,22 @@ export const createUserOrder = inngest.createFunction(
                     if (!user) {
                         throw new Error(`User with ID ${userId} not found`);
                     }
-                              // Add product_file to each item dynamically
-                              const product_file = await Promise.all(
-                                items.map(async (item) => {
-                                    const productFile = await ProductFile.findOne({ product_id: item.product });
-                                    return {
-                                        ...item,
-                                        product_file: productFile ? productFile.filesUrl[0]?.url : null // Add the first file URL or null
-                                    };
-                                })
-                            );
+                    // Add product_file to each item dynamically
+                    const product_file = await Promise.all(
+                        items.map(async (item) => {
+                            const productFile = await ProductFile.findOne({ product_id: item.product });
+                            return {
+                                ...item,
+                                product_file: productFile ? productFile.filesUrl[0]?.url : null // Add the first file URL or null
+                            };
+                        })
+                    );
 
-      
+
                     return {
                         userId,
                         email: user.email, // Add the user's email
-                        items, 
-                        product_file:product_file, // Include updated items with product_file                      
+                        items: product_file, // Include updated items with product_file                        
                         amount,
                         address,
                         date
