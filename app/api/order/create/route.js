@@ -4,16 +4,23 @@ import User from "@/models/User";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function POST(request) {   
 
-    try {        
+
+export async function POST(request) {
+
+    try {
         const { userId } = getAuth(request)
 
-        const { address, items } = await request.json()
+        const { address, items, file } = await request.json()
+        console.log(request)
 
         if (!address || items.length === 0) {
             return NextResponse.json({ success: false, message: 'Invalid data' }, { status: 400 });
         }
+        if (!file) {
+            return NextResponse.json({ success: false, message: 'Invalid data file can not' }, { status: 400 });
+        }
+        console.log(file,items,address)
 
         // calcuatr amount using items
         const amount = await items.reduce(async (acc, item) => {

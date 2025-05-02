@@ -16,6 +16,7 @@ const OrderSummary = () => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file
+   
     if (file.size > 5 * 1024 * 1024) { // 5MB limit
       return toast.error("File size must be less than 5MB");
     }
@@ -31,7 +32,7 @@ const OrderSummary = () => {
       }
     };
   }, [previewUrl]);
-
+  console.log(selectedFile)
 
   // Function to check if user is logged in and redirect to login page if not
   const checkUser = () => {
@@ -66,7 +67,9 @@ const OrderSummary = () => {
   };
 
 
-  const createOrder = async () => {
+  const createOrder = async (e) => {
+    e.preventDefault() 
+
     try {
       let cartItemsArray = Object.keys(cartItems).map((key) => ({ product: key, quantity: cartItems[key] }))
       cartItemsArray = cartItemsArray.filter(item => item.quantity > 0)
@@ -105,7 +108,7 @@ const OrderSummary = () => {
 
 
   return (
-    <div className="w-full md:w-96 bg-gray-500/5 p-5">
+    <form className="w-full md:w-96 bg-gray-500/5 p-5" onSubmit={createOrder }>
       <h2 className="text-xl md:text-2xl font-medium text-gray-700">
         กรอกเพื่อทำการสั่งซื้อ
       </h2>
@@ -170,7 +173,7 @@ const OrderSummary = () => {
             <input
               onChange={(e) => handleFileChange(e)}
               type="file"
-              id="image"
+              id="file"
             />
 
           </div>
@@ -198,10 +201,10 @@ const OrderSummary = () => {
         </div>
       </div>
 
-      <button onClick={createOrder} className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700">
+      <button type="submit" className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700">
         ส่งข้อมูลการสั่งซื้อ
       </button>
-    </div>
+    </form>
   );
 };
 

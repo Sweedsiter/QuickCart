@@ -61,8 +61,7 @@ export const AppContextProvider = (props) => {
       }
     }
 
-    const addToCart = async (itemId) => {
-        console.log(itemId)
+    const addToCart = async (itemId) => { 
         let cartData = structuredClone(cartItems);
         if (cartData[itemId]) {
             cartData[itemId] == 1;           
