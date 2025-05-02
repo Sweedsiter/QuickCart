@@ -4,11 +4,9 @@ import User from "@/models/User";
 import { getAuth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
+export async function POST(request) {   
 
-
-export async function POST(request) {
-
-    try {
+    try {        
         const { userId } = getAuth(request)
 
         const { address, items } = await request.json()

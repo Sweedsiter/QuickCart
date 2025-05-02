@@ -3,13 +3,34 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
+
 const OrderSummary = () => {
 
   const { currency, router, getCartCount, getCartAmount, getToken, user, cartItems, setCartItems } = useAppContext()
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [userAddresses, setUserAddresses] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null); // State to store the selected file
+    // Update the state with the selected file
+  const [selectedFile, setSelectedFile] = useState(null); // State to store the file
+  const [previewUrl, setPreviewUrl] = useState(null); // State to store the preview URL
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; // Get the selected file
+    if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      return toast.error("File size must be less than 5MB");
+    }
+    if (file) {
+      setSelectedFile(file); // Update the file state
+      setPreviewUrl(URL.createObjectURL(file)); // Generate a preview URL
+    }
+  };
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl); // Clean up the URL
+      }
+    };
+  }, [previewUrl]);
 
 
   // Function to check if user is logged in and redirect to login page if not
@@ -44,35 +65,21 @@ const OrderSummary = () => {
     setIsDropdownOpen(false);
   };
 
-// Update the state with the selected file
-  const handleFileChange = (event) => {
-    const file = event.target.files[0]; 
-    setSelectedFile(file); 
-    if (file) {
-        toast.success(`Selected file: ${file.name}`);
-    }
-};
 
   const createOrder = async () => {
     try {
-
-      if (!selectedAddress) {
-        return toast.error('กรุณา เลือกที่อยู่เพื่อทำการสั่งซื้อ')
-      }
-
       let cartItemsArray = Object.keys(cartItems).map((key) => ({ product: key, quantity: cartItems[key] }))
       cartItemsArray = cartItemsArray.filter(item => item.quantity > 0)
 
       if (cartItemsArray.length === 0) {
         return toast.error('Cart is empty')
       }
-
-      const token = await getToken()
+      const token = await getToken() 
 
       const { data } = await axios.post('/api/order/create', {
         address: selectedAddress._id,
         items: cartItemsArray,
-        files : selectedFile,
+        file: selectedFile,
       }, {
         headers: { Authorization: `Bearer ${token}` }
       })
@@ -95,6 +102,7 @@ const OrderSummary = () => {
       fetchUserAddresses();
     }
   }, [user])
+
 
   return (
     <div className="w-full md:w-96 bg-gray-500/5 p-5">
@@ -151,11 +159,20 @@ const OrderSummary = () => {
             Payments
           </label>
           <div className="flex flex-col items-start gap-3">
+            {previewUrl && (
+              <img
+                src={previewUrl}
+                alt="Uploaded Preview"
+                className="max-w-24 mt-2"
+                style={{ width: "100px", height: "100px", objectFit: "cover" }}
+              />
+            )}
             <input
+              onChange={(e) => handleFileChange(e)}
               type="file"
-              onChange={handleFileChange} // Handle file input change
-              className="flex-grow w-full outline-none p-2.5 text-gray-600 border"
+              id="image"
             />
+
           </div>
         </div>
 
