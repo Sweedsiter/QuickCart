@@ -8,9 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 const MyOrders = () => {
-
     const { currency, getToken, user, router } = useAppContext();
-
     const [orders, setOrders] = useState([]);
     const [Order_file, setOrder_file] = useState();
     const [loading, setLoading] = useState(true);
@@ -29,9 +27,7 @@ const MyOrders = () => {
             } catch (error) {
                 toast.error(error.message)
             }
-
         }
-
         const fetchOrder_file = async () => {
             try {
                 const { data } = await axios.get('/api/order/order-file-list')
@@ -50,7 +46,7 @@ const MyOrders = () => {
             fetchOrder_file();
         }
     }, [user]);
-    console.log(Order_file)
+
     return (
         <>
             <Navbar />
@@ -79,11 +75,7 @@ const MyOrders = () => {
                                             <span className="font-medium">{order.address.fullName}</span>
                                             <br />
                                             <span>{order.email}</span>
-                                            <br />
-                                            {/* <span >{order.address.area}</span>
-                                        <br />
-                                        <span>{`${order.address.city}, ${order.address.state}`}</span>
-                                        <br /> */}
+                                            <br />                                   
                                             <span>{order.address.phoneNumber}</span>
                                         </p>
                                     </div>
@@ -98,15 +90,14 @@ const MyOrders = () => {
                                     <div>
                                         <h1>Status</h1>
                                         {Order_file && Order_file.some((file) => file.order_id === item._id) ? (
-                                            <div> 
-                                                  <p >No:1.Wilcom / 2.PES / 3.DST  </p>
+                                            <div>                                              
                                                 {Order_file.filter((file) => file.order_id === item._id).map((file, index) => (
                                                     <div key={index}>
                                                         {file.filesUrl.map((fileUrl, fileIndex) => (
                                                             <a
                                                                 key={fileIndex}
-                                                                href={fileUrl} // File URL
-                                                                download={fileUrl} // Suggested file name
+                                                                href={fileUrl} 
+                                                                download={fileUrl} 
                                                                 className="text-blue-600 underline pr-4"
                                                             >
                                                                 Download 
