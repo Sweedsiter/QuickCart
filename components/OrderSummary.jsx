@@ -8,23 +8,22 @@ const OrderSummary = () => {
   const { currency, router, getCartCount, getCartAmount, getToken, user, cartItems, setCartItems } = useAppContext()
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const [userAddresses, setUserAddresses] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null); // State to store the selected file
+
 
   // Function to check if user is logged in and redirect to login page if not
   const checkUser = () => {
     if (!user) {
       alert("กรุณาเข้าสู่ระบบโดย email ก่อนทำการสั่งซื้อ");
-      
+
     } else {
       router.push("/add-address");
     }
   };
 
   const fetchUserAddresses = async () => {
-
     try {
-
       const token = await getToken()
       const { data } = await axios.get('/api/user/get-address', { headers: { Authorization: `Bearer ${token}` } })
       if (data.success) {
@@ -45,6 +44,15 @@ const OrderSummary = () => {
     setIsDropdownOpen(false);
   };
 
+// Update the state with the selected file
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]; 
+    setSelectedFile(file); 
+    if (file) {
+        toast.success(`Selected file: ${file.name}`);
+    }
+};
+
   const createOrder = async () => {
     try {
 
@@ -61,10 +69,10 @@ const OrderSummary = () => {
 
       const token = await getToken()
 
-
       const { data } = await axios.post('/api/order/create', {
         address: selectedAddress._id,
         items: cartItemsArray,
+        file : selectedFile,
       }, {
         headers: { Authorization: `Bearer ${token}` }
       })
@@ -140,17 +148,14 @@ const OrderSummary = () => {
 
         <div>
           <label className="text-base font-medium uppercase text-gray-600 block mb-2">
-             Scan QR Code เท่านั้น
+            Payments
           </label>
           <div className="flex flex-col items-start gap-3">
             <input
-              type="text"
-              placeholder="Enter promo code"
+              type="file"
+              onChange={handleFileChange} // Handle file input change
               className="flex-grow w-full outline-none p-2.5 text-gray-600 border"
             />
-            <button className="bg-orange-600 text-white px-9 py-2 hover:bg-orange-700">
-              กดเพื่อชำระ
-            </button>
           </div>
         </div>
 
