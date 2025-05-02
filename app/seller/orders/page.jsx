@@ -140,8 +140,7 @@ const Orders = () => {
                                     </p>
                                 </div>
                                 <div>
-                                    <h1>Status</h1>
-                                    {item.product._id}
+                                    <h1>Status</h1>                                                                  
                                     {orderSendIds.some((orderSend) => orderSend.order_id === item._id.toString()) ? (
                                         <p className="text-green-600">
                                             Processed: Date {new Date(orderSendIds.find((orderSend) => orderSend.order_id === item._id.toString()).date).toLocaleDateString()}
@@ -149,7 +148,7 @@ const Orders = () => {
                                     ) : (
                                         <button
                                             className="bg-red-600 text-white p-2 my-2 rounded rounded-lg"
-                                            onClick={() => fileId(item.product._id)}
+                                            onClick={() => fileId(item._id)}
                                         >
                                             Send File
                                         </button>
