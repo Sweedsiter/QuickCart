@@ -72,7 +72,7 @@ const OrderSummary = () => {
       const { data } = await axios.post('/api/order/create', {
         address: selectedAddress._id,
         items: cartItemsArray,
-        file : selectedFile,
+        files : selectedFile,
       }, {
         headers: { Authorization: `Bearer ${token}` }
       })
