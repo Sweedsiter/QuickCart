@@ -14,41 +14,41 @@ const MyOrders = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState(""); // State for search input
 
+    const fetchOrders = async () => {
+        try {
+            const token = await getToken();
+            const { data } = await axios.get('/api/order/list', { headers: { Authorization: `Bearer ${token}` } });
+            if (data.success) {
+                setOrders(data.orders.reverse());
+                setLoading(false);
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+    const fetchOrder_file = async () => {
+        try {
+            const { data } = await axios.get('/api/order/order-file-list');
+            if (data.success) {
+                setOrder_file(data.Order_send);
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
+
     useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const token = await getToken();
-                const { data } = await axios.get('/api/order/list', { headers: { Authorization: `Bearer ${token}` } });
-                if (data.success) {
-                    setOrders(data.orders.reverse());
-                    setLoading(false);
-                } else {
-                    toast.error(data.message);
-                }
-            } catch (error) {
-                toast.error(error.message);
-            }
-        };
-
-        const fetchOrder_file = async () => {
-            try {
-                const { data } = await axios.get('/api/order/order-file-list');
-                if (data.success) {
-                    setOrder_file(data.Order_send);
-                } else {
-                    toast.error(data.message);
-                }
-            } catch (error) {
-                toast.error(error.message);
-            }
-        };
-
         if (user) {
             fetchOrders();
             fetchOrder_file();
         }
     }, [user]);
-
+    console.log(orders)
     // Filter orders based on the search term
     const filteredOrders = orders.filter((order) =>
         order.items.some((item) =>
@@ -98,15 +98,26 @@ const MyOrders = () => {
                                                 <span>Items : {order.items.length}</span>
                                             </p>
                                         </div>
+
+                                        <div>
+                                    <p>
+                                        <span className="font-medium">{order.address.fullName}</span>
+                                        <br />
+                                        <span>{order.address.phoneNumber}</span>
+                                        <br />
+                                        <span>
+                                            {order.email}
+                                        </span>
+
+                                    </p>
+                                </div>
                                         <div>
                                             <p>
-                                                <span className="font-medium">
-                                                    {order.address.fullName}
-                                                </span>
+                                            <span className="font-medium"> {order.address?.fullName || "Name Not Provided"}</span>
                                                 <br />
-                                                <span>{order.email}</span>
+                                                <span>{order?.email || "No Email Provided"}</span>
                                                 <br />
-                                                <span>{order.address.phoneNumber}</span>
+                                                <span>{order?.address?.phoneNumber || "No Phone Number Provided"}</span>
                                             </p>
                                         </div>
                                         <p className="font-medium my-auto">

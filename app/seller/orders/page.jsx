@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const Orders = () => {
 
-    const { currency, getToken, user, router } = useAppContext();
+    const { currency, getToken, user, router , address } = useAppContext();
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);

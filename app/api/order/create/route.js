@@ -11,11 +11,18 @@ export async function POST(request) {
     try {
         const { userId } = getAuth(request)
 
-        const { address, items} = await request.json()
+        const { address, items , paySlip} = await request.json()
 
         if (!address || items.length === 0) {
             return NextResponse.json({ success: false, message: 'Invalid data' }, { status: 400 });
         }
+
+        if (!paySlip) {
+            return NextResponse.json({ success: false, message: 'Invalid data paySlip' });
+        }
+
+      console.log("my paySlip :",paySlip)
+
         // calcuatr amount using items
         const amount = await items.reduce(async (acc, item) => {
             const product = await Product.findById(item.product)
