@@ -202,9 +202,14 @@ const MyOrders = () => {
                         </div>
                     )}
                 </div>
+                <span className="text-red-600 ">
+                    สินค้าไม่แสดงไม่ต้องตกใจ Server กำลังเก็บข้อมูล ลอง Reload ใหม่อีกรอบ
+                    ไฟล์งานอรออนุมัติภายใน 24ชม. หากต้องใช้งานด่วน หรึอ สอบถามเพิ่มเติม โทร 091 045 5990
+                </span>
+
                 {isModalOpen && (
                     <div onClick={closeModal} className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-                        <div className="relative">                  
+                        <div className="relative">
                             <img
                                 src={modalImage}
                                 alt="Enlarged Payment Slip"
