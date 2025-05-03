@@ -183,7 +183,9 @@ const MyOrders = () => {
                                         </div>
 
                                         <div>
+                                            
                                             <p className="flex flex-col">
+                                            <span>สลิปโอน</span>
                                                 {/* Display paySlip image */}
                                                 {order.paySlip ? (
                                                     <img
