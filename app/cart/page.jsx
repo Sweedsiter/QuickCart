@@ -110,7 +110,7 @@ const Cart = () => {
             />
             Continue Shopping
           </button>
-        </div>
+        </div>        
         <OrderSummary />
       </div>
     </>

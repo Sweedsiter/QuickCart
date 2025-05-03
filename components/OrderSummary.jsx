@@ -241,7 +241,7 @@ const OrderSummary = () => {
             }`}
           disabled={isUploading} // Disable the button while uploading
         >
-          {isUploading ? "Uploading..." : "ส่งข้อมูลการสั่งซื้อ"}
+          {isUploading ? "Uploading..." : "ส่งข้อมูลการซื้อ"}
         </button> : <div>
 
         <p className="py-2 text-red-600">คําเดือน <br/>ขอวนสิทธิ์ผู้ที่ส่งข้อมูลไม่ถูกต้องตามประกาศ และ ข้อมูล จะถูกเก็บไว้ใน Server </p>

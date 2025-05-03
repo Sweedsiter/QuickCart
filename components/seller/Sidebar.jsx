@@ -9,8 +9,7 @@ const SideBar = () => {
     const menuItems = [
         { name: 'Add Product', path: '/seller', icon: assets.add_icon },       
         { name: 'Product List', path: '/seller/product-list', icon: assets.product_list_icon },
-        { name: 'Orders', path: '/seller/orders', icon: assets.order_icon },
-        { name: 'Sended', path: '/seller/order-sended', icon: assets.order_icon },
+        { name: 'Orders', path: '/seller/orders', icon: assets.order_icon },       
         { name: 'All User', path: '/seller/all-user', icon: assets.order_icon },        
     ];
 
