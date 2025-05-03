@@ -14,6 +14,19 @@ const MyOrders = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState(""); // State for search input
 
+    // paySlip show
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalImage, setModalImage] = useState(null);
+    const handleImageClick = (imageUrl) => {
+        setModalImage(imageUrl);
+        setIsModalOpen(true);
+    };
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setModalImage(null);
+    };
+
+
     const fetchOrders = async () => {
         try {
             const token = await getToken();
@@ -47,13 +60,14 @@ const MyOrders = () => {
             fetchOrder_file();
         }
     }, [user]);
- 
+
     // Filter orders based on the search term
     const filteredOrders = orders.filter((order) =>
         order.items.some((item) =>
             item.product.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
     );
+
     return (
         <>
             <Navbar />
@@ -99,7 +113,7 @@ const MyOrders = () => {
 
                                         <div>
                                             <p className="flex flex-col">
-                                                <span>Youre : Email</span>                                                
+                                                <span>Youre : Email</span>
                                                 <span>{order?.email || "No Email Provided"}</span>
                                             </p>
                                         </div>
@@ -117,9 +131,11 @@ const MyOrders = () => {
                                                         order.date
                                                     ).toLocaleDateString()}
                                                 </span>
-                                                <span>Payment : Pending</span>
+
+
                                             </p>
                                         </div>
+
                                         <div>
                                             <h1>Status</h1>
                                             {Order_file &&
@@ -164,13 +180,41 @@ const MyOrders = () => {
                                                 </p>
                                             )}
                                         </div>
+
+                                        <div>
+                                            <p className="flex flex-col">
+                                                {/* Display paySlip image */}
+                                                {order.paySlip ? (
+                                                    <img
+                                                        src={order.paySlip}
+                                                        alt="Payment Slip"
+                                                        className="max-w-12 max-h-fit object-cover mt-2 cursor-pointer"
+                                                        onClick={() => handleImageClick(order.paySlip)} // Open modal on click
+                                                    />
+                                                ) : (
+                                                    <p className="text-red-600">คุณยังไม่ได้ชำระ</p>
+                                                )}
+                                            </p>
+                                        </div>
                                     </div>
                                 ))
                             )}
                         </div>
                     )}
                 </div>
+                {isModalOpen && (
+                    <div onClick={closeModal} className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+                        <div className="relative">                  
+                            <img
+                                src={modalImage}
+                                alt="Enlarged Payment Slip"
+                                className="max-w-full max-h-screen object-contain"
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
+
             <Footer />
         </>
     );
