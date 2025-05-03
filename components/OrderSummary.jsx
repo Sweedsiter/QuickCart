@@ -13,6 +13,7 @@ const OrderSummary = () => {
   // Update the state with the selected file
   const [selectedFile, setSelectedFile] = useState(null); // State to store the file
   const [previewUrl, setPreviewUrl] = useState(null); // State to store the preview URL
+  const [paySlip,setPaySlip] = useState("")
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file
@@ -91,7 +92,7 @@ const OrderSummary = () => {
 
         if (data.success) {
             toast.success("Payment slip uploaded successfully");
-            console.log("Uploaded File URL:", data.fileUrl);
+            setPaySlip(data.fileUrl);
         } else {
             toast.error(data.message);
         }
@@ -115,7 +116,7 @@ const OrderSummary = () => {
       const { data } = await axios.post('/api/order/create', {
         address: selectedAddress._id,
         items: cartItemsArray,
-        paySlip: "paySlip url",
+        paySlip: paySlip,
       }, {
         headers: { Authorization: `Bearer ${token}` }
       })
@@ -211,7 +212,12 @@ const OrderSummary = () => {
           </div>
         </div>
 
-        <div>
+      </div>
+
+    {
+      paySlip ?       <button onClick={createOrder} className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700">
+      ส่งข้อมูลการสั่งซื้อ
+    </button>:         <div>
           <label className="text-base font-medium uppercase text-gray-600 block mb-2">
             Payments
           </label>
@@ -234,13 +240,7 @@ const OrderSummary = () => {
             </button>
           </form>
         </div>
-
-
-      </div>
-
-      <button onClick={createOrder} className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700">
-        ส่งข้อมูลการสั่งซื้อ
-      </button>
+    }
     </div>
   );
 };

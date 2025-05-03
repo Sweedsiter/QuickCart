@@ -47,14 +47,13 @@ const MyOrders = () => {
             fetchOrder_file();
         }
     }, [user]);
-    console.log(orders)
+ 
     // Filter orders based on the search term
     const filteredOrders = orders.filter((order) =>
         order.items.some((item) =>
             item.product.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
     );
-
     return (
         <>
             <Navbar />
