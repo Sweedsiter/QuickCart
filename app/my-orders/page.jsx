@@ -149,7 +149,8 @@ const MyOrders = () => {
                                                             file.order_id ===
                                                             item._id
                                                     ).map((file, index) => (
-                                                        <div key={index}>
+                                                        <div key={index} className="mt-4">
+                                                            <p className="">1.Wilcon / 2.PES / 3.DST โหลดได้แล้ว..... </p> <br/>
                                                             {file.filesUrl.map(
                                                                 (
                                                                     fileUrl,
@@ -165,7 +166,7 @@ const MyOrders = () => {
                                                                         download={
                                                                             fileUrl
                                                                         }
-                                                                        className="text-blue-600 underline pr-4"
+                                                                        className="text-white mr-4  bg-green-600 px-2 py-1"
                                                                     >
                                                                         Download
                                                                     </a>
