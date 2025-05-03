@@ -98,7 +98,7 @@ const Product = () => {
                     </p>
                     <hr className="bg-gray-600 my-6" />
                     <div className="overflow-x-auto">
-                        <table className="table-auto border-collapse w-full max-w-72">
+                        <table className="table-auto border-collapse w-full ">
                             <tbody>
                                 <tr>
                                     <td className="text-gray-600 font-medium">Brand</td>
@@ -113,6 +113,18 @@ const Product = () => {
                                     <td className="text-gray-800/50">
                                         {productData.category}
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-gray-600 font-medium">Emb file</td>
+                                    <td className="text-gray-800/50 ">ไฟล์ .emb เป็นไฟล์ wilcom เปิดได้ตั้งแต่เวอร์ชั่น ES2006/E.1/E1.5/E1.8/E2/E3/E3.5/E3.6/E4/E4.5/E5, </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-gray-600 font-medium">PES file</td>
+                                    <td className="text-gray-800/50 ">ไฟล์ .PES เปิดได้ตั้งแต่เวอร์ชั่น PES 5/PES 6/PES 7/PES 8/PES 9/PES 10 และเวอร์ชั่นที่สูงกว่า,</td>
+                                </tr>
+                                <tr>
+                                    <td className="text-gray-600 font-medium">DST file</td>
+                                    <td className="text-gray-800/50 ">ไฟล์ .DST เป็นไฟล์ที่ใช้สำหรับเครืองอุตสาหกรรมใช้ได้กับทุกรุ่นที่เป็นเครื่องปักจักรคอม</td>
                                 </tr>
                             </tbody>
                         </table>
