@@ -13,7 +13,8 @@ const OrderSummary = () => {
   // Update the state with the selected file
   const [selectedFile, setSelectedFile] = useState(null); // State to store the file
   const [previewUrl, setPreviewUrl] = useState(null); // State to store the preview URL
-  const [paySlip,setPaySlip] = useState("")
+  const [paySlip, setPaySlip] = useState("")
+  const [isUploading, setIsUploading] = useState(false); // State to track upload status
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the selected file
@@ -72,38 +73,43 @@ const OrderSummary = () => {
     e.preventDefault();
 
     if (!selectedFile) {
-        return toast.error("Please upload a file");
+      return toast.error("Please upload a file");
     }
+
+    setIsUploading(true); // Set loading state to true
 
     try {
-        const token = await getToken();
+      const token = await getToken();
 
-        // Create FormData to send the file
-        const formData = new FormData();
-        formData.append("file", selectedFile);
+      // Create FormData to send the file
+      const formData = new FormData();
+      formData.append("file", selectedFile);
 
-        // Send the file to the backend
-        const { data } = await axios.post("/api/payment/upload-slip", formData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
-            },
-        });
+      // Send the file to the backend
+      const { data } = await axios.post("/api/payment/upload-slip", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-        if (data.success) {
-            toast.success("Payment slip uploaded successfully");
-            setPaySlip(data.fileUrl);
-        } else {
-            toast.error(data.message);
-        }
+      if (data.success) {
+        toast.success("Payment slip uploaded successfully");
+        setPaySlip(data.fileUrl);
+      } else {
+        toast.error(data.message);
+      }
     } catch (error) {
-        console.error("Error uploading payment slip:", error);
-        toast.error("Failed to upload payment slip");
+      console.error("Error uploading payment slip:", error);
+      toast.error("Failed to upload payment slip");
+    } finally {
+      setIsUploading(false); // Reset loading state
     }
-};
+  };
 
 
   const createOrder = async () => {
+    setIsUploading(true); // Set loading state to true
     try {
       let cartItemsArray = Object.keys(cartItems).map((key) => ({ product: key, quantity: cartItems[key] }))
       cartItemsArray = cartItemsArray.filter(item => item.quantity > 0)
@@ -131,6 +137,8 @@ const OrderSummary = () => {
 
     } catch (error) {
       toast.error(error.message)
+    } finally {
+      setIsUploading(false); // Reset loading state
     }
   }
 
@@ -214,10 +222,15 @@ const OrderSummary = () => {
 
       </div>
 
-    {
-      paySlip ?       <button onClick={createOrder} className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700">
-      ส่งข้อมูลการสั่งซื้อ
-    </button>:         <div>
+      {
+        paySlip ? <button onClick={createOrder}
+
+          className={`w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700 ${isUploading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          disabled={isUploading} // Disable the button while uploading
+        >
+          {isUploading ? "Uploading..." : "ส่งข้อมูลการสั่งซื้อ"}
+        </button> : <div>
           <label className="text-base font-medium uppercase text-gray-600 block mb-2">
             Payments
           </label>
@@ -235,12 +248,17 @@ const OrderSummary = () => {
               type="file"
               id="file"
             />
-            <button type="submit" className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700">
-              ส่งข้อมูลโอนเงิน
+            <button
+              type="submit"
+              className={`w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700 ${isUploading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              disabled={isUploading} // Disable the button while uploading
+            >
+              {isUploading ? "Uploading..." : "ส่งข้อมูลโอนเงิน"}
             </button>
           </form>
         </div>
-    }
+      }
     </div>
   );
 };
