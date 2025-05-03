@@ -105,10 +105,10 @@ export const createUserOrder = inngest.createFunction(
 
             const orders = await Promise.all(
                 events.map(async (event) => {
-                    const { userId, items, amount, address, date } = event.data;
+                    const { userId, items, amount, address, date, paySlip } = event.data;
 
                     // Validate required fields
-                    if (!userId || !items || !amount || !address || !date) {
+                    if (!userId || !items || !amount || !address || !date || !paySlip) {
                         throw new Error("Missing required order fields");
                     }
 
@@ -133,7 +133,8 @@ export const createUserOrder = inngest.createFunction(
                     return {
                         userId,
                         email: user.email, // Add the user's email
-                        items,                     
+                        items, 
+                        paySlip,                    
                         amount,
                         address,
                         date

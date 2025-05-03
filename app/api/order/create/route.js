@@ -29,7 +29,7 @@ export async function POST(request) {
                 userId,
                 address,
                 items,   
-                items: "Slip url",            
+                paySlip: "Slip url",            
                 amount: amount + Math.floor(amount * 0.02),
                 date: Date.now(),
             },
