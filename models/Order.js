@@ -6,8 +6,8 @@ const orderSchema = new mongoose.Schema({
     items: [{     
         product: { type: String, required: true, ref: 'product' },
         quantity: { type: Number, required: true },
-    }],
-    paySlip :{ type: String, required: true},
+        paySlip :{ type: String, required: true},
+    }],   
     amount: { type: Number, required: true },
     address: { type: String, ref: 'address', required: true },
     status: { type: String, required: true, default: 'Order Placed' },
