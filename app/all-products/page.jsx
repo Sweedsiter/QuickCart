@@ -23,11 +23,19 @@ const AllProducts = () => {
     return matchesCategory && matchesSearch;
   });
 
+    // Shuffle products
+    const shuffleArray = (array) => {
+      return array
+        .map((item) => ({ item, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ item }) => item);
+    };  
+    const shuffledProducts = shuffleArray(filteredProducts);
 
   return (
     <>
       <Navbar />
-      <div className="flex flex-col items-start px-6 md:px-16 lg:px-32">
+      <div className="flex flex-col items-start px-6 md:px-16 lg:px-32 ">
         <div className="flex flex-col items-end pt-12">
           <p className="text-2xl font-medium">All Embroidery</p>
           <div className="w-24 h-0.5 bg-orange-600 rounded-full"></div>
@@ -55,9 +63,9 @@ const AllProducts = () => {
           />
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6 mt-12 pb-14 w-full">
-          {filteredProducts.map((product, index) => (
+         {/* Product Grid */}
+         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6 mt-12 pb-14 w-full h-[700px] overflow-auto">
+          {shuffledProducts.map((product, index) => (
             <ProductCard key={index} product={product} />
           ))}
         </div>
