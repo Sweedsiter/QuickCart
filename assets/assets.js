@@ -32,6 +32,9 @@ import ร้านนานาภัณฑ์02 from "./ร้านนาน�
 import Logo3 from "./Logo3.png";
 import Logo2 from "./Logo2.png";
 
+import KRU from "./KRU.png";
+import SCB from "./SCB.png";
+
 import macbook_image from "./macbook_image.png";
 import bose_headphone_image from "./bose_headphone_image.png";
 import apple_earphone_image from "./apple_earphone_image.png";
@@ -79,6 +82,9 @@ export const assets = {
 
   Logo3,
   Logo2,
+
+  KRU,
+  SCB,
 
   macbook_image,
   bose_headphone_image,

@@ -2,6 +2,8 @@ import { useAppContext } from "@/context/AppContext";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { assets } from "@/assets/assets"
+import Image from "next/image";
 
 
 const OrderSummary = () => {
@@ -148,6 +150,15 @@ const OrderSummary = () => {
     }
   }, [user])
 
+  //
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+        toast.success("Copy รหัสเรียบร้อย");
+    }).catch(() => {
+        toast.error("Failed to copy!");
+    });
+};
+
 
   return (
     <div className="w-full md:w-96 bg-gray-500/5 p-5" >
@@ -220,6 +231,7 @@ const OrderSummary = () => {
           </div>
         </div>
 
+
       </div>
 
       {
@@ -231,8 +243,39 @@ const OrderSummary = () => {
         >
           {isUploading ? "Uploading..." : "ส่งข้อมูลการสั่งซื้อ"}
         </button> : <div>
-          <label className="text-base font-medium uppercase text-gray-600 block mb-2">
-            Payments
+
+        <p className="py-2 text-red-600">คําเดือน <br/>ขอวนสิทธิ์ผู้ที่ส่งข้อมูลไม่ถูกต้องตามประกาศ และ ข้อมูล จะถูกเก็บไว้ใน Server </p>
+          
+        <p className="py-2">เมื่อกดที่ตัวเลข Copy ออโต้</p>
+        <div className="flex flex-row my-1">
+          <Image className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" />
+          <div className="pl-6">
+            <p>HTAY AUNG</p>
+            <p
+              className="cursor-pointer text-blue-600 underline w3-wide tracking-[2px]"
+              onClick={() => copyToClipboard("365 264010 7")}
+            >
+              365 264010 7
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-row my-1">
+          <Image className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" />
+          <div className="pl-6">
+            <p>HTAY AUNG</p>
+            <p
+              className="cursor-pointer text-blue-600 underline tracking-[2px]"
+              onClick={() => copyToClipboard("345 904 8624")}
+            >
+              345 904 8624
+            </p>
+          </div>
+        </div>
+
+
+          <label className="text-base font-medium uppercase text-gray-600 block mt-4">
+            แนบสลิปการโอนตรงนี้
           </label>
           <form onSubmit={paySlip_send} className="flex flex-col items-start gap-3">
             {previewUrl && (
