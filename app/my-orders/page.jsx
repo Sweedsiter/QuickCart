@@ -41,7 +41,6 @@ const MyOrders = () => {
         }
     };
 
-
     useEffect(() => {
         if (user) {
             fetchOrders();
@@ -100,26 +99,12 @@ const MyOrders = () => {
                                         </div>
 
                                         <div>
-                                    <p>
-                                        <span className="font-medium">{order.address.fullName}</span>
-                                        <br />
-                                        <span>{order.address.phoneNumber}</span>
-                                        <br />
-                                        <span>
-                                            {order.email}
-                                        </span>
-
-                                    </p>
-                                </div>
-                                        <div>
-                                            <p>
-                                            <span className="font-medium"> {order.address?.fullName || "Name Not Provided"}</span>
-                                                <br />
+                                            <p className="flex flex-col">
+                                                <span>Youre : Email</span>                                                
                                                 <span>{order?.email || "No Email Provided"}</span>
-                                                <br />
-                                                <span>{order?.address?.phoneNumber || "No Phone Number Provided"}</span>
                                             </p>
                                         </div>
+
                                         <p className="font-medium my-auto">
                                             {currency}
                                             {item.product.offerPrice}
@@ -139,10 +124,10 @@ const MyOrders = () => {
                                         <div>
                                             <h1>Status</h1>
                                             {Order_file &&
-                                            Order_file.some(
-                                                (file) =>
-                                                    file.order_id === item._id
-                                            ) ? (
+                                                Order_file.some(
+                                                    (file) =>
+                                                        file.order_id === item._id
+                                                ) ? (
                                                 <div>
                                                     {Order_file.filter(
                                                         (file) =>

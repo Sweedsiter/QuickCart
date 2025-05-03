@@ -103,17 +103,7 @@ const Orders = () => {
                                         </span>
                                         <span>Items : {order.items.length}</span>
                                     </p>
-                                </div>
-
-                                <div>
-                                    <p>
-                                        <span className="font-medium">{order.address.fullName}</span>
-                                        <br />
-                                        <span>{order.address.phoneNumber}</span>
-                                        <br />
-
-                                    </p>
-                                </div>
+                                </div>                         
 
 
                                 <div>
