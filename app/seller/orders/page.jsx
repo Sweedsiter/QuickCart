@@ -8,11 +8,23 @@ import toast from "react-hot-toast";
 
 const Orders = () => {
 
-    const { currency, getToken, user, router , address } = useAppContext();
+    const { currency, getToken, user, router, address } = useAppContext();
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [orderSendIds, setOrderSendIds] = useState(new Set());
+
+    //show slip
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalImage, setModalImage] = useState(null);
+    const handleImageClick = (imageUrl) => {
+        setModalImage(imageUrl);
+        setIsModalOpen(true);
+    };
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setModalImage(null);
+    };
 
     // Fetch seller orders
     const fetchSellerOrders = async () => {
@@ -73,11 +85,11 @@ const Orders = () => {
 
             if (data.success) {
                 toast.success("Product order Update successfully");
-                fetchOrderSendIds(); 
+                fetchOrderSendIds();
             } else {
                 toast.error(data.message);
             }
-            
+
         } catch (error) {
             toast.error(error.response?.data?.message || "An error occurred order Update");
         }
@@ -103,7 +115,7 @@ const Orders = () => {
                                         </span>
                                         <span>Items : {order.items.length}</span>
                                     </p>
-                                </div>                         
+                                </div>
 
 
                                 <div>
@@ -118,6 +130,7 @@ const Orders = () => {
 
                                     </p>
                                 </div>
+
                                 <p className="font-medium my-auto">{currency}{item.product.offerPrice}</p>
 
                                 {/* <p className="font-medium my-auto">{currency}{order.amount}</p> */}
@@ -130,7 +143,7 @@ const Orders = () => {
                                     </p>
                                 </div>
                                 <div>
-                                    <h1>Status</h1>                                                                  
+                                    <h1>Status</h1>
                                     {orderSendIds.some((orderSend) => orderSend.order_id === item._id.toString()) ? (
                                         <p className="text-green-600">
                                             Processed: Date {new Date(orderSendIds.find((orderSend) => orderSend.order_id === item._id.toString()).date).toLocaleDateString()}
@@ -144,9 +157,30 @@ const Orders = () => {
                                         </button>
                                     )}
                                 </div>
+
+                                <div>
+                                    {order.paySlip ? (
+                                        <img
+                                            src={order.paySlip}
+                                            alt="Payment Slip"
+                                            className="max-w-12 max-h-12 object-cover mt-2"
+                                            onClick={() => handleImageClick(order.paySlip)} // Open modal on click
+                                        />
+                                    ) : (
+                                        <p className="text-red-600">ยังไม่ชำระ</p>
+                                    )}
+                                    {isModalOpen && (
+                                        <div onClick={closeModal} className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                                            <img
+                                                src={modalImage}
+                                                alt="Enlarged Payment Slip"
+                                                className="max-w-full max-h-screen object-contain"
+                                            />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         ))
-
                     ))}
                 </div>
             </div>}
