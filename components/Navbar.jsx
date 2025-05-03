@@ -64,13 +64,7 @@ const Navbar = () => {
           }`}>
           Shop
         </Link>
-        <Link href="/" className=" hover:font-bold transition">
-          About Us
-        </Link>
-        <Link href="/" className=" hover:font-bold transition">
-          Contact
-        </Link>
-
+ 
         {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border px-4 py-1.5 rounded-full">Seller Dashboard</button>}
 
       </div>
