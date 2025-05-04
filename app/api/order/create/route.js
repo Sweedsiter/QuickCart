@@ -16,13 +16,10 @@ export async function POST(request) {
         if (!address || items.length === 0) {
             return NextResponse.json({ success: false, message: 'Invalid data' }, { status: 400 });
         }
-        console.log("my paySlip api :",paySlip)
 
-        // if (!paySlip) {
-        //     return NextResponse.json({ success: false, message: 'Invalid data paySlip' });
-        // }
-
-   
+        if (!paySlip) {
+            return NextResponse.json({ success: false, message: 'Invalid data paySlip' });
+        }   
 
         // calcuatr amount using items
         const amount = await items.reduce(async (acc, item) => {
