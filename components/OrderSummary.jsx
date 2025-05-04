@@ -147,7 +147,11 @@ const OrderSummary = () => {
   useEffect(() => {
     if (user) {
       fetchUserAddresses();
-    }
+    } else{
+      alert("กรุณาเข้าสู่ระบบโดย email ก่อนทำการสั่งซื้อ");
+      router.push("/all-products");
+    }   
+
   }, [user])
 
   //
