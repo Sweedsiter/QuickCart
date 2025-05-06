@@ -9,6 +9,7 @@ const AllProducts = () => {
   const { products } = useAppContext();
   const [selectedCategory, setSelectedCategory] = useState("All"); // State for selected category
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  
 
     // Extract unique categories from products
     const categories = ["All", ...new Set(products.map((product) => product.category))];
@@ -42,11 +43,12 @@ const AllProducts = () => {
         </div>
 
         {/* Category Filter */}
-        <div className="flex items-center justify-between mt-6 w-full max-w-md">
+   
+        <div className="flex items-center justify-between mt-6 w-full max-w-md flex-wrap md:flex-nowrap">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="border border-gray-300 rounded-md p-2"
+            className="border border-gray-300 rounded-md p-2 my-2 "
           >
             {categories.map((category, index) => (
               <option  key={index} value={category}>
@@ -59,8 +61,9 @@ const AllProducts = () => {
             placeholder="ค้นหาชื่อโลโก้..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 ml-4 w-full"
+            className="border border-gray-300 rounded-md p-2 md:ml-4 w-full"
           />
+          <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>
         </div>
 
          {/* Product Grid */}

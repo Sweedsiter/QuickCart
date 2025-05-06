@@ -17,7 +17,7 @@ const HomeProducts = () => {
         {products.map((product, index) => <ProductCard key={index} product={product} />)}
       </div>
       <button onClick={() => { router.push('/all-products') }} className="px-12 py-2.5 border rounded text-gray-500/70 hover:bg-slate-50/90 hover:text-black transition mt-16">
-        See more
+        กดดูทั้งหมด....
       </button>
     </div>
   );
