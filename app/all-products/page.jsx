@@ -4,6 +4,8 @@ import ProductCard from "@/components/ProductCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useAppContext } from "@/context/AppContext";
+import Loading from "@/components/Loading";
+
 
 const AllProducts = () => {
   const { products } = useAppContext();
@@ -66,12 +68,15 @@ const AllProducts = () => {
           <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>
         </div>
 
-         {/* Product Grid */}
-         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6 mt-12 pb-14 w-full h-[700px] overflow-auto">
+         {/* Product Grid */}     
+         {
+          products.length === 0 ? <div className="w-full h-[400px]"><Loading/></div> :
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6 mt-12 pb-14 w-full h-[700px] overflow-auto">   
           {shuffledProducts.map((product, index) => (
             <ProductCard key={index} product={product} />
           ))}
         </div>
+         }
       </div>
       <Footer />
     </>
