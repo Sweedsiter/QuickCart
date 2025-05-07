@@ -9,6 +9,7 @@ export default function ProductUrl() {
     const router = useRouter();
     const [updateFile, setUpdateFile] = useState({})
     const [statuFile, setStatueFile] = useState(false)
+    const [loading, setLoading] = useState(false); // Loading state  
 
     // Fetch product data using the `id` parameter
     useEffect(() => {
@@ -29,6 +30,7 @@ export default function ProductUrl() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Set loading to true
 
         const formData = new FormData();
         formData.append('product_id', id); // Append the product ID
@@ -51,41 +53,44 @@ export default function ProductUrl() {
             const data = await response.json();
 
             if (data.success) {
-                alert('Files uploaded successfully!');
+                toast.success(data.message);
                 router.push("/seller")
             } else {
                 alert(data.message || 'Failed to upload files');
             }
         } catch (error) {
             alert(error.message || 'An unexpected error occurred');
+        } finally {
+            setLoading(false); // Set loading to false after submission
         }
     };
 
     // Update File to Database
     const handleSubmitUpdate = async (e) => {
         e.preventDefault();
-    
+        setLoading(true); // Set loading to true
+
         const formData = new FormData();
         formData.append('product_id', id); // Append the product ID
-    
+
         // Append updated files to the formData
         const wilcomFile = document.getElementById('wilcomUp').files[0];
         const pesFile = document.getElementById('pesUp').files[0];
         const dstFile = document.getElementById('dstUp').files[0];
-    
+
         if (wilcomFile) formData.append('wilcom', wilcomFile);
         if (pesFile) formData.append('pes', pesFile);
         if (dstFile) formData.append('dst', dstFile);
 
-     
+
         try {
             const response = await fetch('/api/product/product-file-update', {
                 method: 'PUT',
                 body: formData,
             });
-    
+
             const data = await response.json();
-    
+
             if (data.success) {
                 toast.success('Files updated successfully!');
                 router.push("/seller");
@@ -94,6 +99,8 @@ export default function ProductUrl() {
             }
         } catch (error) {
             toast.error(error.message || 'An unexpected error occurred');
+        }finally {
+            setLoading(false); // Set loading to false after submission
         }
     };
 
@@ -110,7 +117,7 @@ export default function ProductUrl() {
             }
             {
                 !statuFile ?
-                // Get New file to database
+                    // Get New file to database
                     <form onSubmit={handleSubmit} >
                         <div className="flex flex-col gap-1 max-w-md py-2">
                             <label className="text-base font-medium" htmlFor="product-name">
@@ -148,13 +155,13 @@ export default function ProductUrl() {
                                 required
                             />
                         </div>
-
                         <button
                             type="submit"
-                            className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded my-4"
+                            className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded"
+                            disabled={loading}
                         >
-                            Submit
-                        </button>
+                            {loading ? "Uploading..." : "Upload-File"}
+                        </button>                 
                     </form> :
 
                     // Update file to Database
@@ -199,10 +206,11 @@ export default function ProductUrl() {
 
                         <button
                             type="submit"
-                            className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded my-4"
+                            className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded"
+                            disabled={loading}
                         >
-                            Update-File
-                        </button>
+                            {loading ? "Uploading..." : "Upload-File"}
+                        </button>                   
                     </form>
             }
 
