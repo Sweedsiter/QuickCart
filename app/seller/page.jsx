@@ -14,12 +14,17 @@ const AddProduct = () => {
 
   const [files, setFiles] = useState([]);
   const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(`ขนาดปัก cm ไฟล์ที่ได้รับ .emb ผีเข็ม 10300++ Wilcom / Dst / Pes`);
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
   const [loading, setLoading] = useState(false); // Loading state  
   const [imgArray,setImgArray] = useState(1)
+
+
+
+
+
 
 // Handle form submission
   const handleSubmit = async (e) => {
@@ -70,8 +75,6 @@ const AddProduct = () => {
 
   // if add product get urlLink download files
 
-
-
   return (
     <div className="flex-1 min-h-screen flex flex-col justify-between">
 
@@ -85,7 +88,8 @@ const AddProduct = () => {
                 <input onChange={(e) => {
                   const updatedFiles = [...files];
                   updatedFiles[index] = e.target.files[0];
-                  setFiles(updatedFiles);
+                  setFiles(updatedFiles);  
+                  setName(updatedFiles[0].name)              
                 }} type="file" id={`image${index}`} hidden />
                 <Image
                   key={index}
