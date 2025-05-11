@@ -8,8 +8,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 const outfit = Outfit({ subsets: ['latin'], weight: ["300", "400", "500"] })
 
 export const metadata = {
-  title: "Dx-emb - GreatStack",
-  description: "E-Commerce with Next.js ",
+  title: "Dx-emb - ลายปัก",
+  description: `wilcom embroidery, ลายปัก , รับตีลายปัก, รับขึ้นลายปัก, ลายปักอาร์ม`,
 };
 
 export default function RootLayout({ children }) {
