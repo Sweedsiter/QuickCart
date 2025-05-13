@@ -180,13 +180,27 @@ const AddProduct = () => {
             />
           </div>
         </div>
-        <button
+        {/* <button
           type="submit"
           className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded"
           disabled={loading} 
         >
           {loading ? "Adding..." : "ADD"} 
+        </button> */}
+
+        {loading ?  <button
+          type="submit"
+          className="px-8 py-2.5 bg-orange-200 text-white font-medium rounded"
+          disabled={loading} 
+        >
+        Adding...        </button> :   <button
+          type="submit"
+          className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded"
+          disabled={loading} 
+        >
+          Add
         </button>
+        } 
            
       </form>  
      

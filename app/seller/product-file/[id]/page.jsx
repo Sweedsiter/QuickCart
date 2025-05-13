@@ -99,7 +99,7 @@ export default function ProductUrl() {
             }
         } catch (error) {
             toast.error(error.message || 'An unexpected error occurred');
-        }finally {
+        } finally {
             setLoading(false); // Set loading to false after submission
         }
     };
@@ -155,13 +155,28 @@ export default function ProductUrl() {
                                 required
                             />
                         </div>
-                        <button
+                        {/* <button
                             type="submit"
                             className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded"
                             disabled={loading}
                         >
                             {loading ? "Uploading..." : "Upload-File"}
-                        </button>                 
+                        </button> */}
+                        {loading ? <button
+                            type="submit"
+                            className="px-8 py-2.5 bg-orange-200 text-white font-medium rounded mt-2"
+                            disabled={loading}
+                        >
+                            Uploading...
+                        </button> :
+                            <button
+                                type="submit"
+                                className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded mt-2"
+                                disabled={loading}
+                            >
+                                Upload-File
+                            </button>
+                        }
                     </form> :
 
                     // Update file to Database
@@ -204,13 +219,28 @@ export default function ProductUrl() {
                             />
                         </div>
 
-                        <button
+                        {/* <button
                             type="submit"
                             className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded"
                             disabled={loading}
                         >
                             {loading ? "Uploading..." : "Upload-File"}
-                        </button>                   
+                        </button>                    */}
+                        {loading ? <button
+                            type="submit"
+                            className="px-8 py-2.5 bg-orange-200 text-white font-medium rounded mt-2"
+                            disabled={loading}
+                        >
+                            Uploading...
+                        </button> :
+                            <button
+                                type="submit"
+                                className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded mt-2"
+                                disabled={loading}
+                            >
+                                Upload-File
+                            </button>
+                        }
                     </form>
             }
 
