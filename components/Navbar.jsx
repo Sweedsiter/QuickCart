@@ -112,10 +112,10 @@ const Navbar = () => {
             ? <>
               <UserButton>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="Cart" labelIcon={<CartIcon />} onClick={() => router.push('cart')} />
+                  <UserButton.Action label="ตะกร้า" labelIcon={<CartIcon />} onClick={() => router.push('cart')} />
                 </UserButton.MenuItems>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="My Order" labelIcon={<BagIcon />} onClick={() => router.push('my-orders')} />
+                  <UserButton.Action label="รายการสั่งซื้อ" labelIcon={<BagIcon />} onClick={() => router.push('my-orders')} />
                 </UserButton.MenuItems>
               </UserButton>
             </>
@@ -132,16 +132,16 @@ const Navbar = () => {
             ? <>
               <UserButton>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="Home" labelIcon={<HomeIcon />} onClick={() => router.push('/')} />
+                  <UserButton.Action label="หน้าแรก" labelIcon={<HomeIcon />} onClick={() => router.push('/')} />
                 </UserButton.MenuItems>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="Products" labelIcon={<BoxIcon />} onClick={() => router.push('/all-products')} />
+                  <UserButton.Action label="รวมลายปัก" labelIcon={<BoxIcon />} onClick={() => router.push('/all-products')} />
                 </UserButton.MenuItems>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="Cart" labelIcon={<CartIcon />} onClick={() => router.push('/cart')} />
+                  <UserButton.Action label="ตะกร้า" labelIcon={<CartIcon />} onClick={() => router.push('/cart')} />
                 </UserButton.MenuItems>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="My Order" labelIcon={<BagIcon />} onClick={() => router.push('/my-orders')} />
+                  <UserButton.Action label="รายการสั่งซื้อ" labelIcon={<BagIcon />} onClick={() => router.push('/my-orders')} />
                 </UserButton.MenuItems>
               </UserButton>
             </>
