@@ -16,13 +16,13 @@ cloudinary.config({
 
 export async function POST(request) {
     try {
-        const { userId } = getAuth(request);
+        // const { userId } = getAuth(request);
 
-        const isSeller = await authSeller(userId);
+        // const isSeller = await authSeller(userId);
 
-        if (!isSeller) {
-            return NextResponse.json({ success: false, message: "Not authorized" });
-        }
+        // if (!isSeller) {
+        //     return NextResponse.json({ success: false, message: "Not authorized" });
+        // }
 
         const formData = await request.formData();
         const file = formData.get("file"); // Get a single file
