@@ -26,16 +26,16 @@ const Cart = () => {
               <thead className="text-left">
                 <tr>
                   <th className="text-nowrap pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                    Product Details
+                    ข้อมูลชื่อของลาย
                   </th>
                   <th className="pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                    Price
+                    ราคา
                   </th>
                   <th className="pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                    Quantity
+                   จำนวน
                   </th>
                   <th className="pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                    Subtotal
+                  รวม
                   </th>
                 </tr>
               </thead>
@@ -62,7 +62,7 @@ const Cart = () => {
                             className="md:hidden text-xs text-orange-600 mt-1"
                             onClick={() => updateCartQuantity(product._id, 0)}
                           >
-                            Remove
+                            ลบออก
                           </button>
                         </div>
                         <div className="text-sm hidden md:block">
@@ -71,7 +71,7 @@ const Cart = () => {
                             className="text-xs text-orange-600 mt-1"
                             onClick={() => updateCartQuantity(product._id, 0)}
                           >
-                            Remove
+                            ลบออก
                           </button>
                         </div>
                       </td>

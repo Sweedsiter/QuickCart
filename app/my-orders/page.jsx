@@ -73,7 +73,7 @@ const MyOrders = () => {
             <Navbar />
             <div className="flex flex-col justify-between px-6 md:px-16 lg:px-32 py-6 min-h-screen">
                 <div className="space-y-5">
-                    <h2 className="text-lg font-medium mt-6">My Orders</h2>
+                    <h2 className="text-lg font-medium mt-6">รายการสั่งทั้งหมด</h2>
                     {/* Search Input */}
                     <input
                         type="text"
@@ -113,7 +113,7 @@ const MyOrders = () => {
 
                                         <div>
                                             <p className="flex flex-col">
-                                                <span>Youre : Email</span>
+                                                <span>อีเมล : .....</span>
                                                 <span>{order?.email || "No Email Provided"}</span>
                                             </p>
                                         </div>
@@ -137,7 +137,7 @@ const MyOrders = () => {
                                         </div>
 
                                         <div>
-                                            <h1>Status</h1>
+                                            <h1>สถานะ</h1>
                                             {Order_file &&
                                                 Order_file.some(
                                                     (file) =>

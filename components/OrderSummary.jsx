@@ -206,7 +206,7 @@ const OrderSummary = () => {
                   onClick={checkUser}
                   className="px-4 py-2 hover:bg-gray-500/10 cursor-pointer text-center"
                 >
-                  + Add New Address
+                  + กดเพิ่มที่อยู่
                 </li>
               </ul>
             )}

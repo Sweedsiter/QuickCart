@@ -133,10 +133,10 @@ const Product = () => {
 
                     <div className="flex items-center mt-10 gap-4">
                         <button onClick={() => addToCart(productData._id)} className="w-full py-3.5 bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition">
-                            Add to Cart
+                            เพิ่มใส่ตะกร้า
                         </button>
                         <button onClick={() => { addToCart(productData._id); router.push('/cart') }} className="w-full py-3.5 bg-orange-500 text-white hover:bg-orange-600 transition">
-                            Buy now
+                           เพิ่ม และ ไปที่ตะกร้า
                         </button>
                     </div>
                 </div>
@@ -152,7 +152,7 @@ const Product = () => {
                     {products.slice(0, 5).map((product, index) => <ProductCard key={index} product={product} />)}
                 </div>
                 <button className="px-8 py-2 mb-16 border rounded text-gray-500/70 hover:bg-slate-50/90 transition">
-                    See more
+                    กดดูลายทั้งหมด
                 </button>
             </div>
 

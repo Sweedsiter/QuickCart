@@ -58,11 +58,11 @@ const Navbar = () => {
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
         <Link href="/" className={`hover:font-bold transition ${pathname === "/" ? "text-orange-600  font-bold" : ""
           }`}>
-          Home
+          หน้าแรก
         </Link>
         <Link href="/all-products" className={`hover:font-bold transition ${pathname === "/all-products" ? "text-orange-600 font-bold" : ""
           }`}>
-          Shop
+          รวมลายปัก
         </Link>
  
         {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border px-4 py-1.5 rounded-full">Seller Dashboard</button>}

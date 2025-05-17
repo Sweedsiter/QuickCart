@@ -54,7 +54,7 @@ const ProductCard = ({ product }) => {
                 <button 
                 onClick={() => { router.push('/product/' + product._id); scrollTo(0, 0) }}
                  className=" max-sm:hidden px-4 py-1.5 text-gray-500 border border-gray-500/20 rounded-full text-xs hover:bg-slate-50 transition">
-                    Buy now
+                    เพิ่มใส่ตะกร้า
                 </button>
             </div>
         </div>
