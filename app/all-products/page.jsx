@@ -27,14 +27,20 @@ const AllProducts = () => {
   });
 
     // Shuffle products
-    const shuffleArray = (array) => {
+    const shuffleArray = (array) => {    
        return array
         .map((item) => ({ item, sort: Math.random() }))
         .sort((a, b) => b.sort - a.sort)
         .map(({ item }) => item);  
-    };  
+    };      
     const shuffledProducts = shuffleArray(filteredProducts);
 
+    // const sortArrayDescending = (array) => {
+    //   return array.slice().reverse(); // slice() to avoid mutating the original
+    // };
+    // const shuffledProducts = sortArrayDescending(filteredProducts);
+
+    
   return (
     <>
       <Navbar />
@@ -58,7 +64,7 @@ const AllProducts = () => {
               </option>
             ))}
           </select>       
-             
+
           <input
             type="text"
             placeholder="ค้นหาชื่อโลโก้..."
