@@ -28,10 +28,10 @@ const AllProducts = () => {
 
     // Shuffle products
     const shuffleArray = (array) => {
-      return array
+       return array
         .map((item) => ({ item, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ item }) => item);
+        .sort((a, b) => b.sort - a.sort)
+        .map(({ item }) => item);  
     };  
     const shuffledProducts = shuffleArray(filteredProducts);
 
@@ -46,7 +46,7 @@ const AllProducts = () => {
 
         {/* Category Filter */}
    
-        <div className="flex items-center justify-between mt-6 w-full max-w-md flex-wrap md:flex-nowrap">
+        <div className="flex items-center justify-between mt-6 w-full  flex-wrap md:flex-nowrap">
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
@@ -63,7 +63,7 @@ const AllProducts = () => {
             placeholder="ค้นหาชื่อโลโก้..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 md:ml-4 w-full"
+            className="border border-gray-300 rounded-md p-2 md:ml-4 w-full md:w-fit"
           />
           <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>
         </div>
