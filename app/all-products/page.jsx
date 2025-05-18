@@ -57,7 +57,8 @@ const AllProducts = () => {
                 {category}
               </option>
             ))}
-          </select>          
+          </select>       
+             
           <input
             type="text"
             placeholder="ค้นหาชื่อโลโก้..."
