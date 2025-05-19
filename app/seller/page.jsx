@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import { useAppContext } from "@/context/AppContext";
@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 
 const AddProduct = () => {
 
-  const { getToken,router} = useAppContext()
+  const { getToken,router,isSeller} = useAppContext()
 
   const [files, setFiles] = useState([]);
   const [name, setName] = useState('');
@@ -72,6 +72,12 @@ const AddProduct = () => {
       setLoading(false); // Set loading to false after submission
     }    
   };
+
+      useEffect(() => {
+        if(!isSeller){
+          router.push('/')
+        }    
+      }, [isSeller]);
 
   // if add product get urlLink download files
 

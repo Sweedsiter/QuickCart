@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const Orders = () => {
 
-    const { currency, getToken, user, router, address } = useAppContext();
+    const { currency, getToken, user, router, address,isSeller } = useAppContext();
 
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -29,8 +29,9 @@ const Orders = () => {
     // Fetch seller orders
     const fetchSellerOrders = async () => {
         try {
-            const token = await getToken();
-            const { data } = await axios.get('/api/order/seller-order', { headers: { Authorization: `Bearer ${token}` } });
+            // const token = await getToken();
+            // const { data } = await axios.get('/api/order/seller-order', { headers: { Authorization: `Bearer ${token}` } });
+             const { data } = await axios.get('/api/order/seller-order')
 
             if (data.success) {
                 setOrders(data.orders);
@@ -68,6 +69,9 @@ const Orders = () => {
     };
 
     useEffect(() => {
+        if(!isSeller){
+            router.push('/')
+          }
         if (user) {
             fetchSellerOrders();
             fetchOrderSendIds();

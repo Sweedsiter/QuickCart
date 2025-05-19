@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 
 const ProductList = () => {
 
-  const { router, getToken, user } = useAppContext()
+  const { router, getToken, user,isSeller } = useAppContext()
 
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -70,6 +70,9 @@ const ProductList = () => {
   }
 
   useEffect(() => {
+    if(!isSeller){
+      router.push('/')
+    }
     if (user) {
       fetchSellerProduct();
     }
