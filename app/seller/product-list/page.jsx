@@ -10,15 +10,11 @@ import toast from "react-hot-toast";
 
 const ProductList = () => {
 
-  const { router, getToken, user,isSeller } = useAppContext()
+  const { router, getToken, user, isSeller } = useAppContext()
 
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
-
- 
-  console.log(searchTerm)
-
 
   // Delete product function
   const oneDelete = (id) => async () => {
@@ -47,10 +43,6 @@ const ProductList = () => {
     router.push(`/seller/update-product/${id}`)
   }
 
-
-
-
-
   const fetchSellerProduct = async () => {
     try {
       const token = await getToken()
@@ -70,7 +62,7 @@ const ProductList = () => {
   }
 
   useEffect(() => {
-    if(!isSeller){
+    if (!isSeller) {
       router.push('/')
     }
     if (user) {
@@ -78,16 +70,37 @@ const ProductList = () => {
     }
   }, [user])
 
+  const [selectedCategory, setSelectedCategory] = useState("All"); // State for selected category
+  const categories = ["All", ...new Set(products.map((product) => product.category))];
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (selectedCategory === "All" || product.category === selectedCategory)
+  );
+
   return (
     <div className="flex-1 min-h-screen flex flex-col justify-between">
       {loading ? <Loading /> : <div className="w-full md:p-10 p-4">
         <h2 className="pb-4 text-lg font-medium">All Product</h2>
+
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)} // Update selected category
+          className="border border-gray-300 rounded-md p-2 my-2"
+        >
+          {categories.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
         <input
           type="text"
           placeholder="ค้นหาตามชื่อ..."
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="border border-gray-300 rounded px-4 py-2 w-fit mb-4"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+          className="border border-gray-300 rounded px-4 py-2 w-fit mb-4 md:ml-4"
         />
+         <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>
         <div className="flex flex-col items-center w-full overflow-hidden rounded-md bg-white border border-gray-500/20">
           <table className=" table-fixed w-full overflow-hidden">
             <thead className="text-gray-900 text-sm text-left">
@@ -102,7 +115,7 @@ const ProductList = () => {
             </thead>
             <tbody className="text-sm text-gray-500">
 
-              {products.map((product, index) => (
+              {filteredProducts.map((product, index) => (
                 <tr key={index} className="border-t border-gray-500/20">
                   <td className="md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3 truncate">
                     <div className="bg-gray-500/10 rounded p-2">
