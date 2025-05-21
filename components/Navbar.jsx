@@ -85,7 +85,7 @@ const Navbar = () => {
 
         
             {filteredProducts.length > 0 && (
-              <div className=" fixed inset-0 bg-orange-200 bg-opacity-75 flex items-start z-20  mt-20"  onClick={() => {setFilteredProducts([]),setSearchQuery("")}}> 
+              <div className=" fixed inset-0 bg-orange-200 bg-opacity-75   z-20 mt-20  h-full overflow-y-auto"  onClick={() => {setFilteredProducts([]),setSearchQuery("")}}> 
                 {filteredProducts.map((product) => (
                  <NavSearch product={product} />
                 ))}

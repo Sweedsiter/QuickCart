@@ -9,10 +9,10 @@ const NavSearch = ({ product }) => {
    
 
     return (
-        <div>
+        <div className="flex flex-col flex-wrap items-center justify-center ">
 
             {!isModalOpen && <div
-                className="flex flex-row cursor-pointer m-6 p-2 bg-white  rounded-lg shadow-md z-10 transition-all duration-300 ease-in-out transform hover:scale-105"
+                className="flex flex-row justify-between w-full md:w-2/3 cursor-pointer m-1 p-2 bg-white  rounded-lg shadow-md z-10 "
                 onMouseEnter={(e) => e.currentTarget.classList.add("shadow-lg")}
                 onClick={() => {
                     router.push(`/product/${product._id}`);
