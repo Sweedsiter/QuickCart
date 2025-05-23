@@ -17,9 +17,9 @@ const Cart = () => {
         <div className="flex-1">
           <div className="flex items-center justify-between mb-8 border-b border-gray-500/30 pb-6">
             <p className="text-2xl md:text-3xl text-gray-500">
-              Your <span className="font-medium text-orange-600">Cart</span>
+              ตะ <span className="font-medium text-orange-600">กร้า</span>
             </p>
-            <p className="text-lg md:text-xl text-gray-500/80">{getCartCount()} Items</p>
+            <p className="text-lg md:text-xl text-gray-500/80">{getCartCount()} ลาย</p>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full table-auto">
@@ -32,10 +32,10 @@ const Cart = () => {
                     ราคา
                   </th>
                   <th className="pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                   จำนวน
+                    จำนวน
                   </th>
                   <th className="pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                  รวม
+                    รวม
                   </th>
                 </tr>
               </thead>
@@ -95,22 +95,29 @@ const Cart = () => {
                           </button>
                         </div>
                       </td>
-                      <td className="py-4 md:px-4 px-1 text-gray-600">${(product.offerPrice * cartItems[itemId]).toFixed(2)}</td>
+                      <td className="py-4 md:px-4 px-1 text-gray-600">
+                        {product.offerPrice === 0 ? (
+                          <span className="text-green-600 font-medium">แนบสลิปที่เคยสั่งซื้อจากเว็บเท่านั้น</span>
+                        ) : (
+                          `$${(product.offerPrice * cartItems[itemId]).toFixed(2)}`
+                        )}
+                      </td>
+                      
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-          <button onClick={()=> router.push('/all-products')} className="group flex items-center mt-6 gap-2 text-orange-600">
+          <button onClick={() => router.push('/all-products')} className="group flex items-center mt-6 gap-2 text-orange-600">
             <Image
               className="group-hover:-translate-x-1 transition"
               src={assets.arrow_right_icon_colored}
               alt="arrow_right_icon_colored"
             />
-            Continue Shopping
+            Continue กลับไปที่หน้าร้านค้า
           </button>
-        </div>        
+        </div>
         <OrderSummary />
       </div>
     </>
