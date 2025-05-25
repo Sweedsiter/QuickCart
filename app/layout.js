@@ -4,7 +4,8 @@ import "./globals.css";
 import { AppContextProvider } from "@/context/AppContext";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
-import ScrollTop from "@/components/ScroolTop";
+import Contact from "@/components/Contact";
+
 
 const outfit = Outfit({ subsets: ['latin'], weight: ["300", "400", "500"] })
 
@@ -20,9 +21,9 @@ export default function RootLayout({ children }) {
         <body className={`${outfit.className} antialiased text-gray-700`} >
           <Toaster />
           <AppContextProvider>
-            {children}
-            <div className="fixed bottom-3 left-3 desktop:bottom-20 desktop:mr-40  z-50">
-              <ScrollTop />
+            {children}         
+            <div className="fixed bottom-3 right-3  md:bottom-16 md:mr-20  z-50">
+              <Contact />
             </div>
           </AppContextProvider>
         </body>

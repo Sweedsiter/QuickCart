@@ -9,8 +9,8 @@ const Footer = () => {
         <div className="w-4/5">
           <Image className="w-40 md:w-64" src={assets.logo} alt="logo" />
           <p className="mt-6 text-sm">
-            ซอยเพชรเกษม 106 แขวงหนองค้างพลู  เขตหนองแขม กรุงเทพมหานคร 10160<br/>
-            <br/>
+            ซอยเพชรเกษม 106 แขวงหนองค้างพลู  เขตหนองแขม กรุงเทพมหานคร 10160<br />
+            <br />
             Phet Kasem 106 Nong Khang Phlu, Nong Khaem, Bangkok Thailand 10160
           </p>
         </div>
@@ -25,13 +25,7 @@ const Footer = () => {
               <li>
                 <a className="hover:underline transition" href="/all-products">All-products</a>
               </li>
-              <li>
-                <a className="hover:underline transition" href="#">About us</a>
-              </li>
-              <li>
-                <a className="hover:underline transition" href="#">Contact us</a>
-              </li>
-           
+
             </ul>
           </div>
         </div>
@@ -40,8 +34,15 @@ const Footer = () => {
           <div>
             <h2 className="font-medium text-gray-900 mb-5">Get in touch ติดต่อ</h2>
             <div className="text-sm space-y-2">
-              <p>+66 91 045 5990</p>
-              <p>D27saitunlu@gmail.com</p>
+              <p>โทร :  091 045 5990</p>
+              <p>เมล์ : D27saitunlu@gmail.com</p>
+              <p>      <a
+                href="https://web.facebook.com/Dxebm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+               เฟสบุ๊ค : Dxebm
+              </a></p>
             </div>
           </div>
         </div>
