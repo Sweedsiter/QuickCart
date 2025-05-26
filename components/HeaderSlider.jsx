@@ -4,9 +4,7 @@ import Image from "next/image";
 import { useAppContext } from "@/context/AppContext";
 
 const HeaderSlider = () => {
-  const { router } = useAppContext()
-  const [isLoading, setIsLoading] = useState(false);
-
+  const { router,setIsLoading, isLoading } = useAppContext()
 
   const handleClick = () => {
     setIsLoading(true);
@@ -82,7 +80,7 @@ const HeaderSlider = () => {
                   </a>
                 </button>
                 <button onClick={handleClick} disabled={isLoading} className="group flex items-center gap-2 px-6 py-2.5 font-medium" >   
-                  {isLoading ? 'กำลังโหลด...' : slide.buttonText2}
+                  {slide.buttonText2}
                   <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
                 </button>
               </div>

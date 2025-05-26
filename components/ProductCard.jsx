@@ -5,11 +5,16 @@ import { useAppContext } from '@/context/AppContext';
 
 const ProductCard = ({ product }) => {
 
-    const {  router } = useAppContext()
+    const {  router, setIsLoading } = useAppContext()
 
+    const handleClick = () => {
+        setIsLoading(true);
+        router.push('/product/' + product._id);
+        scrollTo(0, 0);
+    }
     return (
         <div
-            onClick={() => { router.push('/product/' + product._id); scrollTo(0, 0) }}
+            onClick={handleClick}
             className="flex flex-col items-start gap-0.5 max-w-[200px] w-full cursor-pointer"
         >
             <div className="cursor-pointer group relative bg-gray-500/10 rounded-lg w-full h-52 flex items-center justify-center">
@@ -52,7 +57,7 @@ const ProductCard = ({ product }) => {
             <div className="flex items-end justify-between w-full mt-1">
                 <p className="text-base font-medium">฿{product.offerPrice}</p>
                 <button 
-                onClick={() => { router.push('/product/' + product._id); scrollTo(0, 0) }}
+                onClick={handleClick}
                  className=" max-sm:hidden px-4 py-1.5 text-gray-500 border border-gray-500/20 rounded-full text-xs hover:bg-slate-50 transition">
                     เพิ่มใส่ตะกร้า
                 </button>

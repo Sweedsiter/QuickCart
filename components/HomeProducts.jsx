@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import ProductCard from "./ProductCard";
 import { useAppContext } from "@/context/AppContext";
 import Loading from "@/components/Loading";
 
 const HomeProducts = () => {
 
-  const { products, router } = useAppContext()
-  const [isLoading, setIsLoading] = useState(false);
-
+  const { products, router,setIsLoading, isLoading } = useAppContext() 
   const handleClick = () => {
     setIsLoading(true);
     router.push('/all-products');

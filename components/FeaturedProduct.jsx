@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import { useAppContext } from "@/context/AppContext";
@@ -26,8 +26,7 @@ const products = [
 
 const FeaturedProduct = () => {
 
-  const { router } = useAppContext()
-  const [isLoading, setIsLoading] = useState(false);
+  const { router,setIsLoading, isLoading} = useAppContext()
 
   const handleClick = () => {
     setIsLoading(true);
@@ -55,7 +54,7 @@ const FeaturedProduct = () => {
                 {description}
               </p>
               <button onClick={handleClick} disabled={isLoading} className="flex items-center gap-1.5 bg-orange-600 px-4 py-2 rounded text-white">               
-                {isLoading ? 'กำลังโหลด...' : 'ลายทั้งหมด'} <Image className="h-3 w-3" src={assets.redirect_icon} alt="Redirect Icon" />
+                ลายทั้งหมด <Image className="h-3 w-3" src={assets.redirect_icon} alt="Redirect Icon" />
               </button>
             </div>
           </div>
