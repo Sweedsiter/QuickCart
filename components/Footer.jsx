@@ -20,10 +20,10 @@ const Footer = () => {
             <h2 className="font-medium text-gray-900 mb-5">ลิงค์</h2>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="hover:underline transition" href="/">Home</a>
+                <a className="hover:underline transition" href="/">หน้าแรก</a>
               </li>
               <li>
-                <a className="hover:underline transition" href="/all-products">All-products</a>
+                <a className="hover:underline transition" href="/all-products">รวมลายปัก</a>
               </li>
 
             </ul>
