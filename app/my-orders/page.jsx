@@ -5,8 +5,9 @@ import Loading from "@/components/Loading";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+
 const MyOrders = () => {
-    const { currency, getToken, user, router } = useAppContext();
+    const { currency, getToken, user, router,setIsLoading,isLoading } = useAppContext();
     const [orders, setOrders] = useState([]);
     const [Order_file, setOrder_file] = useState();
     const [loading, setLoading] = useState(true);
@@ -65,6 +66,20 @@ const MyOrders = () => {
             item.product.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
     );
+
+      useEffect(() => {    
+        setIsLoading(true);
+        const timer = setTimeout(() => {
+          setIsLoading(false); 
+        }, 1000);    
+        return () => clearTimeout(timer); 
+      }, [setIsLoading]);
+
+    if (isLoading) {
+        return <div className="flex items-center justify-center h-screen">
+          <Loading />
+        </div>;
+      }
 
     return (
         <>      

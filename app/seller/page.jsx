@@ -19,6 +19,7 @@ const AddProduct = () => {
   const [offerPrice, setOfferPrice] = useState('');
   const [loading, setLoading] = useState(false); // Loading state  
   const [imgArray,setImgArray] = useState(1)
+  
 
 // Handle form submission
   const handleSubmit = async (e) => {

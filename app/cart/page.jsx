@@ -21,7 +21,7 @@ const Cart = () => {
     setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false); // Stop loading after 2 seconds
-    }, 2000);
+    }, 1000);
 
     return () => clearTimeout(timer); // Cleanup the timer
   }, [setIsLoading]);
