@@ -13,7 +13,7 @@ const Product = () => {
 
     const { id } = useParams();
 
-    const { products, router, addToCart } = useAppContext()
+    const { products, router, addToCart, isLoading, setIsLoading } = useAppContext()
 
     const [mainImage, setMainImage] = useState(null);
     const [productData, setProductData] = useState(null);
@@ -26,17 +26,27 @@ const Product = () => {
 
     useEffect(() => {
         fetchProductData();
+        if (isLoading) {
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 1000);
+        }
     }, [id, products.length])
 
-    return productData ? (<>   
+    if (isLoading) {
+        return <div className="flex items-center justify-center h-screen">
+            <Loading />
+        </div>;
+    }
+    return productData ? (<>
         <div className="px-6 md:px-16 lg:px-32 pt-14 space-y-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
 
                 {/* Cart */}
                 <div className="px-5 lg:px-16 xl:px-20">
                     <div className="rounded-lg overflow-hidden bg-gray-400/10 mb-4" >
-                        <Image  
-                           onClick={() => setIsModalOpen(true)}
+                        <Image
+                            onClick={() => setIsModalOpen(true)}
                             src={mainImage || productData.image[0]}
                             alt="alt"
                             className="w-full h-auto object-cover mix-blend-multiply"
@@ -89,9 +99,9 @@ const Product = () => {
                         {productData.description}
                     </p>
                     <p className="text-3xl font-medium mt-6">
-                    ฿{productData.offerPrice}
+                        ฿{productData.offerPrice}
                         <span className="text-base font-normal text-gray-800/60 line-through ml-2">
-                        ฿{productData.price}
+                            ฿{productData.price}
                         </span>
                     </p>
                     <hr className="bg-gray-600 my-6" />
@@ -133,12 +143,12 @@ const Product = () => {
                             เพิ่มใส่ตะกร้า
                         </button>
                         <button onClick={() => { addToCart(productData._id); router.push('/cart') }} className="w-full py-3.5 bg-orange-500 text-white hover:bg-orange-600 transition">
-                           เพิ่ม และ ไปที่ตะกร้า
+                            เพิ่ม และ ไปที่ตะกร้า
                         </button>
                     </div>
                 </div>
             </div>
-            
+
             {/* product slice  */}
             <div className="flex flex-col items-center">
                 <div className="flex flex-col items-center mb-4 mt-16">
@@ -155,29 +165,29 @@ const Product = () => {
 
             {/* Modal for image preview */}
             {isModalOpen && (
-            <div
-              className="fixed inset-0 bg-orange-200 bg-opacity-75 flex items-center justify-center z-50 "
-              onClick={() => setIsModalOpen(false)} // Close modal on background click
-            >
-              <div className="relative">
-                <button
-                  className="absolute top-4 right-4 text-slate-900 text-2xl "
-                  onClick={() => setIsModalOpen(false)} // Close modal on button click
+                <div
+                    className="fixed inset-0 bg-orange-200 bg-opacity-75 flex items-center justify-center z-50 "
+                    onClick={() => setIsModalOpen(false)} // Close modal on background click
                 >
-                  &times;
-                </button>
-                <Image
-                  src={mainImage || productData.image[0]}
-                  alt="alt"
-                  className="w-auto h-auto max-w-screen max-h-screen p-8 bg-white rounded-lg"
-                  width={1920}
-                  height={1080}
-                />
-              </div>
-            </div>
-          )}
+                    <div className="relative">
+                        <button
+                            className="absolute top-4 right-4 text-slate-900 text-2xl "
+                            onClick={() => setIsModalOpen(false)} // Close modal on button click
+                        >
+                            &times;
+                        </button>
+                        <Image
+                            src={mainImage || productData.image[0]}
+                            alt="alt"
+                            className="w-auto h-auto max-w-screen max-h-screen p-8 bg-white rounded-lg"
+                            width={1920}
+                            height={1080}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
-    
+
     </>
     ) : <Loading />
 };

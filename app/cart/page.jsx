@@ -1,14 +1,36 @@
 'use client'
-import React from "react";
+
+import React, { useEffect } from "react";
 import { assets } from "@/assets/assets";
 import OrderSummary from "@/components/OrderSummary";
 import Image from "next/image";
-
 import { useAppContext } from "@/context/AppContext";
+import Loading from "@/components/Loading";
+
+
 
 const Cart = () => {
+  const { products, router, cartItems, addToCart, updateCartQuantity, getCartCount, setIsLoading, isLoading } = useAppContext();
 
-  const { products, router, cartItems, addToCart, updateCartQuantity, getCartCount } = useAppContext();
+  const handleBackClick = () => {
+    setIsLoading(true);
+    router.push('/all-products');
+  };
+  useEffect(() => {
+    // Simulate a loading process
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false); // Stop loading after 2 seconds
+    }, 2000);
+
+    return () => clearTimeout(timer); // Cleanup the timer
+  }, [setIsLoading]);
+
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-screen">
+      <Loading />
+    </div>;
+  }
 
   return (
     <>
@@ -101,14 +123,14 @@ const Cart = () => {
                           `$${(product.offerPrice * cartItems[itemId]).toFixed(2)}`
                         )}
                       </td>
-                      
+
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-          <button onClick={() => router.push('/all-products')} className="group flex items-center mt-6 gap-2 text-orange-600">
+          <button onClick={handleBackClick} className="group flex items-center mt-6 gap-2 text-orange-600">
             <Image
               className="group-hover:-translate-x-1 transition"
               src={assets.arrow_right_icon_colored}

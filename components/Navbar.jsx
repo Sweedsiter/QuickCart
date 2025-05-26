@@ -27,6 +27,19 @@ const Navbar = () => {
     setIsLoading(true);
     router.push('/');
   };
+  const handleClickCart= () => {
+    setIsLoading(true);
+    router.push('/cart');
+  };
+  const handleClickMy_order = () => {
+    setIsLoading(true);
+    router.push('/my-orders');
+  };
+
+  const handleClickSeller = () => {
+    setIsLoading(true);
+    router.push('/seller');
+  };
 
   // Handle search input change
   const handleSearch = (query) => {
@@ -73,7 +86,7 @@ const Navbar = () => {
           }`}>
         รวมลายปัก        
         </button>
-        {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border px-4 py-1.5 rounded-full">Seller Dashboard</button>}
+        {isSeller && <button onClick={handleClickSeller} className="text-xs border px-4 py-1.5 rounded-full">Seller Dashboard</button>}
       </div>
       <ul className="hidden md:flex items-center gap-4 ">
         <div className="flex items-center gap-4 relative">
@@ -114,10 +127,10 @@ const Navbar = () => {
             ? <>
               <UserButton>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="ตะกร้า" labelIcon={<CartIcon />} onClick={() => router.push('cart')} />
+                  <UserButton.Action label="ตะกร้า" labelIcon={<CartIcon />} onClick={handleClickCart} />
                 </UserButton.MenuItems>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="รายการสั่งซื้อ" labelIcon={<BagIcon />} onClick={() => router.push('my-orders')} />
+                  <UserButton.Action label="รายการสั่งซื้อ" labelIcon={<BagIcon />} onClick={handleClickMy_order} />
                 </UserButton.MenuItems>
               </UserButton>
             </>
@@ -134,16 +147,16 @@ const Navbar = () => {
             ? <>
               <UserButton>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="หน้าแรก" labelIcon={<HomeIcon />} onClick={() => router.push('/')} />
+                  <UserButton.Action label="หน้าแรก" labelIcon={<HomeIcon />} onClick={handleClickHome} />
                 </UserButton.MenuItems>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="รวมลายปัก" labelIcon={<BoxIcon />} onClick={() => router.push('/all-products')} />
+                  <UserButton.Action label="รวมลายปัก" labelIcon={<BoxIcon />} onClick={handleClickAll_products} />
                 </UserButton.MenuItems>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="ตะกร้า" labelIcon={<CartIcon />} onClick={() => router.push('/cart')} />
+                  <UserButton.Action label="ตะกร้า" labelIcon={<CartIcon />} onClick={handleClickCart} />
                 </UserButton.MenuItems>
                 <UserButton.MenuItems>
-                  <UserButton.Action label="รายการสั่งซื้อ" labelIcon={<BagIcon />} onClick={() => router.push('/my-orders')} />
+                  <UserButton.Action label="รายการสั่งซื้อ" labelIcon={<BagIcon />} onClick={handleClickMy_order} />
                 </UserButton.MenuItems>
               </UserButton>
             </>
