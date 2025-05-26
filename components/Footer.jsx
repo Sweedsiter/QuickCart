@@ -17,7 +17,7 @@ const Footer = () => {
 
         <div className="w-1/2 flex items-center justify-start md:justify-center">
           <div>
-            <h2 className="font-medium text-gray-900 mb-5">Links</h2>
+            <h2 className="font-medium text-gray-900 mb-5">ลิงค์</h2>
             <ul className="text-sm space-y-2">
               <li>
                 <a className="hover:underline transition" href="/">Home</a>
@@ -32,16 +32,16 @@ const Footer = () => {
 
         <div className="w-1/2 flex items-start justify-start md:justify-center">
           <div>
-            <h2 className="font-medium text-gray-900 mb-5">Get in touch ติดต่อ</h2>
+            <h2 className="font-medium text-gray-900 mb-5">ติดต่อ</h2>
             <div className="text-sm space-y-2">
-              <p>โทร :  091 045 5990</p>
-              <p>เมล์ : D27saitunlu@gmail.com</p>
-              <p>      <a
+              <p><a href="tel:0910455990">โทร :  091 045 5990</a></p>
+              <p><a href="mailto:d27saitunlu@gmail.com">เมล์ : D27saitunlu@gmail.com</a></p>
+              <p><a
                 href="https://web.facebook.com/Dxebm"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-               เฟสบุ๊ค : Dxebm
+               เฟสบุ๊ค : Dxemb
               </a></p>
             </div>
           </div>
