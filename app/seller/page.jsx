@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useAppContext } from "@/context/AppContext";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Footer from "@/components/Footer";
 
 
 const AddProduct = () => {
@@ -20,11 +19,6 @@ const AddProduct = () => {
   const [offerPrice, setOfferPrice] = useState('');
   const [loading, setLoading] = useState(false); // Loading state  
   const [imgArray,setImgArray] = useState(1)
-
-
-
-
-
 
 // Handle form submission
   const handleSubmit = async (e) => {
@@ -208,9 +202,7 @@ const AddProduct = () => {
         </button>
         } 
            
-      </form>  
-     
-      <Footer />
+      </form>       
     </div>
   );
 };

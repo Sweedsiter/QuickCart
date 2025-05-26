@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "@/context/AppContext";
-import Footer from "@/components/seller/Footer";
 import Loading from "@/components/Loading";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -188,8 +187,6 @@ const Orders = () => {
                     ))}
                 </div>
             </div>}
-
-            <Footer />
         </div>
     );
 };

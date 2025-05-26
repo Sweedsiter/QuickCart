@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useState } from "react";
-import Footer from "@/components/seller/Footer";
 import { useAppContext } from "@/context/AppContext";
 
 const All_user = () => {
@@ -8,7 +7,6 @@ const All_user = () => {
   const [users, setUsers] = useState([]);
   const { router, isSeller, } = useAppContext()
   const [searchQuery, setSearchQuery] = useState("");
-
 
   useEffect(() => {
     if (!isSeller) {
@@ -22,7 +20,6 @@ const All_user = () => {
        
     }
   }, [isSeller, router]);
-
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -70,9 +67,6 @@ const All_user = () => {
           ) : (
             <p>No users found.</p>
           )}
-
-
-          <Footer />
         </>
       )}
     </div>

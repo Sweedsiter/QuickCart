@@ -1,7 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import { assets, BagIcon, BoxIcon, CartIcon, HomeIcon } from "@/assets/assets";
-import Link from "next/link"
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
 import { useClerk, UserButton } from "@clerk/nextjs";
@@ -10,7 +9,7 @@ import NavSearch from '@/components/์NavSearch'
 
 const Navbar = () => {
 
-  const { isSeller, user, products, } = useAppContext();
+  const { isSeller, user, products, setIsLoading } = useAppContext();
   const clerk = useClerk()
   const pathname = usePathname();
   const router = useRouter();
@@ -18,8 +17,6 @@ const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false); // State to toggle search input
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [filteredProducts, setFilteredProducts] = useState([]); // State for filtered products
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingHome, setIsLoadingHome] = useState(false);
 
   const handleClickAll_products = () => {
     setIsLoading(true);
@@ -27,7 +24,7 @@ const Navbar = () => {
   };
 
   const handleClickHome = () => {
-    setIsLoadingHome(true);
+    setIsLoading(true);
     router.push('/');
   };
 
@@ -70,11 +67,11 @@ const Navbar = () => {
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
         <button onClick={handleClickHome} className={`hover:font-bold transition ${pathname === "/" ? "text-orange-600  font-bold" : ""
           }`}>
-          {isLoadingHome ? 'กำลังโหลด...' : 'หน้าแรก'} 
+         หน้าแรก
         </button>
         <button  onClick={handleClickAll_products} className={`hover:font-bold transition ${pathname === "/all-products" ? "text-orange-600 font-bold" : ""
           }`}>
-          {isLoading ? 'กำลังโหลด...' : 'รวมลายปัก'} 
+        รวมลายปัก        
         </button>
         {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border px-4 py-1.5 rounded-full">Seller Dashboard</button>}
       </div>

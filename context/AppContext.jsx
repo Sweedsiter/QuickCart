@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
+
 export const AppContext = createContext();
 
 export const useAppContext = () => {
@@ -24,6 +25,7 @@ export const AppContextProvider = (props) => {
     const [userData, setUserData] = useState(false)
     const [isSeller, setIsSeller] = useState(false)
     const [cartItems, setCartItems] = useState({})
+    const [isLoading, setIsLoading] = useState(false);
 
     const fetchProductData = async () => {
         try {
@@ -142,7 +144,9 @@ export const AppContextProvider = (props) => {
         products, fetchProductData,
         cartItems, setCartItems,
         addToCart, updateCartQuantity,
-        getCartCount, getCartAmount
+        getCartCount, getCartAmount,
+        isLoading, 
+        setIsLoading, 
     }
 
     return (

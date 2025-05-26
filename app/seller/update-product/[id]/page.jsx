@@ -5,7 +5,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter, useParams } from "next/navigation";
 import Loading from "@/components/Loading";
-import Footer from "@/components/seller/Footer";
 import Image from "next/image";
 
 
@@ -97,37 +96,10 @@ export default function UpdateProduct() {
                         ) : (
                             <p className="text-gray-500">No image available</p>
                         )}
-                        {/* <div>   
-                                {product.image && product.image.length > 0 ? (
-                                    <Image
-                                        src={product.image[0]} // Ensure this is a valid image URL
-                                        alt="Product Image"
-                                        className="w-32 h-32 object-cover rounded-md"
-                                        width={128} // Optional: Specify width
-                                        height={128} // Optional: Specify height
-                                    />
-                                ) : (
-                                    <p className="text-gray-500">No image available</p>
-                                )}
-                                <label htmlFor="image-upload" className="cursor-pointer text-blue-500 underline">
-                                    Upload Image
-                                </label>
-                                <input
-                                    type="file"
-                                    id="image-upload"
-                                    className="hidden"
-                                    onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        if (file) {
-                                            setProduct({ ...product, image: [URL.createObjectURL(file)] });
-                                        }
-                                    }}
-                                />
-                        </div> */}
+                       
                     </div>
-
-
                 </div>
+                
                 <div className="flex flex-col gap-1 max-w-md">
                     <label className="text-base font-medium" htmlFor="product-name">
                         Name
@@ -215,7 +187,6 @@ export default function UpdateProduct() {
                     Update
                 </button>
             </form>
-            <Footer />
         </div>
     );
 }
