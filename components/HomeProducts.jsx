@@ -15,7 +15,11 @@ const HomeProducts = () => {
 
 
   return (
-    <div className="flex flex-col items-center pt-14">
+    <>
+    {      isLoading ? (
+     <div className="md:h-[400px] h-[300px]"><Loading /></div>
+    ) : (
+      <div className="flex flex-col items-center pt-14">
       <div className="flex flex-col w-full mb-8 text-3xl ">
         <p className="text-2xl font-medium text-left w-full">Popular products</p>
     
@@ -38,6 +42,8 @@ const HomeProducts = () => {
         {isLoading ? 'กำลังโหลด...' : 'กดดูทั้งหมด....'}
       </button>
     </div>
+    )}
+    </>
   );
 };
 

@@ -5,6 +5,14 @@ import { useAppContext } from "@/context/AppContext";
 
 const HeaderSlider = () => {
   const { router } = useAppContext()
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  const handleClick = () => {
+    setIsLoading(true);
+    router.push('/all-products');
+  };
+
   const sliderData = [
     {
       id: 1,
@@ -68,13 +76,13 @@ const HeaderSlider = () => {
                   <a
                     href="https://m.me/Dxebm"
                     target="_blank"
-                    rel="noopener noreferrer"                    
+                    rel="noopener noreferrer"
                   >
                     {slide.buttonText1}
                   </a>
                 </button>
-                <button onClick={() => { router.push('/all-products') }} className="group flex items-center gap-2 px-6 py-2.5 font-medium" >
-                  {slide.buttonText2}
+                <button onClick={handleClick} disabled={isLoading} className="group flex items-center gap-2 px-6 py-2.5 font-medium" >   
+                  {isLoading ? 'กำลังโหลด...' : slide.buttonText2}
                   <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
                 </button>
               </div>

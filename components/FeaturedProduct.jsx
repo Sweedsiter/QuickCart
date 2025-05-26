@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 import { useAppContext } from "@/context/AppContext";
@@ -12,7 +12,7 @@ const products = [
   },
   {
     id: 2,
-    image: assets.  ร้านนานาภัณฑ์02,
+    image: assets.ร้านนานาภัณฑ์02,
     title: "ลายปัก ขนาดกลาง",
     description: "ปักหลังเสื้อ ถุงผ้า ย่าม หรือกระเป๋า เหมาะกับผ้าที่ลองรับได้",
   },
@@ -27,6 +27,12 @@ const products = [
 const FeaturedProduct = () => {
 
   const { router } = useAppContext()
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = () => {
+    setIsLoading(true);
+    router.push('/all-products');
+  };
 
   return (
     <div className="mt-14">
@@ -48,8 +54,8 @@ const FeaturedProduct = () => {
               <p className="text-sm lg:text-base leading-5 max-w-60">
                 {description}
               </p>
-              <button onClick={() => { router.push('/all-products') }} className="flex items-center gap-1.5 bg-orange-600 px-4 py-2 rounded text-white">
-                ลายทั้งหมด <Image className="h-3 w-3" src={assets.redirect_icon} alt="Redirect Icon" />
+              <button onClick={handleClick} disabled={isLoading} className="flex items-center gap-1.5 bg-orange-600 px-4 py-2 rounded text-white">               
+                {isLoading ? 'กำลังโหลด...' : 'ลายทั้งหมด'} <Image className="h-3 w-3" src={assets.redirect_icon} alt="Redirect Icon" />
               </button>
             </div>
           </div>

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { assets, BagIcon, BoxIcon, CartIcon, HomeIcon } from "@/assets/assets";
 import Link from "next/link"
 import { useAppContext } from "@/context/AppContext";
@@ -18,6 +18,18 @@ const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false); // State to toggle search input
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [filteredProducts, setFilteredProducts] = useState([]); // State for filtered products
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingHome, setIsLoadingHome] = useState(false);
+
+  const handleClickAll_products = () => {
+    setIsLoading(true);
+    router.push('/all-products');
+  };
+
+  const handleClickHome = () => {
+    setIsLoadingHome(true);
+    router.push('/');
+  };
 
   // Handle search input change
   const handleSearch = (query) => {
@@ -31,24 +43,24 @@ const Navbar = () => {
     );
     setFilteredProducts(filtered);
   };
-    // Clear filteredProducts when clicking outside
-    useEffect(() => {
-      const handleBodyClick = (event) => {
-        const searchContainer = document.querySelector(".search-container");
-        if (searchContainer && !searchContainer.contains(event.target)) {
-          setFilteredProducts([]);          
-        }
-      };
-  
-      document.addEventListener("click", handleBodyClick);
-  
-      return () => {
-        document.removeEventListener("click", handleBodyClick);
-      };
-    }, []);
+  // Clear filteredProducts when clicking outside
+  useEffect(() => {
+    const handleBodyClick = (event) => {
+      const searchContainer = document.querySelector(".search-container");
+      if (searchContainer && !searchContainer.contains(event.target)) {
+        setFilteredProducts([]);
+      }
+    };
+
+    document.addEventListener("click", handleBodyClick);
+
+    return () => {
+      document.removeEventListener("click", handleBodyClick);
+    };
+  }, []);
 
   return (
-    <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700"  onClick={() => {  setFilteredProducts([]),setSearchQuery("")}}>
+    <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700" onClick={() => { setFilteredProducts([]), setSearchQuery("") }}>
       <Image
         className="cursor-pointer w-28 md:w-32 "
         onClick={() => router.push('/')}
@@ -56,23 +68,18 @@ const Navbar = () => {
         alt="logo"
       />
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
-        <Link href="/" className={`hover:font-bold transition ${pathname === "/" ? "text-orange-600  font-bold" : ""
+        <button onClick={handleClickHome} className={`hover:font-bold transition ${pathname === "/" ? "text-orange-600  font-bold" : ""
           }`}>
-          หน้าแรก
-        </Link>
-        <Link href="/all-products" className={`hover:font-bold transition ${pathname === "/all-products" ? "text-orange-600 font-bold" : ""
+          {isLoadingHome ? 'กำลังโหลด...' : 'หน้าแรก'} 
+        </button>
+        <button  onClick={handleClickAll_products} className={`hover:font-bold transition ${pathname === "/all-products" ? "text-orange-600 font-bold" : ""
           }`}>
-          รวมลายปัก
-        </Link>
- 
+          {isLoading ? 'กำลังโหลด...' : 'รวมลายปัก'} 
+        </button>
         {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border px-4 py-1.5 rounded-full">Seller Dashboard</button>}
-
       </div>
-
       <ul className="hidden md:flex items-center gap-4 ">
-
         <div className="flex items-center gap-4 relative">
-
           {showSearch && (
             <input
               type="text"
@@ -82,21 +89,19 @@ const Navbar = () => {
               className="border border-gray-300 rounded-md p-1 w- pl-2"
             />
           )}
+          {filteredProducts.length > 0 && (
+            <div className=" fixed inset-0 bg-orange-200 bg-opacity-75   z-20 mt-20  h-full overflow-y-auto" onClick={() => { setFilteredProducts([]), setSearchQuery("") }}>
+              {filteredProducts.map((product) => (
+                <NavSearch product={product} />
+              ))}
+            </div>
+          )}
 
-        
-            {filteredProducts.length > 0 && (
-              <div className=" fixed inset-0 bg-orange-200 bg-opacity-75   z-20 mt-20  h-full overflow-y-auto"  onClick={() => {setFilteredProducts([]),setSearchQuery("")}}> 
-                {filteredProducts.map((product) => (
-                 <NavSearch product={product} />
-                ))}
-              </div>
-            )}
-         
 
 
           {
             showSearch ? (
-              <button onClick={() => {setShowSearch(false),setFilteredProducts([]),setSearchQuery()}} className="text-red-500  hover:font-bold transition">
+              <button onClick={() => { setShowSearch(false), setFilteredProducts([]), setSearchQuery() }} className="text-red-500  hover:font-bold transition">
                 X
               </button>
             ) : (
