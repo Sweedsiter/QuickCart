@@ -61,35 +61,6 @@ export const syncUserDeletion = inngest.createFunction(
 )
 
 
-// Inngest Function to create user's order database
-
-// export const createUserOrder = inngest.createFunction({
-//     id: 'create-user-order',
-//     batchEvents: {
-//         maxSize: 5,
-//         timeout: '5s'
-//     }
-//     },
-//     { event: 'order/created' },
-//     async ({events})=>{
-
-//         const orders = events.map((event)=>{
-//             return {
-//                 userId : event.data.userId,
-//                 items : event.data.items,
-//                 amount : event.data.amount,
-//                 address : event.data.address,
-//                 date : event.data.date
-//             }            
-//         })
-
-//         await connectDB()
-//         await Order.insertMany(orders)
-
-//         return { success: true , processed: orders.length}
-//     }
-// )
-
 export const createUserOrder = inngest.createFunction(
     {
         id: 'create-user-order',
@@ -116,19 +87,7 @@ export const createUserOrder = inngest.createFunction(
                     const user = await User.findById(userId);
                     if (!user) {
                         throw new Error(`User with ID ${userId} not found`);
-                    }
-                    
-                    // // Add product_file to each item dynamically
-                    // const product_file = await Promise.all(
-                    //     items.map(async (item) => {
-                    //         const productFile = await ProductFile.findOne({ product_id: item.product });
-                    //         return {
-                    //             ...item,
-                    //             product_file: productFile ? productFile.filesUrl[0]?.url : null // Add the first file URL or null
-                    //         };
-                    //     })
-                    // );
-
+                    }  
 
                     return {
                         userId,
@@ -151,20 +110,3 @@ export const createUserOrder = inngest.createFunction(
         }
     }
 );
-
-// // inngest Function to delet Order from database
-// export const OrderDeleted = inngest.createFunction(
-//     {
-//         id: 'delete-order-deleted'
-//     },
-//     { event: 'clerk/user.deleted' },
-//     async ({ event }) => {
-//         const { id } = event.data
-
-//         await connectDB()
-
-//         // Delete all orders associated with the user ID
-//         const result = await Order.deleteMany({ userId: id });
-//         return { success: true, deletedCount: result.deletedCount }; // Return the number of deleted orders
-//     }
-// )
