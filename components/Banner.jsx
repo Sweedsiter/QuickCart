@@ -18,7 +18,14 @@ const Banner = () => {
           โลโก้ โรงเรียน สถาบัน องค์กร บริษัท หน่วยงานราชการ ราคาเริ่มต้นที่ 150 บาท
         </p>
         <button className="group flex items-center justify-center gap-1 px-12 py-2.5 bg-orange-600 rounded text-white">
-          ติดต่อเรา&nbsp;&nbsp;&nbsp;
+          <a
+            href="https://m.me/Dxebm"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ติดต่อเรา
+          </a>
+          &nbsp;&nbsp;&nbsp;
           <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon_white} alt="arrow_icon_white" />
         </button>
       </div>
@@ -27,7 +34,7 @@ const Banner = () => {
         src={assets.Logo2}
         alt="md_controller_image"
       />
-   
+
     </div>
   );
 };
