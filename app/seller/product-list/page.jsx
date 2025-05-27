@@ -9,9 +9,13 @@ import toast from "react-hot-toast";
 
 const ProductList = () => {
 
-  const { router, getToken, user, isSeller,setIsLoading } = useAppContext()
+  const { router, getToken, user, isSeller, setIsLoading, isLoading } = useAppContext()
 
-
+  if (isLoading) {
+    return <div className="flex items-center justify-center h-screen">
+      <Loading />
+    </div>;
+  }
 
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -33,6 +37,7 @@ const ProductList = () => {
       if (data.success) {
         toast.success("Product deleted successfully");
         setProducts((prevProducts) => prevProducts.filter((product) => product._id !== id)); // Update the product list
+        setIsLoading(false);
       } else {
         toast.error(data.message);
       }
@@ -42,7 +47,6 @@ const ProductList = () => {
   };
   // Update product function
   const handleUpdate = (id) => () => {
-    setIsLoading(true);
     router.push(`/seller/update-product/${id}`)
   }
 
@@ -82,7 +86,9 @@ const ProductList = () => {
 
   return (
     <div className="flex-1 min-h-screen flex flex-col justify-between">
-      {loading ? <Loading /> : <div className="w-full md:p-10 p-4">
+      {loading ? <div className="flex items-center justify-center h-screen">
+        <Loading />
+      </div> : <div className="w-full md:p-10 p-4">
         <h2 className="pb-4 text-lg font-medium">All Product</h2>
 
         <select
@@ -103,7 +109,7 @@ const ProductList = () => {
           onChange={(e) => setSearchTerm(e.target.value)} // Update search term
           className="border border-gray-300 rounded px-4 py-2 w-fit mb-4 md:ml-4"
         />
-         <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>
+        <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>
         <div className="flex flex-col items-center w-full overflow-hidden rounded-md bg-white border border-gray-500/20">
           <table className=" table-fixed w-full overflow-hidden">
             <thead className="text-gray-900 text-sm text-left">

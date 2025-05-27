@@ -72,8 +72,10 @@ export default function UpdateProduct() {
     };
 
     if (loading) {
-        return <Loading />;
-    }
+        return <div className="flex items-center justify-center h-screen">
+        <Loading /> 
+        </div>;
+    }   
 
     if (!product) {
         return <div className="text-center mt-10">Product not found</div>;
