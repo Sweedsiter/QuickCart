@@ -9,7 +9,9 @@ import toast from "react-hot-toast";
 
 const ProductList = () => {
 
-  const { router, getToken, user, isSeller } = useAppContext()
+  const { router, getToken, user, isSeller,setIsLoading } = useAppContext()
+
+
 
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -17,6 +19,7 @@ const ProductList = () => {
 
   // Delete product function
   const oneDelete = (id) => async () => {
+    setIsLoading(true);
     if (!window.confirm("Are you sure you want to delete this product?")) {
       return; // Exit if the user cancels the confirmation dialog
     }
@@ -39,6 +42,7 @@ const ProductList = () => {
   };
   // Update product function
   const handleUpdate = (id) => () => {
+    setIsLoading(true);
     router.push(`/seller/update-product/${id}`)
   }
 
