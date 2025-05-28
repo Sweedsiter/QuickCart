@@ -7,13 +7,13 @@ import { useParams } from "next/navigation";
 import Loading from "@/components/Loading";
 import { useAppContext } from "@/context/AppContext";
 import React from "react";
+import { useClerk } from "@clerk/nextjs";
 
 
 const Product = () => {
-
+    const clerk = useClerk()
     const { id } = useParams();
-
-    const { products, router, addToCart, isLoading, setIsLoading } = useAppContext()
+    const { products, router, addToCart, isLoading, setIsLoading, user } = useAppContext()
 
     const [mainImage, setMainImage] = useState(null);
     const [productData, setProductData] = useState(null);
@@ -32,6 +32,25 @@ const Product = () => {
             }, 1000);
         }
     }, [id, products.length])
+
+    const handleAddToCart = (productId) => {
+        if (!user) {
+            alert("กรุณาเข้าสู่ระบบก่อนเพิ่มสินค้าลงในตะกร้า");
+            clerk.openSignIn(); // Open the Clerk sign-in modal   
+            return;
+        }
+        addToCart(productId);
+    };
+
+    const handleAddToCartAndGoToCart = (productId) => {
+        if (!user) {
+            alert("กรุณาเข้าสู่ระบบก่อนเพิ่มสินค้าลงในตะกร้า");
+            clerk.openSignIn(); // Open the Clerk sign-in modal   
+            return;
+        }
+        addToCart(productId);
+        router.push("/cart");
+    };
 
     if (isLoading) {
         return <div className="flex items-center justify-center h-screen">
@@ -139,10 +158,10 @@ const Product = () => {
                     </div>
 
                     <div className="flex items-center mt-10 gap-4">
-                        <button onClick={() => addToCart(productData._id)} className="w-full py-3.5 bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition">
+                        <button onClick={() => handleAddToCart(productData._id)} className="w-full py-3.5 bg-gray-100 text-gray-800/80 hover:bg-gray-200 transition">
                             เพิ่มใส่ตะกร้า
                         </button>
-                        <button onClick={() => { addToCart(productData._id); router.push('/cart') }} className="w-full py-3.5 bg-orange-500 text-white hover:bg-orange-600 transition">
+                        <button onClick={() => handleAddToCartAndGoToCart(productData._id)} className="w-full py-3.5 bg-orange-500 text-white hover:bg-orange-600 transition">
                             เพิ่ม และ ไปที่ตะกร้า
                         </button>
                     </div>

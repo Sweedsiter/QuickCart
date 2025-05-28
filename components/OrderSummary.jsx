@@ -4,9 +4,11 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { assets } from "@/assets/assets"
 import Image from "next/image";
+import { useClerk } from "@clerk/nextjs";
 
 
 const OrderSummary = () => {
+    const clerk = useClerk()
 
   const { currency, router, getCartCount, getCartAmount, getToken, user, cartItems, setCartItems } = useAppContext()
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -33,8 +35,10 @@ const OrderSummary = () => {
     if (user) {
       fetchUserAddresses();
     } else{
-      alert("กรุณาเข้าสู่ระบบโดย email ก่อนทำการสั่งซื้อ");
+      alert("กรุณาเข้าสู่ระบบก่อนทำการสั่งซื้อ");
       router.push("/all-products");
+      clerk.openSignIn(); // Open the Clerk sign-in modal   
+      
     }  
     return () => {
       if (previewUrl) {
@@ -47,7 +51,7 @@ const OrderSummary = () => {
   // Function to check if user is logged in and redirect to login page if not
   const checkUser = () => {
     if (!user) {
-      alert("กรุณาเข้าสู่ระบบโดย email ก่อนทำการสั่งซื้อ");
+      alert("กรุณาเข้าสู่ระบบก่อนทำการสั่งซื้อ"); 
 
     } else {
       router.push("/add-address");
