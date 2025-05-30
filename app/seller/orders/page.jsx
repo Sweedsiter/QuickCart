@@ -7,11 +7,13 @@ import toast from "react-hot-toast";
 
 const Orders = () => {
 
-    const { currency, getToken, user, router, address,isSeller } = useAppContext();
+    const { currency, getToken, user, router, isSeller } = useAppContext();
 
     const [orders, setOrders] = useState([]);
+    const [filteredOrders, setFilteredOrders] = useState([]); // State for filtered orders
     const [loading, setLoading] = useState(true);
     const [orderSendIds, setOrderSendIds] = useState(new Set());
+    const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
     //show slip
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,12 +30,12 @@ const Orders = () => {
     // Fetch seller orders
     const fetchSellerOrders = async () => {
         try {
-            // const token = await getToken();
-            // const { data } = await axios.get('/api/order/seller-order', { headers: { Authorization: `Bearer ${token}` } });
-             const { data } = await axios.get('/api/order/seller-order')
+            const { data } = await axios.get('/api/order/seller-order');
 
             if (data.success) {
-                setOrders(data.orders);
+                const sortedOrders = data.orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+                setOrders(sortedOrders);
+                setFilteredOrders(sortedOrders); // Initialize filtered orders
                 setLoading(false);
             } else {
                 toast.error(data.message);
@@ -98,12 +100,35 @@ const Orders = () => {
         }
     }
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        const filtered = orders.filter((order) =>
+            order.items.some((item) =>
+                item.product.name.toLowerCase().includes(query.toLowerCase())
+            )
+        );
+        setFilteredOrders(filtered);
+    };
+
     return (
         <div className="flex-1 h-screen overflow-scroll flex flex-col justify-between text-sm">
             {loading ? <Loading /> : <div className="md:p-10 p-4 space-y-5">
                 <h2 className="text-lg font-medium">Orders</h2>
+                <div className="flex justify-between items-center">
+                    <p className="text-gray-500">Total Orders: {filteredOrders.length}</p>    
+                    <div className="my-4">
+                        <input
+                            type="text"
+                            placeholder="Search by product name..."
+                            value={searchQuery}
+                            onChange={(e) => handleSearch(e.target.value)}
+                            className="border border-gray-300 rounded-md p-2 w-full"
+                        />
+                    </div>            
+                    <p className="text-gray-500">Total Amount: {currency}{orders.reduce((acc, order) => acc + order.amount, 0).toFixed(2)}</p>
+                </div>
                 <div className="rounded-md">
-                    {orders.map((order) => (
+                    {filteredOrders.map((order) => (
                         order.items.map((item, index) => (
                             <div key={index} className="flex flex-col md:flex-row gap-5 justify-between p-5 border-t border-gray-300">
                                 <div onClick={() => router.push(`/product/${item.product._id}`)} className="flex-1 flex gap-5 max-w-80">
