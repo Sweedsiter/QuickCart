@@ -57,7 +57,8 @@ const ProductList = () => {
       const { data } = await axios.get('/api/product/seller-list', { headers: { Authorization: `Bearer ${token}` } })
 
       if (data.success) {
-        setProducts(data.products)
+        const sortedOrders = data.products.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setProducts(sortedOrders)
         setLoading(false)
       } else {
         toast.error(data.message)
