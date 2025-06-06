@@ -260,7 +260,7 @@ const OrderSummary = () => {
           <div className="flex flex-row my-1">
             <Image className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" />
             <div className="pl-6">
-            <p>SCB</p><br/>
+            <p>SCB</p>
               <p>HTAY AUNG</p>
               <p
                 className="cursor-pointer text-blue-600 underline w3-wide tracking-[2px]"
@@ -270,11 +270,11 @@ const OrderSummary = () => {
               </p>
             </div>
           </div>
-  
+      
           <div className="flex flex-row my-1">
             <Image className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" />
             <div className="pl-6">
-            <p>KRU</p><br/>
+            <p>KRU</p>
               <p>HTAY AUNG</p>
               <p
                 className="cursor-pointer text-blue-600 underline tracking-[2px]"
