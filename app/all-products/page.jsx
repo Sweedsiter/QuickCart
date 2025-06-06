@@ -6,14 +6,11 @@ import Loading from "@/components/Loading";
 
 const AllProducts = () => {
   const { products } = useAppContext();
-  const [selectedCategory, setSelectedCategory] = useState("เลือกกลุ่ม"); // State for selected category
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [selectedCategory, setSelectedCategory] = useState("เลือกกลุ่ม"); 
+  const [searchQuery, setSearchQuery] = useState(""); 
 
-
-  // Extract unique categories from products
   const categories = ["เลือกกลุ่ม", ...new Set(products.map((product) => product.category))];
 
-  // Filter products based on selected category and search query
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
       selectedCategory === "เลือกกลุ่ม" || product.category === selectedCategory;
@@ -31,13 +28,6 @@ const AllProducts = () => {
       .map(({ item }) => item);
   };
   const shuffledProducts = shuffleArray(filteredProducts);
-
-  // const sortArrayDescending = (array) => {
-  //   return array.slice().reverse(); // slice() to avoid mutating the original
-  // };
-  // const shuffledProducts = sortArrayDescending(filteredProducts);
-
-
   return (
     <>   
       <div className="flex flex-col items-start px-6 md:px-16 lg:px-32 ">   
@@ -59,7 +49,6 @@ const AllProducts = () => {
               </option>
             ))}
           </select>
-
           <input
             type="text"
             placeholder="ค้นหาชื่อโลโก้..."
@@ -83,5 +72,4 @@ const AllProducts = () => {
     </>
   );
 };
-
 export default AllProducts;

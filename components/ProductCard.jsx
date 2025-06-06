@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { assets } from '@/assets/assets'
 import Image from 'next/image';
 import { useAppContext } from '@/context/AppContext';
 
 const ProductCard = ({ product }) => {
     const { router, setIsLoading } = useAppContext()
-
+    const [imageLoading, setImageLoading] = useState(true);
     const handleClick = () => {
         setIsLoading(true);
-        router.push('/product/' + product._id);
+        router.push('/product/'+product._id);
         scrollTo(0, 0);
     }
     return (
@@ -17,10 +17,17 @@ const ProductCard = ({ product }) => {
             className="flex flex-col items-start gap-0.5 max-w-[200px] w-full cursor-pointer"
         >
             <div className="cursor-pointer group relative bg-gray-500/10 rounded-lg w-full h-52 flex items-center justify-center">
+                {imageLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                        <p className="text-gray-500">Loading...</p>
+                    </div>
+                )}
                 <img
-                    src={product?.image[0] ? product.image[0] :"Loading..."}
-                    alt={product.name}
-                    className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"                 
+                    src={product?.image[0]}
+                    alt={product?.name}
+                    className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"
+                    onLoad={() => setImageLoading(false)} 
+                    onError={() => setImageLoading(false)} 
                 />
                 <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md">
                     <Image
@@ -31,8 +38,8 @@ const ProductCard = ({ product }) => {
                 </button>
             </div>
 
-            <p className="md:text-base font-medium pt-2 w-full truncate">{product.name}</p>
-            <p className="w-full text-xs text-gray-500/70 max-sm:hidden truncate">{product.description}</p>
+            <p className="md:text-base font-medium pt-2 w-full truncate">{product?.name}</p>
+            <p className="w-full text-xs text-gray-500/70 max-sm:hidden truncate">{product?.description}</p>
             <div className="flex items-center gap-2">
                 <p className="text-xs">{4.5}</p>
                 <div className="flex items-center gap-0.5">
@@ -51,7 +58,7 @@ const ProductCard = ({ product }) => {
                 </div>
             </div>
             <div className="flex items-end justify-between w-full mt-1">
-                <p className="text-base font-medium">฿{product.offerPrice}</p>
+                <p className="text-base font-medium">฿{product?.offerPrice}</p>
                 <button
                     onClick={handleClick}
                     className=" max-sm:hidden px-4 py-1.5 text-gray-500 border border-gray-500/20 rounded-full text-xs hover:bg-slate-50 transition">
@@ -61,5 +68,4 @@ const ProductCard = ({ product }) => {
         </div>
     )
 }
-
 export default ProductCard
