@@ -74,9 +74,9 @@ const Product = () => {
                         /> */}
 
                         <img
-                           src={mainImage || productData.image[0]}
+                            src={mainImage || productData.image[0]}
                             alt="alt"
-                           className="w-full h-auto object-cover mix-blend-multiply"
+                            className="w-full h-auto object-cover mix-blend-multiply"
                             onClick={() => setIsModalOpen(true)}
                         />
                     </div>
@@ -88,11 +88,18 @@ const Product = () => {
                                 onClick={() => setMainImage(image)}
                                 className="cursor-pointer rounded-lg overflow-hidden bg-gray-500/10"
                             >
-                                <Image
+                                {/* <Image
                                     src={image}
                                     alt="alt"
                                     className="w-full h-auto object-cover mix-blend-multiply"
                                     width={1280}
+                                    height={720}
+                                /> */}
+                                <img
+                                     src={image}
+                                    alt="alt"
+                                     className="w-full h-auto object-cover mix-blend-multiply"
+                                     width={1280}
                                     height={720}
                                 />
                             </div>
