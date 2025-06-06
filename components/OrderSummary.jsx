@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { assets } from "@/assets/assets"
-import Image from "next/image";
+// import Image from "next/image";
 import { useClerk } from "@clerk/nextjs";
 
 
@@ -258,7 +258,7 @@ const OrderSummary = () => {
             
           <p className="py-2">เมื่อกดที่ตัวเลข Copy ออโต้</p>
           <div className="flex flex-row my-1">
-            <Image className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" />
+            <img className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" />
             <div className="pl-6">
               <p>HTAY AUNG</p>
               <p
@@ -271,7 +271,7 @@ const OrderSummary = () => {
           </div>
   
           <div className="flex flex-row my-1">
-            <Image className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" />
+            <img className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" />
             <div className="pl-6">
               <p>HTAY AUNG</p>
               <p

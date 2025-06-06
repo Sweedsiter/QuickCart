@@ -23,11 +23,13 @@ const ProductCard = ({ product }) => {
                     </div>
                 )}
                 <img
-                    src={product?.image[0]}
-                    alt={product?.name}
+                    src={product.image[0]}
+                    alt={product.name}
                     className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"
                     onLoad={() => setImageLoading(false)} 
                     onError={() => setImageLoading(false)} 
+                    width={800}
+                    hight={800}
                 />
                 <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md">
                     <Image
@@ -38,8 +40,8 @@ const ProductCard = ({ product }) => {
                 </button>
             </div>
 
-            <p className="md:text-base font-medium pt-2 w-full truncate">{product?.name}</p>
-            <p className="w-full text-xs text-gray-500/70 max-sm:hidden truncate">{product?.description}</p>
+            <p className="md:text-base font-medium pt-2 w-full truncate">{product.name}</p>
+            <p className="w-full text-xs text-gray-500/70 max-sm:hidden truncate">{product.description}</p>
             <div className="flex items-center gap-2">
                 <p className="text-xs">{4.5}</p>
                 <div className="flex items-center gap-0.5">
