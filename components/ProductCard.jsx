@@ -4,8 +4,7 @@ import Image from 'next/image';
 import { useAppContext } from '@/context/AppContext';
 
 const ProductCard = ({ product }) => {
-
-    const {  router, setIsLoading } = useAppContext()
+    const {router, setIsLoading } = useAppContext()
 
     const handleClick = () => {
         setIsLoading(true);
@@ -18,7 +17,7 @@ const ProductCard = ({ product }) => {
             className="flex flex-col items-start gap-0.5 max-w-[200px] w-full cursor-pointer"
         >
             <div className="cursor-pointer group relative bg-gray-500/10 rounded-lg w-full h-52 flex items-center justify-center">
-                <Image
+                <img
                     src={product.image[0]}
                     alt={product.name}
                     className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"
@@ -53,7 +52,6 @@ const ProductCard = ({ product }) => {
                     ))}
                 </div>
             </div>
-
             <div className="flex items-end justify-between w-full mt-1">
                 <p className="text-base font-medium">฿{product.offerPrice}</p>
                 <button 
