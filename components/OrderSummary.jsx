@@ -265,7 +265,7 @@ const OrderSummary = () => {
                     <Image className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" /> : <p>SCB</p>
                 }
                 <div className="pl-6">
-
+                  <p>SCB</p>
                   <p>HTAY AUNG</p>
                   <p
                     className="cursor-pointer text-blue-600 underline w3-wide tracking-[2px]"
@@ -277,13 +277,13 @@ const OrderSummary = () => {
               </div>
 
               <div className="flex flex-row my-1">
-                <img className="max-w-12 my-1" src="https://play.google.com/store/apps/details?id=com.krungsri.kma&hl=th" alt="arrow_icon_white" />
+
                 {
                   assets?.KRU ?
                     <Image className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" /> : <p>กรุงศรี</p>
                 }
                 <div className="pl-6">
-
+                  <p>กรุงศรี</p>
                   <p>HTAY AUNG</p>
                   <p
                     className="cursor-pointer text-blue-600 underline tracking-[2px]"
