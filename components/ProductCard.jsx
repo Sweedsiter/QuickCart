@@ -6,6 +6,7 @@ import { useAppContext } from '@/context/AppContext';
 const ProductCard = ({ product }) => {
     const { router, setIsLoading } = useAppContext()
     const [imageLoading, setImageLoading] = useState(true);
+
     const handleClick = () => {
         setIsLoading(true);
         router.push('/product/'+product._id);
@@ -22,7 +23,7 @@ const ProductCard = ({ product }) => {
                         <p className="text-gray-500">Loading...</p>
                     </div>
                 )}
-                <Image
+                <img
                     src={product.image[0]}
                     alt={product.name}
                     className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"
