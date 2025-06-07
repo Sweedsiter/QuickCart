@@ -8,7 +8,7 @@ import { useClerk } from "@clerk/nextjs";
 
 
 const OrderSummary = () => {
-    const clerk = useClerk()
+  const clerk = useClerk()
 
   const { currency, router, getCartCount, getCartAmount, getToken, user, cartItems, setCartItems } = useAppContext()
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -34,24 +34,24 @@ const OrderSummary = () => {
   useEffect(() => {
     if (user) {
       fetchUserAddresses();
-    } else{
+    } else {
       alert("กรุณาเข้าสู่ระบบก่อนทำการสั่งซื้อ");
       router.push("/all-products");
       clerk.openSignIn(); // Open the Clerk sign-in modal   
-      
-    }  
+
+    }
     return () => {
       if (previewUrl) {
         URL.revokeObjectURL(previewUrl); // Clean up the URL
       }
     };
-  }, [previewUrl,user]);
+  }, [previewUrl, user]);
 
 
   // Function to check if user is logged in and redirect to login page if not
   const checkUser = () => {
     if (!user) {
-      alert("กรุณาเข้าสู่ระบบก่อนทำการสั่งซื้อ"); 
+      alert("กรุณาเข้าสู่ระบบก่อนทำการสั่งซื้อ");
 
     } else {
       router.push("/add-address");
@@ -136,11 +136,11 @@ const OrderSummary = () => {
         items: cartItemsArray,
         paySlip: paySlip,
       }
-      // ,
-      //  {
-      //   headers: { Authorization: `Bearer ${token}` }
-      // }
-    )
+        // ,
+        //  {
+        //   headers: { Authorization: `Bearer ${token}` }
+        // }
+      )
 
       if (data.success) {
         toast.success(data.message)
@@ -160,11 +160,11 @@ const OrderSummary = () => {
   //
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => {
-        toast.success("Copy รหัสเรียบร้อย");
+      toast.success("Copy รหัสเรียบร้อย");
     }).catch(() => {
-        toast.error("Failed to copy!");
+      toast.error("Failed to copy!");
     });
-};
+  };
 
 
   return (
@@ -249,74 +249,80 @@ const OrderSummary = () => {
           disabled={isUploading} // Disable the button while uploading
         >
           {isUploading ? "Uploading..." : "ส่งข้อมูลการซื้อ"}
-        </button> :     
-          !selectedAddress ? 
-          <span className="text-green-600">กรุณากรอกที่อยู่ก่อนทำการสั่งซื้อ</span> 
-          :       
-          <div>
-          <p className="py-2 text-red-600">คําเดือน <br/>ขอวนสิทธิ์ผู้ที่ส่งข้อมูลไม่ถูกต้องตามประกาศ และ ข้อมูล จะถูกเก็บไว้ใน Server </p>
-            
-          <p className="py-2">เมื่อกดที่ตัวเลข Copy ออโต้</p>
-          <div className="flex flex-row my-1">
-          <img className="max-w-12 my-1" src="https://play.google.com/store/apps/details?id=com.scb.phone&hl=th" alt="arrow_icon_white" />        
+        </button> :
+          !selectedAddress ?
+            <span className="text-green-600">กรุณากรอกที่อยู่ก่อนทำการสั่งซื้อ</span>
+            :
+            <div>
+              <p className="py-2 text-red-600">คําเดือน <br />ขอวนสิทธิ์ผู้ที่ส่งข้อมูลไม่ถูกต้องตามประกาศ และ ข้อมูล จะถูกเก็บไว้ใน Server </p>
 
-            {/* <Image className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" /> */}
-            <div className="pl-6">
-            <p>SCB</p>
-              <p>HTAY AUNG</p>
-              <p
-                className="cursor-pointer text-blue-600 underline w3-wide tracking-[2px]"
-                onClick={() => copyToClipboard("365 264010 7")}
-              >
-                365 264010 7
-              </p>
-            </div>
-          </div>
-      
-          <div className="flex flex-row my-1">    
-            <img className="max-w-12 my-1" src="https://play.google.com/store/apps/details?id=com.krungsri.kma&hl=th" alt="arrow_icon_white" />        
-            {/* <Image className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" /> */}
-            <div className="pl-6">
-            <p>กรุงศรี</p>
-              <p>HTAY AUNG</p>
-              <p
-                className="cursor-pointer text-blue-600 underline tracking-[2px]"
-                onClick={() => copyToClipboard("345 904 8624")}
-              >
-                345 904 8624
-              </p>
-            </div>
-          </div>
-  
-  
-            <label className="text-base font-medium uppercase text-gray-600 block mt-4">
-              แนบสลิปการโอนตรงนี้
-            </label>
-            
-            <form onSubmit={paySlip_send} className="flex flex-col items-start gap-3">
-              {previewUrl && (
-                <img
-                  src={previewUrl}
-                  alt="Uploaded Preview"
-                  className="max-w-24 mt-2"
-                  style={{ width: "100px", height: "100px", objectFit: "cover" }}
+              <p className="py-2">เมื่อกดที่ตัวเลข Copy ออโต้</p>
+              <div className="flex flex-row my-1">
+
+
+                {
+                  assets?.SCB ?
+                    <Image className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" /> : <p>SCB</p>
+                }
+                <div className="pl-6">
+
+                  <p>HTAY AUNG</p>
+                  <p
+                    className="cursor-pointer text-blue-600 underline w3-wide tracking-[2px]"
+                    onClick={() => copyToClipboard("365 264010 7")}
+                  >
+                    365 264010 7
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-row my-1">
+                <img className="max-w-12 my-1" src="https://play.google.com/store/apps/details?id=com.krungsri.kma&hl=th" alt="arrow_icon_white" />
+                {
+                  assets?.KRU ?
+                    <Image className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" /> : <p>กรุงศรี</p>
+                }
+                <div className="pl-6">
+
+                  <p>HTAY AUNG</p>
+                  <p
+                    className="cursor-pointer text-blue-600 underline tracking-[2px]"
+                    onClick={() => copyToClipboard("345 904 8624")}
+                  >
+                    345 904 8624
+                  </p>
+                </div>
+              </div>
+
+
+              <label className="text-base font-medium uppercase text-gray-600 block mt-4">
+                แนบสลิปการโอนตรงนี้
+              </label>
+
+              <form onSubmit={paySlip_send} className="flex flex-col items-start gap-3">
+                {previewUrl && (
+                  <img
+                    src={previewUrl}
+                    alt="Uploaded Preview"
+                    className="max-w-24 mt-2"
+                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                  />
+                )}
+                <input
+                  onChange={(e) => handleFileChange(e)}
+                  type="file"
+                  id="file"
                 />
-              )}
-              <input
-                onChange={(e) => handleFileChange(e)}
-                type="file"
-                id="file"
-              />
-              <button
-                type="submit"
-                className={`w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700 ${isUploading ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                disabled={isUploading} // Disable the button while uploading
-              >
-                {isUploading ? "Uploading..." : "ส่งข้อมูลโอนเงิน"}
-              </button>
-            </form>
-          </div> 
+                <button
+                  type="submit"
+                  className={`w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700 ${isUploading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                  disabled={isUploading} // Disable the button while uploading
+                >
+                  {isUploading ? "Uploading..." : "ส่งข้อมูลโอนเงิน"}
+                </button>
+              </form>
+            </div>
       }
     </div>
   );
