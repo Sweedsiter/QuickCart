@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
                         <p className="text-gray-500">Loading...</p>
                     </div>
                 )}
-                <img
+                <Image
                     src={product.image[0]}
                     alt={product.name}
                     className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"
