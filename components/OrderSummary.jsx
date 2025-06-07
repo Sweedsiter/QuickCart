@@ -258,7 +258,9 @@ const OrderSummary = () => {
             
           <p className="py-2">เมื่อกดที่ตัวเลข Copy ออโต้</p>
           <div className="flex flex-row my-1">
-            <Image className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" />
+          <img className="max-w-12 my-1" src="https://play.google.com/store/apps/details?id=com.scb.phone&hl=th" alt="arrow_icon_white" />        
+
+            {/* <Image className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" /> */}
             <div className="pl-6">
             <p>SCB</p>
               <p>HTAY AUNG</p>
@@ -271,10 +273,11 @@ const OrderSummary = () => {
             </div>
           </div>
       
-          <div className="flex flex-row my-1">
-            <Image className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" />
+          <div className="flex flex-row my-1">    
+            <img className="max-w-12 my-1" src="https://play.google.com/store/apps/details?id=com.krungsri.kma&hl=th" alt="arrow_icon_white" />        
+            {/* <Image className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" /> */}
             <div className="pl-6">
-            <p>KRU</p>
+            <p>กรุงศรี</p>
               <p>HTAY AUNG</p>
               <p
                 className="cursor-pointer text-blue-600 underline tracking-[2px]"
