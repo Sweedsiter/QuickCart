@@ -3,17 +3,17 @@ import { assets } from '@/assets/assets'
 import Image from 'next/image';
 import { useAppContext } from '@/context/AppContext';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product ,index}) => {
     const { router, setIsLoading } = useAppContext()
     const [imageLoading, setImageLoading] = useState(true);
 
     const handleClick = () => {
         setIsLoading(true);
-        router.push('/product/'+product._id);
+        router.push('/product/' + product._id);
         scrollTo(0, 0);
     }
     return (
-        <div key={product._id}
+        <div key={index}
             onClick={handleClick}
             className="flex flex-col items-start gap-0.5 max-w-[200px] w-full cursor-pointer"
         >
