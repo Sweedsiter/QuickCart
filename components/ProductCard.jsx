@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
         scrollTo(0, 0);
     }
     return (
-        <div
+        <div key={product._id}
             onClick={handleClick}
             className="flex flex-col items-start gap-0.5 max-w-[200px] w-full cursor-pointer"
         >

@@ -64,21 +64,23 @@ const Product = () => {
                 {/* Cart */}
                 <div className="px-5 lg:px-16 xl:px-20">
                     <div className="rounded-lg overflow-hidden bg-gray-400/10 mb-4" >
-                        {/* <Image
+                        <Image
                             onClick={() => setIsModalOpen(true)}
                             src={mainImage || productData.image[0]}
                             alt="alt"
                             className="w-full h-auto object-cover mix-blend-multiply"
                             width={1280}
                             height={720}
-                        /> */}
+                        />
 
-                        <img
+                        {/* <Image
                             src={mainImage || productData.image[0]}
                             alt="alt"
                             className="w-full h-auto object-cover mix-blend-multiply"
                             onClick={() => setIsModalOpen(true)}
-                        />
+                            width={1280}
+                            height={720}
+                        /> */}
                     </div>
 
                     <div className="grid grid-cols-4 gap-4">
@@ -88,20 +90,20 @@ const Product = () => {
                                 onClick={() => setMainImage(image)}
                                 className="cursor-pointer rounded-lg overflow-hidden bg-gray-500/10"
                             >
-                                {/* <Image
+                                <Image
                                     src={image}
                                     alt="alt"
                                     className="w-full h-auto object-cover mix-blend-multiply"
                                     width={1280}
                                     height={720}
-                                /> */}
-                                <img
+                                />
+                                {/* <img
                                      src={image}
                                     alt="alt"
                                      className="w-full h-auto object-cover mix-blend-multiply"
                                      width={1280}
                                     height={720}
-                                />
+                                /> */}
                             </div>
 
                         ))}

@@ -262,10 +262,10 @@ const OrderSummary = () => {
 
                 {
                   assets?.SCB ?
-                    <Image className="max-w-12 my-1" src={assets.SCB} alt="arrow_icon_white" /> : <p>SCB</p>
+                    <Image className="max-w-14 my-1" src={assets.SCB} alt="arrow_icon_white" /> : <p>SCB</p>
                 }
                 <div className="pl-6">
-                  <p>SCB</p>
+                  <p>ธนาคารไทยพาณิชย์</p>
                   <p>HTAY AUNG</p>
                   <p
                     className="cursor-pointer text-blue-600 underline w3-wide tracking-[2px]"
@@ -280,10 +280,10 @@ const OrderSummary = () => {
 
                 {
                   assets?.KRU ?
-                    <Image className="max-w-12 my-1" src={assets.KRU} alt="arrow_icon_white" /> : <p>กรุงศรี</p>
+                    <Image className="max-w-14 my-1" src={assets.KRU} alt="arrow_icon_white" /> : <p>กรุงศรี</p>
                 }
                 <div className="pl-6">
-                  <p>กรุงศรี</p>
+                  <p>ธนาคารกรุงศรีอยุธยา</p>
                   <p>HTAY AUNG</p>
                   <p
                     className="cursor-pointer text-blue-600 underline tracking-[2px]"
