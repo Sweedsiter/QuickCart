@@ -32,7 +32,7 @@ const AllProducts = () => {
     return array.sort((a, b) => new Date(b.date) - new Date(a.date));
   };
   const shuffledProducts = shuffleArray(filteredProducts);
-  // const sortedOrders = data.products.sort((a, b) => new Date(b.date) - new Date(a.date));
+
   return (
     <>   
       <div className="flex flex-col items-start px-6 md:px-16 lg:px-32 ">   

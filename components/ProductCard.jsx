@@ -7,7 +7,7 @@ import Loading from './Loading';
 
 const ProductCard = ({ product ,index}) => {
     const { router, setIsLoading } = useAppContext()
-    // const [imageLoading, setImageLoading] = useState(true);
+    const [imageLoading, setImageLoading] = useState(true);
 
     const handleClick = () => {
         setIsLoading(true);
@@ -20,17 +20,17 @@ const ProductCard = ({ product ,index}) => {
             className="flex flex-col items-start gap-0.5 max-w-[200px] w-full cursor-pointer"
         >
             <div className="cursor-pointer group relative bg-gray-500/10 rounded-lg w-full h-52 flex items-center justify-center">
-                {/* {imageLoading && (
+                {imageLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-                        <p className="text-gray-500">Loading...</p>
+                        <Loading/>
                     </div>
-                )} */}
+                )}
                 <Image
                     src={product.image[0] ? product?.image[0]: <Loading/> }
                     alt={product.name}
                     className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"
-                    // onLoad={() => setImageLoading(false)} 
-                    // onError={() => setImageLoading(false)} 
+                    onLoad={() => setImageLoading(false)} 
+                    onError={() => setImageLoading(false)} 
                     width={800}
                     hight={800}
                 />
