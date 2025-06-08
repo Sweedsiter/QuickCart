@@ -52,6 +52,18 @@ const Product = () => {
         router.push("/cart");
     };
 
+    const handleNextProduct = () => {
+        const currentIndex = products.findIndex((product) => product._id === id);
+        const nextIndex = (currentIndex + 1) % products.length; // Loop back to the first product
+        const nextProduct = products[nextIndex];
+        router.push(`/product/${nextProduct._id}`);
+    };
+    const handlePreviousProduct = () => {
+        const currentIndex = products.findIndex((product) => product._id === id);
+        const previousIndex = (currentIndex - 1 + products.length) % products.length; // Loop back to the last product
+        const previousProduct = products[previousIndex];
+        router.push(`/product/${previousProduct._id}`);
+    };
     if (isLoading) {
         return <div className="flex items-center justify-center h-screen">
             <Loading />
@@ -98,10 +110,10 @@ const Product = () => {
                                     height={720}
                                 /> */}
                                 <img
-                                     src={image}
+                                    src={image}
                                     alt="alt"
-                                     className="w-full h-auto object-cover mix-blend-multiply"
-                                     width={1280}
+                                    className="w-full h-auto object-cover mix-blend-multiply"
+                                    width={1280}
                                     height={720}
                                 />
                             </div>
@@ -179,6 +191,21 @@ const Product = () => {
                         </button>
                         <button onClick={() => handleAddToCartAndGoToCart(productData._id)} className="w-full py-3.5 bg-orange-500 text-white hover:bg-orange-600 transition">
                             เพิ่ม และ ไปที่ตะกร้า
+                        </button>
+                    </div>
+                    <div className="flex items-center mt-10 gap-4">                 
+                        <button
+                            onClick={handleNextProduct}
+                            className="w-full py-3.5 bg-blue-500 text-white hover:bg-blue-600 transition"
+                        >
+                             ลายก่อนหน้า
+                        </button>
+
+                        <button
+                            onClick={handlePreviousProduct}
+                            className="w-full py-3.5 bg-blue-500 text-white hover:bg-blue-600 transition"
+                        >                           
+                           ลายถัดไป
                         </button>
                     </div>
                 </div>
