@@ -6,8 +6,8 @@ import Loading from "@/components/Loading";
 
 const AllProducts = () => {
   const { products } = useAppContext();
-  const [selectedCategory, setSelectedCategory] = useState("เลือกกลุ่ม"); 
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [selectedCategory, setSelectedCategory] = useState("เลือกกลุ่ม");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const categories = ["เลือกกลุ่ม", ...new Set(products.map((product) => product.category))];
 
@@ -34,8 +34,8 @@ const AllProducts = () => {
   const shuffledProducts = shuffleArray(filteredProducts);
 
   return (
-    <>   
-      <div className="flex flex-col items-start px-6 md:px-16 lg:px-32 ">   
+    <>
+      <div className="flex flex-col items-start px-6 md:px-16 lg:px-32 ">
         <div className="flex flex-col items-end pt-12">
           <p className="text-2xl font-medium">All Embroidery</p>
           <div className="w-24 h-0.5 bg-orange-600 rounded-full"></div>
@@ -61,8 +61,8 @@ const AllProducts = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="border border-gray-300 rounded-md p-2 md:ml-4 w-full md:w-fit"
           />
-            <span>รูปไม่แสดงกรุณาให้กดที่รูป</span>
-          <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>        
+          <span>รูปไม่แสดงกรุณาให้กดที่รูป</span>
+          <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>
         </div>
 
         {/* Product Grid */}
@@ -74,7 +74,7 @@ const AllProducts = () => {
               ))}
             </div>
         }
-      </div> 
+      </div>
     </>
   );
 };
