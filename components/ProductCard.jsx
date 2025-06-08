@@ -25,7 +25,7 @@ const ProductCard = ({ product ,index}) => {
                         <Loading/>
                     </div>
                 )}
-                <Image
+                <img
                     src={product.image[0] ? product?.image[0]: <Loading/> }
                     alt={product.name}
                     className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"
