@@ -61,8 +61,8 @@ const AllProducts = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="border border-gray-300 rounded-md p-2 md:ml-4 w-full md:w-fit"
           />
-          <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>
-          <p>รูปไม่แสดงกรุณาให้กดที่รูป ข้อมูลเยอะตอนกดอาจจะต้องรอให้ระบบประเมินผลสัก1/2นาที ข้อมูลเพิ่มเติมกรุณากดที่ปุ๋มส่งข้อความด้านล่างขวามือ</p>
+          <span className="md:ml-4 block w-full my-2">ทั้งหมด : {filteredProducts.length} ลาย</span>       
+          <p className="text-sm text-gray-500">รูปไม่แสดงกรุณาให้กดที่รูป ข้อมูลเยอะตอนกดอาจจะต้องรอให้ระบบประเมินผลสัก1/2นาที ข้อมูลเพิ่มเติมกรุณากดที่ปุ๋มส่งข้อความด้านล่างขวามือ</p>
         </div>
 
         {/* Product Grid */}
