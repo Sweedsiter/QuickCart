@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { assets } from '@/assets/assets'
 import Image from 'next/image';
 import { useAppContext } from '@/context/AppContext';
-import Loading from './Loading';
 
 
 const ProductCard = ({ product ,index}) => {
     const { router, setIsLoading } = useAppContext()
-    const [imageLoading, setImageLoading] = useState(true);
+
 
     const handleClick = () => {
         setIsLoading(true);
@@ -19,20 +18,11 @@ const ProductCard = ({ product ,index}) => {
             onClick={handleClick}
             className="flex flex-col items-start gap-0.5 max-w-[200px] w-full cursor-pointer"
         >
-            <div className="cursor-pointer group relative bg-gray-500/10 rounded-lg w-full h-52 flex items-center justify-center">
-                {imageLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-                        <Loading/>
-                    </div>
-                )}
+            <div className="cursor-pointer group relative bg-gray-500/10 rounded-lg w-full h-52 flex items-center justify-center">        
                 <Image
-                    src={product.image[0] ? product?.image[0]: <Loading/> }
+                    src={product.image[0]}
                     alt={product.name}
-                    className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"
-                    onLoad={() => setImageLoading(false)} 
-                    onError={() => setImageLoading(false)} 
-                    width={800}
-                    hight={800}
+                    className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"    
                 />
                 <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md">
                     <Image

@@ -1,5 +1,4 @@
-import authSeller from "@/lib/authSeller";
-import { getAuth } from "@clerk/nextjs/server";
+
 import { v2 as cloudinary } from "cloudinary";
 import { NextResponse } from "next/server";
 

@@ -17,7 +17,7 @@ const OrderSummary = () => {
   // Update the state with the selected file
   const [selectedFile, setSelectedFile] = useState(null); // State to store the file
   const [previewUrl, setPreviewUrl] = useState(null); // State to store the preview URL
-  const [paySlip, setPaySlip] = useState("")
+  const [paySlip, setPaySlip] = useState()
   const [isUploading, setIsUploading] = useState(false); // State to track upload status
 
   const handleFileChange = (e) => {
@@ -301,7 +301,7 @@ const OrderSummary = () => {
 
               <form onSubmit={paySlip_send} className="flex flex-col items-start gap-3">
                 {previewUrl && (
-                  <img
+                  <Image
                     src={previewUrl}
                     alt="Uploaded Preview"
                     className="max-w-24 mt-2"

@@ -14,15 +14,9 @@ const Home = () => {
   const {isLoading,setIsLoading} = useAppContext()
 
   useEffect(() => {
-    // Simulate a loading process
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Stop loading after 2 seconds
-    }, 1000);
-
-    return () => clearTimeout(timer); // Cleanup the timer
+    setIsLoading(false);
   }, [setIsLoading]);
-
+  
   if (isLoading) {
     return <div className="flex items-center justify-center h-screen">
       <Loading /> 
