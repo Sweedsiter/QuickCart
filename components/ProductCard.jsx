@@ -22,11 +22,15 @@ const ProductCard = ({ product ,index}) => {
                 <Image
                     src={product.image[0]}
                     alt={product.name}
+                    width={800} 
+                    height={600}
                     className="group-hover:scale-105 transition object-cover w-4/5 h-4/5 md:w-full md:h-full"    
                 />
                 <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md">
                     <Image
                         className="h-3 w-3"
+                        width={800} 
+                        height={600}
                         src={assets.heart_icon}
                         alt="heart_icon"
                     />

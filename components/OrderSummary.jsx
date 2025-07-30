@@ -128,18 +128,13 @@ const OrderSummary = () => {
 
       if (cartItemsArray.length === 0) {
         return toast.error('Cart is empty')
-      }
-      // const token = await getToken()
+      }    
 
       const { data } = await axios.post('/api/order/create', {
         address: selectedAddress._id,
         items: cartItemsArray,
         paySlip: paySlip,
       }
-        // ,
-        //  {
-        //   headers: { Authorization: `Bearer ${token}` }
-        // }
       )
 
       if (data.success) {
@@ -153,11 +148,10 @@ const OrderSummary = () => {
     } catch (error) {
       toast.error(error.message)
     } finally {
-      setIsUploading(false); // Reset loading state
+      setIsUploading(false); 
     }
   }
 
-  //
   const copyToClipboard = (text) => {
     navigator.clipboard.writeText(text).then(() => {
       toast.success("Copy รหัสเรียบร้อย");
@@ -246,7 +240,7 @@ const OrderSummary = () => {
 
           className={`w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700 ${isUploading ? "opacity-50 cursor-not-allowed" : ""
             }`}
-          disabled={isUploading} // Disable the button while uploading
+          disabled={isUploading} 
         >
           {isUploading ? "Uploading..." : "ส่งข้อมูลการซื้อ"}
         </button> :
@@ -305,6 +299,8 @@ const OrderSummary = () => {
                     src={previewUrl}
                     alt="Uploaded Preview"
                     className="max-w-24 mt-2"
+                    width={800} 
+                    height={600}
                     style={{ width: "100px", height: "100px", objectFit: "cover" }}
                   />
                 )}
@@ -317,7 +313,7 @@ const OrderSummary = () => {
                   type="submit"
                   className={`w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700 ${isUploading ? "opacity-50 cursor-not-allowed" : ""
                     }`}
-                  disabled={isUploading} // Disable the button while uploading
+                  disabled={isUploading} 
                 >
                   {isUploading ? "Uploading..." : "ส่งข้อมูลโอนเงิน"}
                 </button>
