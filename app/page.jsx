@@ -50,7 +50,7 @@ const AllProducts = () => {
         {/* Product Grid */}
         {
           products.length === 0 ? <div className="w-full h-[400px]"><Loading /></div> :
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6  pb-14 w-full h-[700px] overflow-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6 pt-6  pb-14 w-full h-[700px] overflow-auto">
               {!shuffledProducts ? <Loading /> : shuffledProducts.map((product, index) => (
                 <ProductCard key={index} product={product} />
               ))}
