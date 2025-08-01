@@ -13,7 +13,7 @@ const AddProduct = () => {
 
   const [files, setFiles] = useState([]);
   const [name, setName] = useState('');
-  const [description, setDescription] = useState(`ลายปักขนาด cm ไฟล์ที่ได้รับ .emb ผีเข็ม 00++ Wilcom / Dst / Pes`);
+  const [description, setDescription] = useState(`ลายปักขนาด mm ไฟล์ที่ได้รับ .emb ผีเข็ม 00++ Wilcom / Dst / Pes`);
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
