@@ -25,7 +25,7 @@ export const AppContextProvider = (props) => {
     const [userData, setUserData] = useState(false)
     const [isSeller, setIsSeller] = useState(false)
     const [cartItems, setCartItems] = useState({})
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);     
 
     const fetchProductData = async () => {
         try {
@@ -132,7 +132,7 @@ export const AppContextProvider = (props) => {
 
     useEffect(() => {
         if(user){
-            fetchUserData()
+            fetchUserData()       
         }       
     }, [user])
 
@@ -145,8 +145,7 @@ export const AppContextProvider = (props) => {
         cartItems, setCartItems,
         addToCart, updateCartQuantity,
         getCartCount, getCartAmount,
-        isLoading, 
-        setIsLoading, 
+        isLoading, setIsLoading, 
     }
 
     return (

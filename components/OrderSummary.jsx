@@ -4,68 +4,41 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { assets } from "@/assets/assets"
 import Image from "next/image";
-import { useClerk } from "@clerk/nextjs";
 
 
 const OrderSummary = () => {
-  const clerk = useClerk()
-
-  const { currency, router, getCartCount, getCartAmount, getToken, user, cartItems, setCartItems } = useAppContext()
+  const { currency, router, getCartCount, getCartAmount, getToken, cartItems, setCartItems } = useAppContext()
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [userAddresses, setUserAddresses] = useState([]);
-  // Update the state with the selected file
-  const [selectedFile, setSelectedFile] = useState(null); // State to store the file
-  const [previewUrl, setPreviewUrl] = useState(null); // State to store the preview URL
+  const [selectedFile, setSelectedFile] = useState(null); 
+  const [previewUrl, setPreviewUrl] = useState(null); 
   const [paySlip, setPaySlip] = useState()
-  const [isUploading, setIsUploading] = useState(false); // State to track upload status
+  const [isUploading, setIsUploading] = useState(false);  
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0]; // Get the selected file
-
+    const file = e.target.files[0]; 
     if (file.size > 5 * 1024 * 1024) { // 5MB limit
       return toast.error("File size must be less than 5MB");
     }
     if (file) {
-      setSelectedFile(file); // Update the file state
-      setPreviewUrl(URL.createObjectURL(file)); // Generate a preview URL
-    }
-  };
-  useEffect(() => {
-    if (user) {
-      fetchUserAddresses();
-    } else {
-      alert("กรุณาเข้าสู่ระบบก่อนทำการสั่งซื้อ");
-      router.push("/all-products");
-      clerk.openSignIn(); // Open the Clerk sign-in modal   
-
-    }
-    return () => {
-      if (previewUrl) {
-        URL.revokeObjectURL(previewUrl); // Clean up the URL
-      }
-    };
-  }, [previewUrl, user]);
-
-
-  // Function to check if user is logged in and redirect to login page if not
-  const checkUser = () => {
-    if (!user) {
-      alert("กรุณาเข้าสู่ระบบก่อนทำการสั่งซื้อ");
-
-    } else {
-      router.push("/add-address");
+      setSelectedFile(file); 
+      setPreviewUrl(URL.createObjectURL(file)); 
     }
   };
 
+  useEffect(() => {    
   const fetchUserAddresses = async () => {
+ 
     try {
       const token = await getToken()
       const { data } = await axios.get('/api/user/get-address', { headers: { Authorization: `Bearer ${token}` } })
       if (data.success) {
         setUserAddresses(data.addresses)
+      
         if (data.addresses.length > 0) {
-          setSelectedAddress(data.addresses[0])
+          setSelectedAddress(data.addresses[0])  
+             
         }
       } else {
         toast.error(data.message)
@@ -74,30 +47,35 @@ const OrderSummary = () => {
       toast.error(error.message)
     }
   }
+    fetchUserAddresses();  
+
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl); // Clean up the URL
+      }
+  
+  }, [previewUrl]);
+
 
   const handleAddressSelect = (address) => {
     setSelectedAddress(address);
     setIsDropdownOpen(false);
   };
 
-  // payment create url slip
+  const createAddress =async () =>{ 
+     router.push('/add-address');     
+  }
+
   const paySlip_send = async (e) => {
     e.preventDefault();
-
     if (!selectedFile) {
       return toast.error("Please upload a file");
     }
-
-    setIsUploading(true); // Set loading state to true
-
+    setIsUploading(true); 
     try {
       const token = await getToken();
-
-      // Create FormData to send the file
+    
       const formData = new FormData();
       formData.append("file", selectedFile);
-
-      // Send the file to the backend
       const { data } = await axios.post("/api/payment/upload-slip", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -115,21 +93,18 @@ const OrderSummary = () => {
       console.error("Error uploading payment slip:", error);
       toast.error("Failed to upload payment slip");
     } finally {
-      setIsUploading(false); // Reset loading state
+      setIsUploading(false); 
     }
   };
 
-
   const createOrder = async () => {
-    setIsUploading(true); // Set loading state to true
+    setIsUploading(true); 
     try {
       let cartItemsArray = Object.keys(cartItems).map((key) => ({ product: key, quantity: cartItems[key] }))
       cartItemsArray = cartItemsArray.filter(item => item.quantity > 0)
-
       if (cartItemsArray.length === 0) {
         return toast.error('Cart is empty')
       }    
-
       const { data } = await axios.post('/api/order/create', {
         address: selectedAddress._id,
         items: cartItemsArray,
@@ -200,8 +175,7 @@ const OrderSummary = () => {
                     {address.fullName}, {address.area}, {address.city}, {address.state}
                   </li>
                 ))}
-                <li
-                  onClick={checkUser}
+                <li    onClick={createAddress}           
                   className="px-4 py-2 hover:bg-gray-500/10 cursor-pointer text-center"
                 >
                   + กดเพิ่มที่อยู่

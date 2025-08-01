@@ -1,29 +1,26 @@
 'use client'
-
 import React, { useEffect } from "react";
 import { assets } from "@/assets/assets";
 import OrderSummary from "@/components/OrderSummary";
 import Image from "next/image";
 import { useAppContext } from "@/context/AppContext";
 import Loading from "@/components/Loading";
-
+import { useClerk } from "@clerk/nextjs";
+import Link from "next/link";
 
 
 const Cart = () => {
-  const { products, router, cartItems, addToCart, updateCartQuantity, getCartCount, setIsLoading, isLoading } = useAppContext();
+  const clerk = useClerk()
+  const { products, router, cartItems, addToCart, updateCartQuantity, getCartCount, setIsLoading, isLoading , user } = useAppContext();
 
-  const handleBackClick = () => {
-    setIsLoading(true);
-    router.push('/all-products');
-  };
   useEffect(() => {
-    // Simulate a loading process
     setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Stop loading after 2 seconds
-    }, 1000);
-
-    return () => clearTimeout(timer); // Cleanup the timer
+   if (user) {
+      setIsLoading(false); 
+    } else { 
+      clerk.openSignIn();
+      router.push('/')
+    }
   }, [setIsLoading]);
 
   if (isLoading) {
@@ -130,14 +127,14 @@ const Cart = () => {
               </tbody>
             </table>
           </div>
-          <button onClick={handleBackClick} className="group flex items-center mt-6 gap-2 text-orange-600">
+          <Link href={'/'} className="group flex items-center mt-6 gap-2 text-orange-600">
             <Image
               className="group-hover:-translate-x-1 transition"
               src={assets.arrow_right_icon_colored}
               alt="arrow_right_icon_colored"
             />
             Continue กลับไปที่หน้าร้านค้า
-          </button>
+          </Link>
         </div>
         <OrderSummary />
       </div>

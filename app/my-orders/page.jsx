@@ -4,9 +4,11 @@ import { useAppContext } from "@/context/AppContext";
 import Loading from "@/components/Loading";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useClerk } from "@clerk/nextjs";
 
 
 const MyOrders = () => {
+     const clerk = useClerk()
     const { currency, getToken, user, router,setIsLoading,isLoading } = useAppContext();
     const [orders, setOrders] = useState([]);
     const [Order_file, setOrder_file] = useState();
@@ -26,7 +28,8 @@ const MyOrders = () => {
     };
 
 
-    const fetchOrders = async () => {
+    useEffect(() => {        
+       const fetchOrders = async () => {
         try {
             const token = await getToken();
             const { data } = await axios.get('/api/order/list', { headers: { Authorization: `Bearer ${token}` } });
@@ -39,25 +42,28 @@ const MyOrders = () => {
         } catch (error) {
             toast.error(error.message);
         }
-    };
-    const fetchOrder_file = async () => {
+       };    
+      const fetchOrder_file = async () => {
         try {
             const { data } = await axios.get('/api/order/order-file-list');
             if (data.success) {
                 setOrder_file(data.Order_send);
+                setLoading(false);
             } else {
                 toast.error(data.message);
             }
         } catch (error) {
             toast.error(error.message);
         }
-    };
-
-    useEffect(() => {
+       };
         if (user) {
             fetchOrders();
             fetchOrder_file();
         }
+        if(!user) {        
+            clerk.openSignIn();
+            router.push('/')
+        }   
     }, [user]);
 
     // Filter orders based on the search term
@@ -84,9 +90,9 @@ const MyOrders = () => {
     return (
         <>      
             <div className="flex flex-col justify-between px-6 md:px-16 lg:px-32 py-6 min-h-screen">
-                <div className="space-y-5">
-                    <h2 className="text-lg font-medium mt-6">รายการสั่งทั้งหมด</h2>
-                    {/* Search Input */}
+                <div className="space-y-2">
+                   <div className="flex flex-row items-center justify-between">
+                    <h2 className="text-lg font-medium ">รายการสั่งทั้งหมด</h2>                 
                     <input
                         type="text"
                         placeholder="ค้นหาตามชื่อ..."
@@ -94,6 +100,7 @@ const MyOrders = () => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="border border-gray-300 rounded px-4 py-2 w-fit mb-4"
                     />
+                   </div>
                     {loading ? (
                         <Loading />
                     ) : (

@@ -1,39 +1,63 @@
 'use client'
-import React, { useEffect } from "react";
-import HeaderSlider from "@/components/HeaderSlider";
-import HomeProducts from "@/components/HomeProducts";
-import Banner from "@/components/Banner";
-import NewsLetter from "@/components/NewsLetter";
-import FeaturedProduct from "@/components/FeaturedProduct";
+import React, { useState } from "react";
+import ProductCard from "@/components/ProductCard";
 import { useAppContext } from "@/context/AppContext";
 import Loading from "@/components/Loading";
 
+const AllProducts = () => {
+  const { products } = useAppContext();
+  const [selectedCategory, setSelectedCategory] = useState("เลือกกลุ่ม"); 
+  const [searchQuery, setSearchQuery] = useState(""); 
 
-
-const Home = () => {
-  const {isLoading,setIsLoading} = useAppContext()
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, [setIsLoading]);
-  
-  if (isLoading) {
-    return <div className="flex items-center justify-center h-screen">
-      <Loading /> 
-      </div>;
-  }
+  const categories = ["เลือกกลุ่ม", ...new Set(products.map((product) => product.category))];
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory =
+      selectedCategory === "เลือกกลุ่ม" || product.category === selectedCategory;
+    const matchesSearch = product.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+  const shuffleArray = (array) => {
+    return array.sort((a, b) => new Date(b.date) - new Date(a.date));
+  };
+  const shuffledProducts = shuffleArray(filteredProducts);
 
   return (
-    <>
-        <div className="px-6 md:px-16 lg:px-32">
-          <HeaderSlider />
-          <HomeProducts />
-          <FeaturedProduct />
-          <Banner />
-          <NewsLetter />
+    <>   
+      <div className=" flex flex-col items-start px-6 md:px-16 lg:px-32 "> 
+        <div className="md:hidden flex items-center justify-between  w-full  flex-wrap">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 my-2 "
+          >
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+          <input
+            type="text"
+            placeholder="ค้นหาชื่อโลโก้..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 md:ml-4 w-full md:w-fit"
+          />       
         </div>
+
+        {/* Product Grid */}
+        {
+          products.length === 0 ? <div className="w-full h-[400px]"><Loading /></div> :
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6  pb-14 w-full h-[700px] overflow-auto">
+              {!shuffledProducts ? <Loading /> : shuffledProducts.map((product, index) => (
+                <ProductCard key={index} product={product} />
+              ))}
+            </div>
+        }
+      </div> 
     </>
   );
 };
-
-export default Home;
+export default AllProducts;
