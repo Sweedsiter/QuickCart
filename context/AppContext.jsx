@@ -25,7 +25,9 @@ export const AppContextProvider = (props) => {
     const [userData, setUserData] = useState(false)
     const [isSeller, setIsSeller] = useState(false)
     const [cartItems, setCartItems] = useState({})
-    const [isLoading, setIsLoading] = useState(false);     
+    const [isLoading, setIsLoading] = useState(false);    
+     const [selectedCategoryNav, setSelectedCategoryNav] = useState("เลือกกลุ่ม");  
+   const [searchQuery, setSearchQuery] = useState(""); 
 
     const fetchProductData = async () => {
         try {
@@ -146,6 +148,8 @@ export const AppContextProvider = (props) => {
         addToCart, updateCartQuantity,
         getCartCount, getCartAmount,
         isLoading, setIsLoading, 
+        setSelectedCategoryNav,selectedCategoryNav,
+        searchQuery, setSearchQuery,
     }
 
     return (

@@ -1,18 +1,16 @@
 'use client'
-import React, { useState } from "react";
+import React from "react";
 import ProductCard from "@/components/ProductCard";
 import { useAppContext } from "@/context/AppContext";
 import Loading from "@/components/Loading";
+import { Category } from "@/components/Category";
 
 const AllProducts = () => {
-  const { products } = useAppContext();
-  const [selectedCategory, setSelectedCategory] = useState("เลือกกลุ่ม"); 
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const { products,selectedCategoryNav, searchQuery} = useAppContext();
 
-  const categories = ["เลือกกลุ่ม", ...new Set(products.map((product) => product.category))];
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
-      selectedCategory === "เลือกกลุ่ม" || product.category === selectedCategory;
+      selectedCategoryNav === "เลือกกลุ่ม" || product.category === selectedCategoryNav;
     const matchesSearch = product.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
@@ -27,24 +25,7 @@ const AllProducts = () => {
     <>   
       <div className=" flex flex-col items-start px-6 md:px-16 lg:px-32 "> 
         <div className="md:hidden flex items-center justify-between  w-full  flex-wrap">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 my-2 "
-          >
-            {categories.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-          <input
-            type="text"
-            placeholder="ค้นหาชื่อโลโก้..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 md:ml-4 w-full md:w-fit"
-          />       
+            <Category/>      
         </div>
 
         {/* Product Grid */}
