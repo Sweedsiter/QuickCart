@@ -10,7 +10,6 @@ import React from "react";
 import { useClerk } from "@clerk/nextjs";
 import Link from "next/link";
 
-
 const Product = () => {
     const clerk = useClerk()
     const { id } = useParams();

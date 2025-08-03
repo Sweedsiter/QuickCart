@@ -132,10 +132,12 @@ const Orders = () => {
                         order.items.map((item, index) => (
                             <div key={index} className="flex flex-col md:flex-row gap-5 justify-between p-5 border-t border-gray-300">
                                 <div onClick={() => router.push(`/product/${item.product._id}`)} className="flex-1 flex gap-5 max-w-80">
-                                    <img
+                                    <Image
                                         className="max-w-16 max-h-16 object-cover"
                                         src={item.product.image}
                                         alt={item.product.name}
+                                        width={1280}  
+                                        height={720}
                                     />
                                     <p className="flex flex-col gap-3">
                                         <span className="font-medium ">
@@ -188,11 +190,12 @@ const Orders = () => {
 
                                 <div>
                                     {order.paySlip ? (
-                                        <img
+                                        <Image
                                             src={order.paySlip}
                                             alt="Payment Slip"
                                             className="max-w-12 max-h-12 object-cover mt-2"
                                             onClick={() => handleImageClick(order.paySlip)} // Open modal on click
+                                            width={1280}  height={720}
                                         />
                                     ) : (
                                         <p className="text-red-600">ยังไม่ชำระ</p>

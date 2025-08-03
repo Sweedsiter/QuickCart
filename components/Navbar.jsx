@@ -17,8 +17,6 @@ const Navbar = () => {
   const { isSeller, user, setIsLoading ,getCartCount,router} = useAppContext();
   const clerk = useClerk()
   const pathname = usePathname();
-  const [filteredProducts, setFilteredProducts] = useState([]); 
-
   const handleClickHome = () => {
     setIsLoading(true);
     router.push('/');
@@ -40,23 +38,15 @@ const Navbar = () => {
     router.push('/seller');
   };
   return (
-    <nav className="flex items-center sticky top-0 z-50 bg-white justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700" onClick={() => { setFilteredProducts([])}}>
+    <nav className="flex items-center sticky top-0 z-50 bg-white justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700" >
       <Image
         className="cursor-pointer w-28 md:w-32  hover:scale-105 transition duration-200"
         onClick={() => router.push('/')}
         src={assets.logo}
         alt="logo"
       />
-
       <div className="items-center gap-4 relative hidden md:flex">   
-           <Category/>          
-          {filteredProducts.length > 0 && (
-            <div className=" fixed inset-0 bg-orange-200 bg-opacity-75 z-50 mt-20  h-full overflow-y-auto" onClick={() => { setFilteredProducts([])}}>
-              {filteredProducts.map((product) => (
-                <NavSearch product={product} />
-              ))}
-            </div>
-          )}
+           <Category/> 
       </div>  
 
       <ul className="hidden md:flex items-center gap-4 ">

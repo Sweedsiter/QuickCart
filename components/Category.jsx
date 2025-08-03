@@ -11,7 +11,7 @@ import React from 'react'
          <select
             value={selectedCategoryNav}
             onChange={(e) => setSelectedCategoryNav(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 my-2 "
+            className="border border-gray-300 rounded-md p-1 my-2 "
           >
             {categories.map((category, index) => (
               <option key={index} value={category}>
@@ -24,7 +24,7 @@ import React from 'react'
             placeholder="ค้นหาชื่อโลโก้..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="border border-gray-300 rounded-md p-2 md:ml-4 w-full md:w-fit"
+            className="border border-gray-300 rounded-md p-1 md:ml-4 w-full md:w-fit"
           />  
     </>
   )
